@@ -1,22 +1,23 @@
 package com.example.shopsmanager.dto;
 
 public class LoginDTO {
-    public long getUserID() {
-        return userID;
+    private String username;
+    private String password;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserID(long userID) {
-        this.userID = userID;
+    public void setUsername(String userID) {
+        this.username = userID;
     }
 
-    public long getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(long password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public long userID;
-    public long password;
+
 }
