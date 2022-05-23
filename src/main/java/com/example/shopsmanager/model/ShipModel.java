@@ -1,7 +1,14 @@
 package com.example.shopsmanager.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Ship")
 public class ShipModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long shipId;
+    @Column(name = "CompanyName")
     private String companyName;
 
     public long getShipId() {

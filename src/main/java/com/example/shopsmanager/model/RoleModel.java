@@ -1,8 +1,16 @@
 package com.example.shopsmanager.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Role")
 public class RoleModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roleId;
+    @Column(name = "name")
     private String roleName;
+    @Column
     private String code;
 
     public long getRoleId() {

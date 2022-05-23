@@ -1,8 +1,16 @@
 package com.example.shopsmanager.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Category")
 public class CategoryModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long categoryId;
+    @Column(name = "CategoryName")
     private String categoryName;
+    @Column(name = "Description")
     private String description;
 
     public long getCategoryId() {

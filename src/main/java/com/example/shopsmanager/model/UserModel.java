@@ -1,18 +1,37 @@
 package com.example.shopsmanager.model;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
-
+@Entity
+@Table(name = "User")
 public class UserModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
+    @Column(name = "roleId")
     private long roleId;
+    @Column(name = "firstName")
     private String firstName;
+    @Column(name = "lastName")
     private String lastName;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+    @Column(name = "lastLogin")
     private Timestamp lastLogin;
+    @Column(name = "state")
     private int state;
-
+    @Column
+    private Timestamp createdDate;
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
     public long getUserId() {
         return userId;
     }

@@ -1,11 +1,22 @@
 package com.example.shopsmanager.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Customer")
 public class CustomerModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long customerId;
+    @Column(name = "FirstName")
     private String firstName;
+    @Column(name = "LastName")
     private String lastName;
+    @Column(name = "Address")
     private String address;
+    @Column(name = "Phone")
     private String phone;
+    @Column(name = "Email")
     private String email;
 
     public long getCustomerId() {
