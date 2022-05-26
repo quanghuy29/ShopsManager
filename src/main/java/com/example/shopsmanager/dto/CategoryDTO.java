@@ -1,16 +1,8 @@
-package com.example.shopsmanager.model;
+package com.example.shopsmanager.dto;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "Category")
-public class CategoryModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CategoryDTO {
     private long categoryId;
-    @Column(name = "categoryname")
     private String categoryName;
-    @Column(name = "Description")
     private String description;
 
     public long getCategoryId() {

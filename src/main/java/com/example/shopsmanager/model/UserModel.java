@@ -8,11 +8,11 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
-    @Column(name = "roleId")
+    @Column(name = "roleid")
     private long roleId;
-    @Column(name = "firstName")
+    @Column(name = "firstname")
     private String firstName;
-    @Column(name = "lastName")
+    @Column(name = "lastname")
     private String lastName;
     @Column(name = "phone")
     private String phone;
@@ -20,11 +20,11 @@ public class UserModel {
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "lastLogin")
+    @Column(name = "lastlogin")
     private Timestamp lastLogin;
     @Column(name = "state")
     private int state;
-    @Column
+    @Column(name = "createddate")
     private Timestamp createdDate;
     public Timestamp getCreatedDate() {
         return createdDate;
@@ -34,10 +34,6 @@ public class UserModel {
     }
     public long getUserId() {
         return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public long getRoleId() {

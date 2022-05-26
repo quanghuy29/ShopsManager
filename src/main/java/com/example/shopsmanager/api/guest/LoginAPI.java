@@ -1,4 +1,4 @@
-package com.example.shopsmanager.controller.guest.api;
+package com.example.shopsmanager.api.guest;
 
 import com.example.shopsmanager.dto.LoginDTO;
 import org.springframework.web.bind.annotation.PostMapping;

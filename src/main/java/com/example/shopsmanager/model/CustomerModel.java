@@ -8,9 +8,9 @@ public class CustomerModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long customerId;
-    @Column(name = "FirstName")
+    @Column(name = "Firstname")
     private String firstName;
-    @Column(name = "LastName")
+    @Column(name = "Lastname")
     private String lastName;
     @Column(name = "Address")
     private String address;
