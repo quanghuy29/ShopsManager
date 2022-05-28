@@ -6,7 +6,8 @@ import java.util.List;
 
 public class ShopDTO {
     private long shopId;
-    private long shopName;
+    private long userID;
+    private String shopName;
     private String website;
     private String address;
     private String detail;
@@ -18,6 +19,14 @@ public class ShopDTO {
     private Timestamp expirationDay;
     private List<OrderDTO> listOrder = new ArrayList<>();
     private List<CustomerDTO> listCustomer = new ArrayList<>();
+
+    public long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(long userID) {
+        this.userID = userID;
+    }
 
     public List<OrderDTO> getListOrder() {
         return listOrder;
@@ -43,11 +52,11 @@ public class ShopDTO {
         this.shopId = shopId;
     }
 
-    public long getShopName() {
+    public String getShopName() {
         return shopName;
     }
 
-    public void setShopName(long shopName) {
+    public void setShopName(String shopName) {
         this.shopName = shopName;
     }
 

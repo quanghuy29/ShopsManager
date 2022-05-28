@@ -8,16 +8,34 @@ import org.springframework.stereotype.Component;
 public class OrderConverter {
     public OrderModel toModel(OrderDTO dto){
         OrderModel model = new OrderModel();
-        model.setCreatedDay(dto.getCreatedDay());
+        model.setShopId(dto.getShop().getShopId());
         model.setOrderNumber(dto.getOrderNumber());
         model.setCustomerId(dto.getCustomer().getId());
         //model.setDepartmentId(dto.getDepartment());
         //model.setShip
+        model.setCreatedDay(dto.getCreatedDay());
         model.setPaymentDay(dto.getPaymentDay());
-        model.setTotalPrice(dto.getTotalPrice());
         model.setShipDate(dto.getShipDate());
-        model.setState(dto.getState());
         model.setTotalPrice(dto.getTotalPrice());
+        model.setState(dto.getState());
+
         return model;
+    }
+
+    public OrderDTO toDTO(OrderModel model){
+        OrderDTO dto = new OrderDTO();
+        dto.setOrderId(model.getOrderId());
+        dto.setOrderNumber(model.getOrderNumber());
+        dto.setCreatedDay(model.getCreatedDay());
+        //dto.getCustomer()
+        //department
+        //ship
+        //shop
+        dto.setShipDate(model.getShipDate());
+        dto.setState(model.getState());
+        dto.setTotalPrice(dto.getTotalPrice());
+        dto.setPaymentDay(model.getPaymentDay());
+
+        return dto;
     }
 }

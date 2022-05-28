@@ -3,16 +3,25 @@ package com.example.shopsmanager.dto;
 import java.sql.Timestamp;
 
 public class RegisterOrderDTO {
-    private String shopID;
+    private long id;
+    private String shopName;
     private float money;
     private Timestamp date;
 
-    public String getShopID() {
-        return shopID;
+    public long getId() {
+        return id;
     }
 
-    public void setShopID(String shopID) {
-        this.shopID = shopID;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopID) {
+        this.shopName = shopID;
     }
 
     public float getMoney() {

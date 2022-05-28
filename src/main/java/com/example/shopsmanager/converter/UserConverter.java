@@ -15,4 +15,15 @@ public class UserConverter {
         userModel.setPassword(userDTO.getPassword());
         return userModel;
     }
+
+    public SignUpDTO toDTO(UserModel model){
+        SignUpDTO dto = new SignUpDTO();
+        dto.setFirstName(model.getFirstName());
+        dto.setLastname(model.getLastName());
+        dto.setEmail(model.getEmail());
+        dto.setPhone(model.getPhone());
+        dto.setPassword(model.getPassword());
+        //dto.setRoleCode();
+        return dto;
+    }
 }

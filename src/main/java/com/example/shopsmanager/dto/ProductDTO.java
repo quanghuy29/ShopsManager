@@ -5,11 +5,20 @@ import java.sql.Timestamp;
 public class ProductDTO {
     private long id;
     private long shopId;
+    private String name;
     private String category;
     private float price;
     private String description;
     private int available;
     private Timestamp createdDay;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Timestamp getCreatedDay() {
         return createdDay;
