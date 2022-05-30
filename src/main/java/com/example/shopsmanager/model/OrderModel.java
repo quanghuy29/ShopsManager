@@ -8,23 +8,23 @@ public class OrderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderId;
-    @Column(name = "CustomerId")
+    @Column(name = "Customerid")
     private long customerId;
-    @Column(name = "ShopId")
+    @Column(name = "Shopid")
     private long shopId;
-    @Column(name = "ShipId")
+    @Column(name = "Shipid")
     private long shipId;
-    @Column(name = "DepartmentId")
+    @Column(name = "Departmentid")
     private long departmentId;
-    @Column(name = "CreatedDate")
+    @Column(name = "Createddate")
     private Timestamp createdDay;
-    @Column(name = "PaymentDate")
+    @Column(name = "Paymentdate")
     private Timestamp paymentDay;
-    @Column(name = "ShipDate")
+    @Column(name = "Shipdate")
     private Timestamp shipDate;
-    @Column(name = "TotalPrice")
+    @Column(name = "Totalprice")
     private float totalPrice;
-    @Column(name = "OrderNumber")
+    @Column(name = "Ordernumber")
     private int orderNumber;
     @Column(name = "State")
     private int state;

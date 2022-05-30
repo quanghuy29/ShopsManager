@@ -7,18 +7,18 @@ import javax.persistence.*;
 public class CategoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long categoryId;
+    private long categoryid;
     @Column(name = "categoryname")
     private String categoryName;
-    @Column(name = "Description")
+    @Column()
     private String description;
 
     public long getCategoryId() {
-        return categoryId;
+        return categoryid;
     }
 
     public void setCategoryId(long categoryId) {
-        this.categoryId = categoryId;
+        this.categoryid = categoryId;
     }
 
     public String getCategoryName() {

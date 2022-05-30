@@ -8,11 +8,11 @@ public class OrderProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderProId;
-    @Column(name = "OrderId")
+    @Column(name = "Orderid")
     private long orderId;
-    @Column(name = "ProductId")
+    @Column(name = "Productid")
     private long productId;
-    @Column(name = "OrderNumber")
+    @Column(name = "Ordernumber")
     private int orderNumber;
 
     public long getOrderProId() {

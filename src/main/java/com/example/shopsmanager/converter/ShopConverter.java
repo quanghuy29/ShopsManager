@@ -36,7 +36,6 @@ public class ShopConverter {
         dto.setLastRegisterDay(model.getLastRegisterDay());
         dto.setExpirationDay(model.getExpirationDay());
         //listOrder
-        //listCustomer
         return dto;
     }
 }

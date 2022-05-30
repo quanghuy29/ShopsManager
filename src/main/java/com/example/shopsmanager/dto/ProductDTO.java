@@ -1,16 +1,26 @@
 package com.example.shopsmanager.dto;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class ProductDTO {
-    private long id;
+    private Long id;
     private long shopId;
     private String name;
     private String category;
     private float price;
     private String description;
     private int available;
-    private Timestamp createdDay;
+    private Date createdDay;
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getName() {
         return name;
@@ -20,15 +30,15 @@ public class ProductDTO {
         this.name = name;
     }
 
-    public Timestamp getCreatedDay() {
+    public Date getCreatedDay() {
         return createdDay;
     }
 
-    public void setCreatedDay(Timestamp createdDay) {
+    public void setCreatedDay(Date createdDay) {
         this.createdDay = createdDay;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

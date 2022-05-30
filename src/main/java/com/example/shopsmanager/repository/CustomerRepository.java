@@ -1,10 +1,9 @@
 package com.example.shopsmanager.repository;
 
-import com.example.shopsmanager.model.UserModel;
+import com.example.shopsmanager.model.CustomerModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserModel, Long> {
-
+public interface CustomerRepository extends JpaRepository<CustomerModel, Long> {
 }

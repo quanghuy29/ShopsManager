@@ -8,11 +8,11 @@ public class RegisterOrderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long registerId;
-    @Column(name = "ShopId")
+    @Column(name = "Shopid")
     private long shopId;
-    @Column(name = "PaymentMoney")
+    @Column(name = "Paymentmoney")
     private float paymentMoney;
-    @Column(name = "PaymentDate")
+    @Column(name = "Paymentdate")
     private Timestamp paymentDate;
 
     public long getRegisterId() {

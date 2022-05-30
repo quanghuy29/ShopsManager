@@ -8,9 +8,9 @@ public class ShopModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long shopId;
-    @Column(name = "UserId")
+    @Column(name = "Userid")
     private long userId;
-    @Column(name = "ShopName")
+    @Column(name = "Shopname")
     private String shopName;
     @Column(name = "Website")
     private String website;
@@ -24,11 +24,11 @@ public class ShopModel {
     private String email;
     @Column(name = "State")
     private int state;
-    @Column(name = "CreatedDate")
+    @Column(name = "Createddate")
     private Timestamp createdDay;
-    @Column(name = "LastRegisterDate")
+    @Column(name = "Lastregisterdate")
     private Timestamp lastRegisterDay;
-    @Column(name = "ExpirationDate")
+    @Column(name = "Expirationdate")
     private Timestamp expirationDay;
 
     public long getShopId() {

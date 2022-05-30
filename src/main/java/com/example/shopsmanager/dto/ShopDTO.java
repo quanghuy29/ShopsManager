@@ -18,7 +18,6 @@ public class ShopDTO {
     private Timestamp lastRegisterDay;
     private Timestamp expirationDay;
     private List<OrderDTO> listOrder = new ArrayList<>();
-    private List<CustomerDTO> listCustomer = new ArrayList<>();
 
     public long getUserID() {
         return userID;
@@ -34,14 +33,6 @@ public class ShopDTO {
 
     public void setListOrder(List<OrderDTO> listOrder) {
         this.listOrder = listOrder;
-    }
-
-    public List<CustomerDTO> getListCustomer() {
-        return listCustomer;
-    }
-
-    public void setListCustomer(List<CustomerDTO> listCustomer) {
-        this.listCustomer = listCustomer;
     }
 
     public long getShopId() {

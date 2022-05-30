@@ -8,7 +8,7 @@ public class ShipModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long shipId;
-    @Column(name = "CompanyName")
+    @Column(name = "Companyname")
     private String companyName;
 
     public long getShipId() {
