@@ -10,8 +10,8 @@ public class ListDTO<T> {
         return totalItem;
     }
 
-    public void setTotalItem(int totalItem) {
-        this.totalItem = totalItem;
+    public void setTotalItem() {
+        this.totalItem = listResult.size();
     }
 
     public List<T> getListResult() {

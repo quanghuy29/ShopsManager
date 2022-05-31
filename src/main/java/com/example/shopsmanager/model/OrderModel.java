@@ -28,7 +28,12 @@ public class OrderModel {
     private int orderNumber;
     @Column(name = "State")
     private int state;
-
+    @Column(name = "shippingfee")
+    private float shippingFee;
+    @Column(name = "transitionfee")
+    private float transitionFee;
+    @Column(name = "totalpayment")
+    private float totalPayment;
     public long getOrderId() {
         return orderId;
     }
@@ -115,5 +120,29 @@ public class OrderModel {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public float getShippingFee() {
+        return shippingFee;
+    }
+
+    public void setShippingFee(float shippingFee) {
+        this.shippingFee = shippingFee;
+    }
+
+    public float getTransitionFee() {
+        return transitionFee;
+    }
+
+    public void setTransitionFee(float transitionFee) {
+        this.transitionFee = transitionFee;
+    }
+
+    public float getTotalPayment() {
+        return totalPayment;
+    }
+
+    public void setTotalPayment(float totalPayment) {
+        this.totalPayment = totalPayment;
     }
 }

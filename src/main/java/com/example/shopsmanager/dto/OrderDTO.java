@@ -3,56 +3,50 @@ package com.example.shopsmanager.dto;
 import java.sql.Timestamp;
 
 public class OrderDTO {
-    private long orderId;
-    private ShopDTO shop;
-    private CustomerDTO customer;
-    private String ship;
-    private String department;
+    private Long orderId;
+    private Long shopId;
+    private Long customerId;
+    private ShipDTO ship;
     private Timestamp createdDay;
     private Timestamp paymentDay;
     private Timestamp shipDate;
     private float totalPrice;
     private int orderNumber;
     private int state;
+    private float shippingFee;
+    private float transitionFee;
+    private float totalPayment;
 
-    public CustomerDTO getCustomer() {
-        return customer;
+    public Long getCustomer() {
+        return customerId;
     }
 
-    public void setCustomer(CustomerDTO customer) {
-        this.customer = customer;
+    public void setCustomer(Long customer) {
+        this.customerId = customer;
     }
 
-    public long getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(long orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
-    public ShopDTO getShop() {
-        return shop;
+    public Long getShopId() {
+        return shopId;
     }
 
-    public void setShop(ShopDTO shop) {
-        this.shop = shop;
+    public void setShopId(Long shop) {
+        this.shopId = shop;
     }
 
-    public String getShip() {
+    public ShipDTO getShip() {
         return ship;
     }
 
-    public void setShip(String ship) {
+    public void setShip(ShipDTO ship) {
         this.ship = ship;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
     }
 
     public Timestamp getCreatedDay() {
@@ -101,5 +95,29 @@ public class OrderDTO {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public float getShippingFee() {
+        return shippingFee;
+    }
+
+    public void setShippingFee(float shippingFee) {
+        this.shippingFee = shippingFee;
+    }
+
+    public float getTransitionFee() {
+        return transitionFee;
+    }
+
+    public void setTransitionFee(float transitionFee) {
+        this.transitionFee = transitionFee;
+    }
+
+    public float getTotalPayment() {
+        return totalPayment;
+    }
+
+    public void setTotalPayment(float totalPayment) {
+        this.totalPayment = totalPayment;
     }
 }

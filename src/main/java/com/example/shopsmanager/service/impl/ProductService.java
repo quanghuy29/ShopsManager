@@ -31,6 +31,16 @@ public class ProductService implements iProductService {
     }
 
     @Override
+    public ProductDTO findOneById(Long id) {
+        if(productRepository.findById(id).isPresent())
+        {
+            ProductModel model = productRepository.findById(id).get();
+            return productConverter.toDTO(model);
+        }
+        else return null;
+    }
+
+    @Override
     public void delete(long[] ids) {
         for(long item: ids){
             productRepository.deleteById(item);
@@ -49,7 +59,19 @@ public class ProductService implements iProductService {
     }
 
     @Override
+    public List<ProductDTO> findAllByShop(Long shopId) {
+        List<ProductDTO> listDTO = new ArrayList<>();
+        List<ProductModel> listModel = productRepository.findAllByShopId(shopId);
+        for(ProductModel item: listModel){
+            ProductDTO dto = productConverter.toDTO(item);
+            listDTO.add(dto);
+        }
+        return listDTO;
+    }
+
+    @Override
     public int totalItem() {
         return (int) productRepository.count();
     }
+
 }

@@ -2,6 +2,7 @@ package com.example.shopsmanager.api.shop;
 
 import com.example.shopsmanager.dto.ListDTO;
 import com.example.shopsmanager.dto.ProductDTO;
+import com.example.shopsmanager.model.ProductModel;
 import com.example.shopsmanager.service.iProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +19,17 @@ public class ProductAPI {
         return productService.save(product);
     }
 
-    @GetMapping(value = "/product")
-    public ListDTO<ProductDTO> showProduct(){
+    @GetMapping(value = "/product/shop/{idShop}")
+    public ListDTO<ProductDTO> showProductOfShop(@PathVariable("idShop") long idShop){
         ListDTO<ProductDTO> listResult = new ListDTO<ProductDTO>();
-        listResult.setListResult(productService.findAll());
-        listResult.setTotalItem(productService.totalItem());
+        listResult.setListResult(productService.findAllByShop(idShop));
+        listResult.setTotalItem();
         return listResult;
     }
-
+    @GetMapping(value = "/product/{idProduct}")
+    public ProductDTO showOneProduct(@PathVariable("idProduct") long id){
+        return productService.findOneById(id);
+    }
     @PutMapping(value = "/product/{id}")
     public ProductDTO updateProduct(@RequestBody ProductDTO product, @PathVariable("id") long id){
         product.setId(id);
