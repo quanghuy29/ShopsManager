@@ -1,6 +1,7 @@
 package com.example.shopsmanager.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class OrderDTO {
     private Long orderId;
@@ -16,6 +17,15 @@ public class OrderDTO {
     private float shippingFee;
     private float transitionFee;
     private float totalPayment;
+    private List<OrderDetailDTO> orderDetail;
+
+    public List<OrderDetailDTO> getOrderDetail() {
+        return orderDetail;
+    }
+
+    public void setOrderDetail(List<OrderDetailDTO> orderDetail) {
+        this.orderDetail = orderDetail;
+    }
 
     public Long getCustomer() {
         return customerId;

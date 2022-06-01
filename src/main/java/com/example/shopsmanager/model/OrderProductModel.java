@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class OrderProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderProId;
+    private long orderproductid;
     @Column(name = "Orderid")
     private long orderId;
     @Column(name = "Productid")
@@ -16,11 +16,11 @@ public class OrderProductModel {
     private int orderNumber;
 
     public long getOrderProId() {
-        return orderProId;
+        return orderproductid;
     }
 
     public void setOrderProId(long orderProId) {
-        this.orderProId = orderProId;
+        this.orderproductid = orderProId;
     }
 
     public long getOrderId() {

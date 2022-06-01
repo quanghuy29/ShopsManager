@@ -7,16 +7,16 @@ import javax.persistence.*;
 public class ShipModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long shipId;
+    private long shipid;
     @Column(name = "Companyname")
     private String companyName;
 
     public long getShipId() {
-        return shipId;
+        return shipid;
     }
 
     public void setShipId(long shipId) {
-        this.shipId = shipId;
+        this.shipid = shipId;
     }
 
     public String getCompanyName() {

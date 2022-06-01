@@ -8,6 +8,7 @@ import com.example.shopsmanager.service.iOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,16 +32,29 @@ public class OrderService implements iOrderService {
 
     @Override
     public OrderDTO findOneById(Long id) {
-        return null;
+        if(orderRepository.findById(id).isPresent())
+        {
+            OrderModel model = orderRepository.findById(id).get();
+            return orderConverter.toDTO(model);
+        }
+        else return null;
     }
 
     @Override
     public void delete(Long[] ids) {
-
+        for(long item: ids){
+            orderRepository.deleteById(item);
+        }
     }
 
     @Override
     public List<OrderDTO> findAllByShop(Long shopId) {
-        return null;
+        List<OrderDTO> listDTO = new ArrayList<>();
+        List<OrderModel> listModel = orderRepository.findAllByShopId(shopId);
+        for(OrderModel item: listModel){
+            OrderDTO dto = orderConverter.toDTO(item);
+            listDTO.add(dto);
+        }
+        return listDTO;
     }
 }

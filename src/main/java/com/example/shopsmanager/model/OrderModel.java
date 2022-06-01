@@ -3,11 +3,11 @@ package com.example.shopsmanager.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 @Entity
-@Table(name = "Order")
+@Table(name = "Ordertb")
 public class OrderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderId;
+    private long orderid;
     @Column(name = "Customerid")
     private long customerId;
     @Column(name = "Shopid")
@@ -20,7 +20,7 @@ public class OrderModel {
     private Timestamp createdDay;
     @Column(name = "Paymentdate")
     private Timestamp paymentDay;
-    @Column(name = "Shipdate")
+    @Column(name = "Shippeddate")
     private Timestamp shipDate;
     @Column(name = "Totalprice")
     private float totalPrice;
@@ -35,11 +35,11 @@ public class OrderModel {
     @Column(name = "totalpayment")
     private float totalPayment;
     public long getOrderId() {
-        return orderId;
+        return orderid;
     }
 
     public void setOrderId(long orderId) {
-        this.orderId = orderId;
+        this.orderid = orderId;
     }
 
     public long getCustomerId() {
