@@ -1,4 +1,4 @@
-package com.example.shopsmanager.converter;
+package com.example.shopsmanager.config.converter;
 
 import com.example.shopsmanager.dto.RegisterOrderDTO;
 import com.example.shopsmanager.model.RegisterOrderModel;

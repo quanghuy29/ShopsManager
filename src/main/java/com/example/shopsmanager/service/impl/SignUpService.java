@@ -1,6 +1,6 @@
 package com.example.shopsmanager.service.impl;
 
-import com.example.shopsmanager.converter.UserConverter;
+import com.example.shopsmanager.config.converter.UserConverter;
 import com.example.shopsmanager.dto.SignUpDTO;
 import com.example.shopsmanager.model.UserModel;
 import com.example.shopsmanager.repository.UserRepository;

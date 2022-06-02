@@ -1,8 +1,12 @@
 package com.example.shopsmanager.service.impl;
 
-import com.example.shopsmanager.converter.OrderConverter;
+import com.example.shopsmanager.config.converter.OrderConverter;
+import com.example.shopsmanager.config.converter.OrderDetailConverter;
 import com.example.shopsmanager.dto.OrderDTO;
+import com.example.shopsmanager.dto.OrderDetailDTO;
 import com.example.shopsmanager.model.OrderModel;
+import com.example.shopsmanager.model.OrderProductModel;
+import com.example.shopsmanager.repository.OrderProductRepository;
 import com.example.shopsmanager.repository.OrderRepository;
 import com.example.shopsmanager.service.iOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,10 @@ public class OrderService implements iOrderService {
     private OrderRepository orderRepository;
     @Autowired
     private OrderConverter orderConverter;
+    @Autowired
+    private OrderProductRepository orderProductRepository;
+    @Autowired
+    private OrderDetailConverter orderDetailConverter;
     @Override
     public OrderDTO save(OrderDTO orderDTO) {
         OrderModel model = new OrderModel();
@@ -27,6 +35,13 @@ public class OrderService implements iOrderService {
             model = orderConverter.toModel(orderDTO);
         }
         model = orderRepository.save(model);
+        List<OrderProductModel> listOrderDetail = new ArrayList<>();
+        for(OrderDetailDTO dto: orderDTO.getOrderDetail()){
+            OrderProductModel orderProductModel = new OrderProductModel();
+            orderProductModel = orderDetailConverter.toModel(dto, model.getOrderId());
+            listOrderDetail.add(orderProductModel);
+            orderProductRepository.save(orderProductModel);
+        }
         return orderConverter.toDTO(model);
     }
 

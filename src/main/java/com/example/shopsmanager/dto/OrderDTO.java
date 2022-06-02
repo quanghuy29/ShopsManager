@@ -27,12 +27,12 @@ public class OrderDTO {
         this.orderDetail = orderDetail;
     }
 
-    public Long getCustomer() {
+    public Long getCustomerId() {
         return customerId;
     }
 
-    public void setCustomer(Long customer) {
-        this.customerId = customer;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public Long getOrderId() {
