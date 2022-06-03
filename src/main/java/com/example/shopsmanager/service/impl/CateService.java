@@ -1,6 +1,6 @@
 package com.example.shopsmanager.service.impl;
 
-import com.example.shopsmanager.config.converter.CateConverter;
+import com.example.shopsmanager.converter.CateConverter;
 import com.example.shopsmanager.dto.CategoryDTO;
 import com.example.shopsmanager.model.CategoryModel;
 import com.example.shopsmanager.repository.CategoryRepository;

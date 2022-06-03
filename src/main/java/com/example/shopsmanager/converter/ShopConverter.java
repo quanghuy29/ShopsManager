@@ -1,4 +1,4 @@
-package com.example.shopsmanager.config.converter;
+package com.example.shopsmanager.converter;
 
 import com.example.shopsmanager.dto.ShopDTO;
 import com.example.shopsmanager.model.ShopModel;
@@ -35,7 +35,20 @@ public class ShopConverter {
         dto.setCreatedDay(model.getCreatedDay());
         dto.setLastRegisterDay(model.getLastRegisterDay());
         dto.setExpirationDay(model.getExpirationDay());
-        //listOrder
         return dto;
+    }
+    public ShopModel toModel(ShopDTO dto, ShopModel model){
+        model.setShopName(dto.getShopName());
+        model.setUserId(dto.getUserID());
+        model.setWebsite(dto.getWebsite());
+        model.setAddress(dto.getAddress());
+        model.setDetail(dto.getDetail());
+        model.setPhone(dto.getPhone());
+        model.setEmail(dto.getEmail());
+        model.setState(dto.getState());
+        model.setCreatedDay(dto.getCreatedDay());
+        model.setLastRegisterDay(dto.getLastRegisterDay());
+        model.setExpirationDay(dto.getExpirationDay());
+        return model;
     }
 }

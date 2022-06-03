@@ -10,5 +10,4 @@ public interface iProductService {
     void delete(long[] ids);
     List<ProductDTO> findAll();
     List<ProductDTO> findAllByShop(Long shopId);
-    int totalItem();
 }

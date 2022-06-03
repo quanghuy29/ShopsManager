@@ -1,4 +1,4 @@
-package com.example.shopsmanager.config.converter;
+package com.example.shopsmanager.converter;
 
 import com.example.shopsmanager.dto.OrderDTO;
 import com.example.shopsmanager.dto.OrderDetailDTO;

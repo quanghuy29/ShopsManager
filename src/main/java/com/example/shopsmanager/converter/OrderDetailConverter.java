@@ -1,4 +1,4 @@
-package com.example.shopsmanager.config.converter;
+package com.example.shopsmanager.converter;
 
 import com.example.shopsmanager.dto.OrderDetailDTO;
 import com.example.shopsmanager.model.OrderProductModel;
@@ -19,5 +19,11 @@ public class OrderDetailConverter {
         dto.setProductId(model.getProductId());
         dto.setQuantity(model.getOrderNumber());
         return dto;
+    }
+    public OrderProductModel toModel(OrderDetailDTO dto, Long orderId, OrderProductModel oldModel){
+        oldModel.setOrderId(orderId);
+        oldModel.setProductId(dto.getProductId());
+        oldModel.setOrderNumber(dto.getQuantity());
+        return oldModel;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.shopsmanager.service.impl;
 
-import com.example.shopsmanager.config.converter.ProductConverter;
+import com.example.shopsmanager.converter.ProductConverter;
 import com.example.shopsmanager.dto.ProductDTO;
 import com.example.shopsmanager.model.ProductModel;
 import com.example.shopsmanager.repository.ProductRepository;
@@ -68,10 +68,4 @@ public class ProductService implements iProductService {
         }
         return listDTO;
     }
-
-    @Override
-    public int totalItem() {
-        return (int) productRepository.count();
-    }
-
 }
