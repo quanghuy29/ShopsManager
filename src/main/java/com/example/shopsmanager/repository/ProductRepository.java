@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<ProductModel, Long> {
     List<ProductModel> findAllByShopId(Long shopId);
-
+    void deleteAllByShopId(Long shopId);
 }

@@ -2,8 +2,11 @@ package com.example.shopsmanager.service.impl;
 
 import com.example.shopsmanager.converter.ShopConverter;
 import com.example.shopsmanager.dto.ShopDTO;
+import com.example.shopsmanager.model.OrderModel;
+import com.example.shopsmanager.model.OrderProductModel;
+import com.example.shopsmanager.model.ProductModel;
 import com.example.shopsmanager.model.ShopModel;
-import com.example.shopsmanager.repository.ShopRepository;
+import com.example.shopsmanager.repository.*;
 import com.example.shopsmanager.service.iShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,14 @@ import java.util.List;
 public class ShopService implements iShopService {
     @Autowired
     private ShopRepository shopRepository;
+    @Autowired
+    private RegisterOrderRepo registerOrderRepo;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private OrderProductRepository orderProductRepository;
     @Autowired
     private ShopConverter shopConverter;
     @Override
@@ -42,7 +53,21 @@ public class ShopService implements iShopService {
 
     @Override
     public void delete(long[] ids) {
-
+        for(long item: ids){
+            ShopModel shop = shopRepository.getById(item);
+            List<OrderModel> listOrder = orderRepository.findAllByShopId(shop.getShopId());
+            List<ProductModel> listProduct = productRepository.findAllByShopId(shop.getShopId());
+            for(OrderModel order: listOrder){
+                orderProductRepository.deleteAllByOrderId(order.getOrderId());
+            }
+            for(ProductModel product: listProduct){
+                orderProductRepository.deleteAllByProductId(product.getProductId());
+            }
+            registerOrderRepo.deleteAllByShopId(shop.getShopId());
+            orderRepository.deleteAllByShopId(shop.getShopId());
+            productRepository.deleteAllByShopId(shop.getShopId());
+            shopRepository.deleteById(item);
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.shopsmanager.service.impl;
 import com.example.shopsmanager.converter.ProductConverter;
 import com.example.shopsmanager.dto.ProductDTO;
 import com.example.shopsmanager.model.ProductModel;
+import com.example.shopsmanager.repository.OrderProductRepository;
 import com.example.shopsmanager.repository.ProductRepository;
 import com.example.shopsmanager.service.iProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,13 @@ public class ProductService implements iProductService {
     private ProductRepository productRepository;
     @Autowired
     private ProductConverter productConverter;
+    @Autowired
+    private OrderProductRepository orderProductRepository;
     @Override
     public ProductDTO save(ProductDTO productDTO) {
-        ProductModel model = new ProductModel();
+        ProductModel model;
         if (productDTO.getId() != null) {
-            ProductModel oldModel = productRepository.findById(productDTO.getId()).get();
+            ProductModel oldModel = productRepository.getById(productDTO.getId());
             model = productConverter.toModel(productDTO, oldModel);
         } else {
             model = productConverter.toModel(productDTO);
@@ -43,6 +46,11 @@ public class ProductService implements iProductService {
     @Override
     public void delete(long[] ids) {
         for(long item: ids){
+            if (productRepository.findById(item).isPresent())
+            {
+                ProductModel model = productRepository.findById(item).get();
+                orderProductRepository.deleteAllByProductId(model.getProductId());
+            }
             productRepository.deleteById(item);
         }
     }

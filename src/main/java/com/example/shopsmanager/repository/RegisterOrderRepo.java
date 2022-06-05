@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RegisterOrderRepo extends JpaRepository<RegisterOrderModel, Long> {
+    void deleteAllByShopId(Long shopId);
 }

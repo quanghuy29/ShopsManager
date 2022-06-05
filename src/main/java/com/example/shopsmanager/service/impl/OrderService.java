@@ -28,18 +28,18 @@ public class OrderService implements iOrderService {
     private OrderDetailConverter orderDetailConverter;
     @Override
     public OrderDTO save(OrderDTO orderDTO) {
-        OrderModel model = new OrderModel();
+        OrderModel model;
         if (orderDTO.getOrderId() != null) {
-            OrderModel oldModel = orderRepository.findById(orderDTO.getOrderId()).get();
+            OrderModel oldModel = orderRepository.getById(orderDTO.getOrderId());
             model = orderConverter.toModel(orderDTO, oldModel);
         } else {
             model = orderConverter.toModel(orderDTO);
         }
         model = orderRepository.save(model);
         for(OrderDetailDTO dto: orderDTO.getOrderDetail()){
-            OrderProductModel orderProductModel = new OrderProductModel();
+            OrderProductModel orderProductModel;
             if (dto.getOrderDetailId() != null) {
-                OrderProductModel oldModel = orderProductRepository.findById(dto.getOrderDetailId()).get();
+                OrderProductModel oldModel = orderProductRepository.getById(dto.getOrderDetailId());
                 orderProductModel = orderDetailConverter.toModel(dto,model.getOrderId(), oldModel);
             } else {
                 orderProductModel = orderDetailConverter.toModel(dto, model.getOrderId());

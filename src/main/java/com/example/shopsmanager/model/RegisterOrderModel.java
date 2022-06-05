@@ -3,11 +3,11 @@ package com.example.shopsmanager.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 @Entity
-@Table(name = "RegisterOrder")
+@Table(name = "Registerorder")
 public class RegisterOrderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long registerId;
+    private long registerid;
     @Column(name = "Shopid")
     private long shopId;
     @Column(name = "Paymentmoney")
@@ -16,11 +16,11 @@ public class RegisterOrderModel {
     private Timestamp paymentDate;
 
     public long getRegisterId() {
-        return registerId;
+        return registerid;
     }
 
     public void setRegisterId(long registerId) {
-        this.registerId = registerId;
+        this.registerid = registerId;
     }
 
     public long getShopId() {
