@@ -1,23 +1,44 @@
 package com.example.shopsmanager.model;
 
+import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
-
+@Entity
+@Table(name = "Product")
 public class ProductModel {
-    private long productId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long productid;
+    @Column(name = "Shopid")
     private long shopId;
+    @Column(name = "Categoryid")
     private long categoryId;
+    @Column(name = "Productname")
     private String productName;
+    @Column(name = "Detail")
     private String detail;
+    @Column(name = "Price")
     private float price;
+    @Column(name = "Available")
     private int available;
-    private Timestamp createdDay;
+    @Column(name = "Createddate")
+    private Date createdDay;
 
-    public long getProductId() {
-        return productId;
+    @Column
+    private String image;
+
+    public String getImage() {
+        return image;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public long getProductId() { return productid; }
+
     public void setProductId(long productId) {
-        this.productId = productId;
+        this.productid = productId;
     }
 
     public long getShopId() {
@@ -68,11 +89,11 @@ public class ProductModel {
         this.available = available;
     }
 
-    public Timestamp getCreatedDay() {
+    public Date getCreatedDay() {
         return createdDay;
     }
 
-    public void setCreatedDay(Timestamp createdDay) {
+    public void setCreatedDay(Date createdDay) {
         this.createdDay = createdDay;
     }
 }

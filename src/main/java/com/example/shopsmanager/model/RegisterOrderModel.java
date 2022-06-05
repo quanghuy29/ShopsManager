@@ -1,11 +1,18 @@
 package com.example.shopsmanager.model;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
-
+@Entity
+@Table(name = "RegisterOrder")
 public class RegisterOrderModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long registerId;
+    @Column(name = "Shopid")
     private long shopId;
+    @Column(name = "Paymentmoney")
     private float paymentMoney;
+    @Column(name = "Paymentdate")
     private Timestamp paymentDate;
 
     public long getRegisterId() {

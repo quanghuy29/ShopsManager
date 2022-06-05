@@ -1,30 +1,23 @@
-package com.example.shopsmanager.model;
+package com.example.shopsmanager.dto;
 
-import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(name = "Customer")
-public class CustomerModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long customerId;
-    @Column(name = "Firstname")
+public class CustomerDTO {
+    private long id;
     private String firstName;
-    @Column(name = "Lastname")
     private String lastName;
-    @Column(name = "Address")
     private String address;
-    @Column(name = "Phone")
     private String phone;
-    @Column(name = "Email")
     private String email;
+    private List<OrderDTO> listOrder = new ArrayList<>();
 
-    public long getCustomerId() {
-        return customerId;
+    public long getId() {
+        return id;
     }
 
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -65,5 +58,13 @@ public class CustomerModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<OrderDTO> getListOrder() {
+        return listOrder;
+    }
+
+    public void setListOrder(List<OrderDTO> listOrder) {
+        this.listOrder = listOrder;
     }
 }

@@ -1,17 +1,26 @@
 package com.example.shopsmanager.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Order_Product")
 public class OrderProductModel {
-    private long orderProId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long orderproductid;
+    @Column(name = "Orderid")
     private long orderId;
+    @Column(name = "Productid")
     private long productId;
+    @Column(name = "Ordernumber")
     private int orderNumber;
 
     public long getOrderProId() {
-        return orderProId;
+        return orderproductid;
     }
 
     public void setOrderProId(long orderProId) {
-        this.orderProId = orderProId;
+        this.orderproductid = orderProId;
     }
 
     public long getOrderId() {

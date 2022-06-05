@@ -1,77 +1,62 @@
-package com.example.shopsmanager.model;
+package com.example.shopsmanager.dto;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
-@Entity
-@Table(name = "Ordertb")
-public class OrderModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderid;
-    @Column(name = "Customerid")
-    private long customerId;
-    @Column(name = "Shopid")
-    private long shopId;
-    @Column(name = "Shipid")
-    private long shipId;
-    @Column(name = "Departmentid")
-    private long departmentId;
-    @Column(name = "Createddate")
+import java.util.List;
+
+public class OrderDTO {
+    private Long orderId;
+    private Long shopId;
+    private Long customerId;
+    private ShipDTO ship;
     private Timestamp createdDay;
-    @Column(name = "Paymentdate")
     private Timestamp paymentDay;
-    @Column(name = "Shippeddate")
     private Timestamp shipDate;
-    @Column(name = "Totalprice")
     private float totalPrice;
-    @Column(name = "Ordernumber")
     private int orderNumber;
-    @Column(name = "State")
     private int state;
-    @Column(name = "shippingfee")
     private float shippingFee;
-    @Column(name = "transitionfee")
     private float transitionFee;
-    @Column(name = "totalpayment")
     private float totalPayment;
-    public long getOrderId() {
-        return orderid;
+    private List<OrderDetailDTO> orderDetail;
+
+    public List<OrderDetailDTO> getOrderDetail() {
+        return orderDetail;
     }
 
-    public void setOrderId(long orderId) {
-        this.orderid = orderId;
+    public void setOrderDetail(List<OrderDetailDTO> orderDetail) {
+        this.orderDetail = orderDetail;
     }
 
-    public long getCustomerId() {
+    public Long getCustomer() {
         return customerId;
     }
 
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Long customer) {
+        this.customerId = customer;
     }
 
-    public long getShopId() {
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public Long getShopId() {
         return shopId;
     }
 
-    public void setShopId(long shopId) {
-        this.shopId = shopId;
+    public void setShopId(Long shop) {
+        this.shopId = shop;
     }
 
-    public long getShipId() {
-        return shipId;
+    public ShipDTO getShip() {
+        return ship;
     }
 
-    public void setShipId(long shipId) {
-        this.shipId = shipId;
-    }
-
-    public long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(long departmentId) {
-        this.departmentId = departmentId;
+    public void setShip(ShipDTO ship) {
+        this.ship = ship;
     }
 
     public Timestamp getCreatedDay() {

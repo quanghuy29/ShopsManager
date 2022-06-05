@@ -1,35 +1,39 @@
-package com.example.shopsmanager.model;
+package com.example.shopsmanager.dto;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
-@Entity
-@Table(name = "Shop")
-public class ShopModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+import java.util.ArrayList;
+import java.util.List;
+
+public class ShopDTO {
     private long shopId;
-    @Column(name = "Userid")
-    private long userId;
-    @Column(name = "Shopname")
+    private long userID;
     private String shopName;
-    @Column(name = "Website")
     private String website;
-    @Column(name = "Address")
     private String address;
-    @Column(name = "Detail")
     private String detail;
-    @Column(name = "Phone")
     private String phone;
-    @Column(name = "Email")
     private String email;
-    @Column(name = "State")
     private int state;
-    @Column(name = "Createddate")
     private Timestamp createdDay;
-    @Column(name = "Lastregisterdate")
     private Timestamp lastRegisterDay;
-    @Column(name = "Expirationdate")
     private Timestamp expirationDay;
+    private List<OrderDTO> listOrder = new ArrayList<>();
+
+    public long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(long userID) {
+        this.userID = userID;
+    }
+
+    public List<OrderDTO> getListOrder() {
+        return listOrder;
+    }
+
+    public void setListOrder(List<OrderDTO> listOrder) {
+        this.listOrder = listOrder;
+    }
 
     public long getShopId() {
         return shopId;
@@ -37,14 +41,6 @@ public class ShopModel {
 
     public void setShopId(long shopId) {
         this.shopId = shopId;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public String getShopName() {
