@@ -3,8 +3,12 @@ import axios from 'axios';
 import NavBarLogin from '../../component/NavBarLogin.js';
 import Navadmin from '../../component/Navadmin.js';
 import { Carousel, img, Button, Container, Row, Col, Card, Tabs, Tab } from 'react-bootstrap';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
-export default function Quanlydata() {
+export default function Quanlydata(props) {
+      let location = useLocation();
+    if(props.dataApp.role !== "admin" && !props.dataApp.idShop) {return <Navigate to="/login" state={{ from: location }} replace />}
+
     return (
         <div >
           <NavBarLogin />

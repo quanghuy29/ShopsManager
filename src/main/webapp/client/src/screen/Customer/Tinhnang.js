@@ -11,7 +11,7 @@ export default function Tinhnang() {
 	            <h2 style={{paddingTop: "4rem", paddingBottom: "2rem"}}>Omnichannel mang đến mọi thứ bạn cần <br />
 				để quản lý & bán hàng đa kênh ngay hôm nay</h2>
 				<h4 style={{paddingBottom: "2rem"}}>Khám phá những tính năng vượt trội của Sapo</h4>
-				<Button variant="info" size="lg">Đăng ký ngay</Button>
+				<Button variant="info" size="lg" href="/dang-ky-dich-vu">Đăng ký ngay</Button>
 				<Container>
 					<Row style={{paddingTop: "4rem", paddingBottom: "3rem"}}>
 						<Col sx={2}>

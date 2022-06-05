@@ -3,8 +3,13 @@ import axios from 'axios';
 import NavBarLogin from '../../component/NavBarLogin.js';
 import Navadmin from '../../component/Navadmin.js';
 import { Carousel, img, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
-export default function Dashboardadmin() {
+export default function Dashboardadmin(props) {
+  console.log(props.dataApp)
+  let location = useLocation();
+  if(props.dataApp.role !== "admin" && !props.dataApp.idShop) {return <Navigate to="/login" state={{ from: location }} replace />}
+
     return (
         <div >
           <NavBarLogin />
@@ -21,7 +26,7 @@ export default function Dashboardadmin() {
                                   <Card.Body>
                                     <Card.Title>Đơn hàng chờ xác nhận: </Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">5</Card.Subtitle>
-                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}}>Xem chi tiết</Button>
+                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}} href="/quan-ly-dich-vu">Xem chi tiết</Button>
                                   </Card.Body>
                                 </Card>
 
@@ -29,7 +34,7 @@ export default function Dashboardadmin() {
                                   <Card.Body>
                                     <Card.Title>Đơn hàng đã hoàn thành: </Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">15</Card.Subtitle>
-                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}}>Xem chi tiết</Button>
+                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}}  href="/quan-ly-dich-vu">Xem chi tiết</Button>
                                   </Card.Body>
                                 </Card>
 
@@ -37,7 +42,7 @@ export default function Dashboardadmin() {
                                   <Card.Body>
                                     <Card.Title>Đơn hàng đã hủy: </Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">1</Card.Subtitle>
-                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}}>Xem chi tiết</Button>
+                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}}  href="/quan-ly-dich-vu">Xem chi tiết</Button>
                                   </Card.Body>
                                 </Card>
 
@@ -45,7 +50,7 @@ export default function Dashboardadmin() {
                                   <Card.Body>
                                     <Card.Title>Shop đang hoạt động: </Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">5</Card.Subtitle>
-                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}}>Xem chi tiết</Button>
+                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}} href="/quan-ly-shop">Xem chi tiết</Button>
                                   </Card.Body>
                                 </Card>
                             </Row>
