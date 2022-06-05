@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class CustomerModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long customerId;
+    private long customerid;
     @Column(name = "Firstname")
     private String firstName;
     @Column(name = "Lastname")
@@ -20,11 +20,11 @@ public class CustomerModel {
     private String email;
 
     public long getCustomerId() {
-        return customerId;
+        return customerid;
     }
 
     public void setCustomerId(long customerId) {
-        this.customerId = customerId;
+        this.customerid = customerId;
     }
 
     public String getFirstName() {
