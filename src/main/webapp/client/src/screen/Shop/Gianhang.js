@@ -21,7 +21,14 @@ export default function Gianhang(props) {
     const handleClose3 = () => setShow3(false);
     const handleShow3 = () => setShow3(true);
     let location = useLocation();
-  let idShop = location.pathname.replace("gian-hang/",'');
+    const [shop, setShop] = useState('');
+
+    useEffect(() => {
+      fetch("http://localhost:8080/shop")
+      .then(res => res.json())
+      .then(data => setShop(data))
+    },[])
+    let idShop = location.pathname.replace("gian-hang/",'');
 
     
     return (
@@ -70,25 +77,30 @@ export default function Gianhang(props) {
                               </Col>
                             </Row>
 
-                            <Row style={{borderStyle: "ridge"}}>
-                              <Col xs={3}>
-                                <p>fsdfsdfs</p>
-                              </Col>
-                              <Col xs={2}>
-                                <p>dasdasodea@gmail.com</p>
-                              </Col>
-                              <Col xs={2}>
-                                <p>09328382382</p>
-                              </Col>
-                              <Col xs={2}>
-                                <p>đâsoafe</p>
-                              </Col>
-                              <Col xs={2}>
-                                <p  style={{marginBottom: "0.1rem"}} onClick={handleShow3}>Xem thêm</p>
-                                <p style={{marginBottom: "0.1rem"}} onClick={handleShow2}>Sửa</p>
-                                <p  style={{marginBottom: "0.1rem"}}>Xóa</p>
-                              </Col>
-                            </Row>
+                            <div>
+                                {shop && shop.map((s, i) =>{
+                                return(
+                                  <Row style={{borderStyle: "ridge"}}>
+                                  <Col xs={3}>
+                                    <p>{s.shopName}</p>
+                                  </Col>
+                                  <Col xs={2}>
+                                    <p>{s.email}</p>
+                                  </Col>
+                                  <Col xs={2}>
+                                    <p>{s.phone}</p>
+                                  </Col>
+                                  <Col xs={2}>
+                                    <p>chú thích</p>
+                                  </Col>
+                                  <Col xs={2}>
+                                    <Button variant="info" size="sm" style={{marginRight: "0.3rem"}}>Xem</Button>
+                                    <Button variant="outline-info" size="sm" >Sửa</Button>
+                                    <Button variant="info" size="sm" style={{marginLeft: "0.3rem"}}>Xóa</Button>
+                                  </Col>
+                                </Row>
+                                )})}
+                                </div>
 
                           </Container>
                         </Tab>
