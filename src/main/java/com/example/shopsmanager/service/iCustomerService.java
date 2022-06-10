@@ -1,7 +1,6 @@
 package com.example.shopsmanager.service;
 
 import com.example.shopsmanager.dto.CustomerDTO;
-import com.example.shopsmanager.dto.OrderDTO;
 
 import java.util.List;
 

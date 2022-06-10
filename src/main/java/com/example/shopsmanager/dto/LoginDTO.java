@@ -1,14 +1,24 @@
 package com.example.shopsmanager.dto;
 
 public class LoginDTO {
-    private String username;
+    private String phoneNumber;
+    private String email;
     private String password;
-    public String getUsername() {
-        return username;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setUsername(String userID) {
-        this.username = userID;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

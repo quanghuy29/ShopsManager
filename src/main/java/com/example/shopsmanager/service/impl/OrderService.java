@@ -8,6 +8,7 @@ import com.example.shopsmanager.model.OrderModel;
 import com.example.shopsmanager.model.OrderProductModel;
 import com.example.shopsmanager.repository.OrderProductRepository;
 import com.example.shopsmanager.repository.OrderRepository;
+import com.example.shopsmanager.repository.ShipRepository;
 import com.example.shopsmanager.service.iOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ public class OrderService implements iOrderService {
     private OrderProductRepository orderProductRepository;
     @Autowired
     private OrderDetailConverter orderDetailConverter;
+    @Autowired
+    private ShipRepository shipRepository;
     @Override
     public OrderDTO save(OrderDTO orderDTO) {
         OrderModel model;
@@ -33,6 +36,7 @@ public class OrderService implements iOrderService {
             OrderModel oldModel = orderRepository.getById(orderDTO.getOrderId());
             model = orderConverter.toModel(orderDTO, oldModel);
         } else {
+            orderDTO.getShip().setId(shipRepository.findByCompanyName(orderDTO.getShip().getName()).getShipId());
             model = orderConverter.toModel(orderDTO);
         }
         model = orderRepository.save(model);

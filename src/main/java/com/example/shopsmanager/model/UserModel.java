@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userId;
+    private long userid;
     @Column(name = "roleid")
     private long roleId;
     @Column(name = "firstname")
@@ -33,7 +33,7 @@ public class UserModel {
         this.createdDate = createdDate;
     }
     public long getUserId() {
-        return userId;
+        return userid;
     }
 
     public long getRoleId() {

@@ -7,18 +7,18 @@ import javax.persistence.*;
 public class RoleModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long roleId;
+    private long roleid;
     @Column(name = "name")
     private String roleName;
     @Column
     private String code;
 
     public long getRoleId() {
-        return roleId;
+        return roleid;
     }
 
     public void setRoleId(long roleId) {
-        this.roleId = roleId;
+        this.roleid = roleId;
     }
 
     public String getRoleName() {

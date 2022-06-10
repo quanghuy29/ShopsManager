@@ -14,6 +14,8 @@ public class RegisterOrderModel {
     private float paymentMoney;
     @Column(name = "Paymentdate")
     private Timestamp paymentDate;
+    @Column
+    private String State;
 
     public long getRegisterId() {
         return registerid;
@@ -45,5 +47,13 @@ public class RegisterOrderModel {
 
     public void setPaymentDate(Timestamp paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
     }
 }

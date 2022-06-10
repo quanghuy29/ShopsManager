@@ -8,18 +8,28 @@ import org.springframework.stereotype.Component;
 public class RegisterOrderConverter {
     public RegisterOrderModel toModel(RegisterOrderDTO dto){
         RegisterOrderModel model = new RegisterOrderModel();
-        //model.setShopId(dto.getShopName());
-        model.setPaymentDate(dto.getDate());
-        model.setPaymentMoney(dto.getMoney());
+        model.setShopId(dto.getShopId());
+        model.setPaymentDate(dto.getPay_date());
+        model.setPaymentMoney(dto.getPay_money());
+        model.setState(dto.getState());
         return model;
     }
 
     public RegisterOrderDTO toDTO(RegisterOrderModel model){
         RegisterOrderDTO dto = new RegisterOrderDTO();
         dto.setId(model.getRegisterId());
-        //dto.setShopName(model.getShopId());
-        dto.setDate(model.getPaymentDate());
-        dto.setMoney(model.getPaymentMoney());
+        dto.setShopId(model.getShopId());
+        dto.setPay_date(model.getPaymentDate());
+        dto.setPay_money(model.getPaymentMoney());
+        dto.setState(model.getState());
         return dto;
+    }
+
+    public RegisterOrderModel toModel(RegisterOrderDTO dto, RegisterOrderModel model){
+        model.setShopId(dto.getShopId());
+        model.setPaymentDate(dto.getPay_date());
+        model.setPaymentMoney(dto.getPay_money());
+        model.setState(dto.getState());
+        return model;
     }
 }

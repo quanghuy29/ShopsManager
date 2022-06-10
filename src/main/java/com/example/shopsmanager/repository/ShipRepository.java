@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ShipRepository extends JpaRepository<ShipModel, Long> {
+    ShipModel findByCompanyName(String companyName);
 }
