@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, img, Card, Button, Tabs,Tab, Navbar, NavDropdown, Nav, Form, FormControl } from 'react-bootstrap';
 import axios from 'axios';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { createBrowserHistory } from 'history';
 
 
-export default function Login() { 
+
+export default function Login(props) { 
+	const data={role: 'shop', idShop: '1312'}
+	let location = useLocation();
+	const history = createBrowserHistory();
+	var linkToShop = "/dashboard/" + data.idShop;
+
+	const sendData = () => { props.appCallback(data)}
+	sendData();
+
+  	if(data.role == "admin") { return <Navigate to="/admin" state={{ from: location }} />}
+    else if(data.role === "shop")
+   { return <Navigate to={linkToShop} state={{ from: location }}  />} else  { return <Navigate to="/login" state={{ from: location }}  />}
+
 	return (
 		<div>
 		<Container style={{maxWidth: '100%', margin: '1rem', marginTop:0}}>
@@ -35,13 +50,13 @@ export default function Login() {
 			</Col>
 			<Col xs={8} >
 			<h2 style = {{marginTop: '3rem'}}>OmniChannel Account Login</h2>
-			<Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-5">
+			<Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-5">
 			  <Tab eventKey="home" title="Email" style={{paddingLeft: '6rem'}}>
 			    <label for="email" style={{fontSize: '1.5rem', marginRight: '15rem', marginBottom: '0.7rem'}}>Email</label><br />
 			    <input type="email" id="email" style={{paddingTop: '0.5rem', paddingBottom: '0.5rem', paddingRight: '6rem', paddingLeft: '0.5rem'}}/><br />
 			    <label for="password" style={{fontSize: '1.5rem',marginRight: '12rem', marginTop: '1rem', textAlign: 'left', marginBottom: '0.7rem'}}>Password</label><br />
 			    <input type="password" id="password" style={{marginBottom: '2rem', paddingTop: '0.5rem', paddingBottom: '0.5rem', paddingRight: '6rem', paddingLeft: '0.5rem'}}/><br />
-			    <Button style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}}>Login</Button> <br />
+			    <Button style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}}  >Login</Button> <br />
 			    <a href="#" style={{marginBottom: '0.5rem'}}>Forgot Password?</a> <br />
 			    <a href="#" >Register</a> <br />
 			  </Tab>

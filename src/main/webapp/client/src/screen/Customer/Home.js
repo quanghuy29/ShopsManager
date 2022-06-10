@@ -17,7 +17,7 @@ export default function Home() {
                         <h3>OmniChannel</h3>
                         <p>Giải pháp đồng bộ bán hàng tại 1 nơi từ nhiều kênh như
                         Website, Facebook, Instagram, sàn TMĐT, đến cửa hàng</p>
-                        <Button variant="info">Đăng ký ngay</Button>
+                        <Button variant="info" href="/dang-ky-dich-vu">Đăng ký ngay</Button>
                     </Col>
                     <Col sm={7} ><div style={{backgroundImage: 'url("anhbia.png")', height: '34rem', width: '100%'}}></div></Col>
                 </Row>

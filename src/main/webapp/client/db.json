@@ -1,0 +1,223 @@
+{
+    "products": [
+        {
+            "productID": "1",
+            "shopid": "111",
+            "category": "Thời trang nữ/ Áo/ Áo sơ mi",
+            "productName": "Áo sơ mi nữ công sở",
+            "detail": "Áo sơ mi ngắn tay chất vải rất mềm mịn, đứng form và thoải mái khi mặc, đảm bảo sẽ không hề cảm thấy gò bó ngay cả khi di chuyển.",
+            "price": "159000",
+            "image": "https://i.vietgiaitri.com/2018/12/5/15-kieu-ao-so-mi-nu-cong-so-dep-nhat-2018-danh-cho-co-nang-cong--647db3.jpg",
+            "available": "1000",
+            "createdDay": "5/6/2021"
+        },
+        {
+            "productID": "2",
+            "shopid": "111",
+            "category": "Thời trang nam/ Quần jean",
+            "productName": "Quần Jean Nam GrayHomme Màu Xanh",
+            "detail": "Quần jean nam rách gối màu đen chất bò cao cấp co dãn 4 chiều cực đẹp rin trơn from dáng skinny đẹp Havado QH1 được đặt may riêng.",
+            "price": "150000",
+            "image": "https://cf.shopee.vn/file/2547f7bde8a919ceb7fdd6f701a3fc7f",
+            "available": "500",
+            "createdDay": "1/2/2022"
+        },
+        {
+            "productID": "3",
+            "shopid": "213",
+            "category": "Phụ kiện & thời trang nữ/ mũ",
+            "productName": "Mũ lưỡi trai hàn quốc Ediko",
+            "detail": "Mũ ediko được làm bằng chất liệu 100% cotton mang lại cảm giác thoáng mát, thoải mái cho người dùng bởi khả năng hút ẩm cao, thấm hút tốt.",
+            "price": "69000",
+            "image": "https://cf.shopee.vn/file/18e35461e07763b703a907edf770da2d",
+            "available": "3200",
+            "createdDay": "9/6/2020"
+        }
+    ],
+    "orders": [
+        {
+            "orderID": "120",
+            "shopID": "111",
+            "shipingID": "ship115",
+            "shipingUnit": "moto",
+            "product": [{
+                "productID": "1",
+                "quantity": "20"
+            },{
+                "productID": "3",
+                "quantity": "20"
+            }],
+            "customerID": "401",
+            "createdDay": "5/6/2022",
+            "totalPrice": "2300000",
+            "shippingFee": "16000",
+            "transitionFee": "10000",
+            "totalPayment": "2326000",
+            "state": "Đang vận chuyển"
+        },
+        {
+            "orderID": "130",
+            "shopID": "213",
+            "shipingID": "ship116",
+            "shipingUnit": "oto",
+            "product": [{
+                "productID": "3",
+                "quantity": "200"
+            }, {
+                "productID": "1",
+                "quantity": "20"
+            }, {
+                "productID": "2",
+                "quantity": "20"
+            }],
+            "customerID": "402",
+            "createdDay": "2/3/2022",
+            "totalPrice": "23500000",
+            "shippingFee": "450000",
+            "transitionFee": "50000",
+            "totalPayment": "24000000",
+            "state": "Đã vận chuyển"
+        },
+        {
+            "orderID": "140",
+            "shopID": "111",
+            "shipingID": "ship126",
+            "shipingUnit": "moto",
+            "product": [{
+                "productID": "2",
+                "quantity": "5"
+            }],
+            "customerID": "403",
+            "createdDay": "2/4/2022",
+            "totalPrice": "1230000",
+            "shippingFee": "50000",
+            "transitionFee": "10000",
+            "totalPayment": "1290000",
+            "state": "Đã vận chuyển"
+        }
+    ],
+    "shop":[
+        {
+            "shopId": "111",
+            "userId": "801",
+            "shopName": "Shop quần áo nam nữ mùa hè",
+            "website": "https://shopee.vn/riooshop",
+            "address": "102 Hoàng Mai, Hà Nội",
+            "detail": "Shop quần áo nam nữ mùa hè. Đóng gói cẩn thận. Sản phẩm phù hợp giá tiền. Mặc lên form dáng đẹp.",
+            "phone": "01258963225",
+            "email": "quanaonamnu@gmail.com",
+            "state": "1",
+            "createdDay": "1/2/2019",
+            "lastRegisterDay": "5/6/2022",
+            "expirationDate": "30/8/2022"
+        },
+        {
+            "shopId": "213",
+            "userId": "802",
+            "shopName": "Shop mũ và phụ kiện Hàn Quốc",
+            "website": "https://shopee.vn/phukienkoreacase",
+            "address": "Ngõ 49 Hoàn Kiếm, Hà Nội",
+            "detail": "Shop mũ và phụ kiện Hàn Quốc. Đóng gói cẩn thận. Sản phẩm phù hợp giá tiền.",
+            "phone": "0398456268",
+            "email": "mudep@gmail.com",
+            "state": "1",
+            "createdDay": "2/3/2018",
+            "lastRegisterDay": "6/6/2022",
+            "expirationDate": "30/7/2022"
+        },
+        {
+            "shopId": "302",
+            "userId": "803",
+            "shopName": "Shop linh kiện điện tử cũ giá rẻ",
+            "website": "https://shopee.vn/oppo_authorized_store_vn",
+            "address": "98 Bạch Mai, Hà Nội",
+            "detail": "Không thấm nước 5ATM / 50M (hỗ trợ nước tắm lạnh và bơi lội, không hoạt động dưới giờ nước, không hỗ trợ tắm với nước nóng)",
+            "phone": "0326525816",
+            "email": "linhkien@gmail.com",
+            "state": "0",
+            "createdDay": "5/8/2018",
+            "lastRegisterDay": "5/6/2022",
+            "expirationDate": "30/9/2022"
+        }
+    ],
+    "login": [
+        {
+            "phoneNumber": "0168945283",
+            "email": "quanht@gmail.com",
+            "password": "123456789"
+        },
+        {
+            "phoneNumber": "0398462851",
+            "email": "guonglt@gmail.com",
+            "password": "123456789"
+        },
+        {
+            "phoneNumber": "0268495035",
+            "email": "anhnguyen@gmail.com",
+            "password": "123456789"
+        }
+    ],
+    "register": [
+        {
+            "phoneNumber": "0168952483",
+            "email": "tungnv@gmail.com",
+            "shopName": "Quần áo nam nữ mùa đông",
+            "password": "123456789"
+        },
+        {
+            "phoneNumber": "0359465816",
+            "email": "thunt@gmail.com",
+            "shopName": "Đồng hồ đeo tay nam",
+            "password": "123456789"
+        },
+        {
+            "phoneNumber": "0498152684",
+            "email": "dieppc@gmail.com",
+            "shopName": "Mũ thời trang Hàn Quốc",
+            "password": "123456789"
+        }
+    ],
+    "register-order": [
+        {
+            "shopID": "111",
+            "payment": "123000",
+            "paymentMoney": "2300000"
+        },
+        {
+            "shopID": "213",
+            "payment": "523000",
+            "paymentMoney": "4520000"
+        },
+        {
+            "shopID": "302",
+            "payment": "914000",
+            "paymentMoney": "2350000"
+        }
+    ],
+    "customers": [
+        {
+            "customerId": "401",
+            "firstName": "Nguyễn Văn",
+            "lastName": "Quân",
+            "address": "201 Bạch Mai, Hà Nội",
+            "phone": "0395686271",
+            "email": "quannv@gmail.com"
+        },
+        {
+            "customerId": "402",
+            "firstName": "Bùi Thị",
+            "lastName": "Lệ",
+            "address": "160 Hoàn Kiếm, Hà Nội",
+            "phone": "0395486771",
+            "email": "lebt@gmail.com"
+        },
+        {
+            "customerId": "403",
+            "firstName": "Trần Quốc",
+            "lastName": "Anh",
+            "address": "Ngõ 46, Hai Bà Trưng, Hà Nội",
+            "phone": "0395656871",
+            "email": "anhtq@gmail.com"
+        }
+    ]
+}

@@ -18,7 +18,7 @@ export default function Banggia() {
                     <p>Giải pháp quản lý bán hàng đa kênh</p>
                     <img src = "banggia.PNG" />
                     <h2>199.000đ</h2>
-                    <Button variant="info" size="sm">Đăng ký ngay</Button>
+                    <Button variant="info" size="sm" href="/dang-ky-dich-vu">Đăng ký ngay</Button>
                 </Col>
                 <Col xs={4}>
                     <p style={{textAlign: "left", paddingBottom: "0.5rem"}}> CRM và Marketing Automation</p>

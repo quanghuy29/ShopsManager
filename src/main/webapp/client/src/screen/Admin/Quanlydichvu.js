@@ -2,9 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBarLogin from '../../component/NavBarLogin.js';
 import Navadmin from '../../component/Navadmin.js';
-import { Carousel, img, Button, Container, Row, Col, Card, Tabs, Tab } from 'react-bootstrap';
+import { Carousel, img, Button, Container, Row, Col, Card, Tabs, Tab, Modal } from 'react-bootstrap';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
-export default function Quanlydichvu() {
+export default function Quanlydichvu(props) {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    let location = useLocation();
+    if(props.dataApp.role !== "admin" && !props.dataApp.idShop) {return <Navigate to="/login" state={{ from: location }} replace />}
+
+    
     return (
         <div >
           <NavBarLogin />
@@ -30,7 +38,7 @@ export default function Quanlydichvu() {
                                       <h6>Thời gian gia hạn: 4 tháng</h6>
                                       <h6>Tổng thanh toán: 4.000.000đ</h6>
                                     </Card.Text>
-                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}}>Xem chi tiết</Button>
+                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}} onClick={handleShow}>Xem chi tiết</Button>
                                     <Button variant="outline-success" size="sm" style={{marginRight: "0.1rem"}}>Xác nhận</Button>
                                     <Button variant="outline-danger" size="sm">Hủy</Button>
                                   </Card.Body>
@@ -52,6 +60,36 @@ export default function Quanlydichvu() {
                 </Row>
             </Container>
           </div>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                    <Modal.Title>Xem chi tiết đơn hàng</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <h5>Đơn hàng</h5>
+                            <label>Tên shop</label><br />
+                            <h6>111</h6>
+
+                            <label>Website</label><br />
+                            <h6>111</h6>
+
+                            <label>Email</label><br />
+                            <h6>111</h6>
+
+                            <label>Số điện thoại</label><br />
+                            <h6>111</h6>
+                            
+                            <label>Mật khẩu</label><br />
+                            <h6>111</h6>
+                            
+                            <label>Thông tin thêm</label><br />
+                            <h6>111</h6>
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Thoát
+                        </Button>
+                </Modal.Footer>
+        </Modal>
         </div>
     )
 }
