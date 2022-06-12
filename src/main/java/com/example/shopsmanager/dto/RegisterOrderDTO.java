@@ -3,40 +3,49 @@ package com.example.shopsmanager.dto;
 import java.sql.Timestamp;
 
 public class RegisterOrderDTO {
-    private long id;
-    private String shopName;
-    private float money;
-    private Timestamp date;
+    private Long id;
+    private Long shopId;
+    private float pay_money;
+    private Timestamp pay_date;
+    private String state;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getShopName() {
-        return shopName;
+    public Long getShopId() {
+        return shopId;
     }
 
-    public void setShopName(String shopID) {
-        this.shopName = shopID;
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
     }
 
-    public float getMoney() {
-        return money;
+    public float getPay_money() {
+        return pay_money;
     }
 
-    public void setMoney(float money) {
-        this.money = money;
+    public void setPay_money(float pay_money) {
+        this.pay_money = pay_money;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getPay_date() {
+        return pay_date;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setPay_date(Timestamp pay_date) {
+        this.pay_date = pay_date;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

@@ -7,6 +7,6 @@ import java.util.List;
 public interface iOrderService {
     OrderDTO save(OrderDTO orderDTO);
     OrderDTO findOneById(Long id);
-    void delete(Long[] ids);
+    void delete(long[] ids);
     List<OrderDTO> findAllByShop(Long shopId);
 }

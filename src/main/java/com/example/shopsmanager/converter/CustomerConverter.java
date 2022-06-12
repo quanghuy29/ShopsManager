@@ -16,7 +16,7 @@ public class CustomerConverter {
         return model;
     }
 
-    public CustomerDTO toEntity(CustomerModel model){
+    public CustomerDTO toDTO(CustomerModel model){
         CustomerDTO dto = new CustomerDTO();
         dto.setId(model.getCustomerId());
         dto.setFirstName(model.getFirstName());
@@ -24,7 +24,14 @@ public class CustomerConverter {
         dto.setAddress(model.getAddress());
         dto.setEmail(model.getEmail());
         dto.setPhone(model.getPhone());
-        //get list order
         return dto;
+    }
+    public CustomerModel toModel(CustomerDTO dto, CustomerModel model){
+        model.setFirstName(dto.getFirstName());
+        model.setLastName(dto.getLastName());
+        model.setAddress(dto.getAddress());
+        model.setEmail(dto.getEmail());
+        model.setPhone(dto.getPhone());
+        return model;
     }
 }

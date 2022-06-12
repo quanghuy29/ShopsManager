@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 public class ShopModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long shopId;
+    private long shopid;
     @Column(name = "Userid")
     private long userId;
     @Column(name = "Shopname")
@@ -32,11 +32,11 @@ public class ShopModel {
     private Timestamp expirationDay;
 
     public long getShopId() {
-        return shopId;
+        return shopid;
     }
 
     public void setShopId(long shopId) {
-        this.shopId = shopId;
+        this.shopid = shopId;
     }
 
     public long getUserId() {

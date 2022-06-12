@@ -23,6 +23,7 @@ export default function Gianhang(props) {
     let location = useLocation();
   let idShop = location.pathname.replace("/gian-hang/",'');
 
+
     const [shops, setShops] = useState("");
     const [viewShop, setViewShop] = useState("");
     const [fixShop, setFixShop] = useState("");
@@ -81,6 +82,7 @@ export default function Gianhang(props) {
                                 <h5>Thao tác</h5>
                               </Col>
                             </Row>
+
                             {shops && shops.map( (shop) => {return(
                             <div>
                                 <Row style={{borderStyle: "ridge"}}>
@@ -103,6 +105,7 @@ export default function Gianhang(props) {
                                   </Col>
                                 </Row>
                             </div>)})}
+
 
                           </Container>
                         </Tab>

@@ -14,8 +14,6 @@ public class OrderModel {
     private long shopId;
     @Column(name = "Shipid")
     private long shipId;
-    @Column(name = "Departmentid")
-    private long departmentId;
     @Column(name = "Createddate")
     private Timestamp createdDay;
     @Column(name = "Paymentdate")
@@ -64,14 +62,6 @@ public class OrderModel {
 
     public void setShipId(long shipId) {
         this.shipId = shipId;
-    }
-
-    public long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(long departmentId) {
-        this.departmentId = departmentId;
     }
 
     public Timestamp getCreatedDay() {

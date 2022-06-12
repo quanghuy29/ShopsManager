@@ -1,22 +1,18 @@
 package com.example.shopsmanager.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CustomerDTO {
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String address;
     private String phone;
     private String email;
-    private List<OrderDTO> listOrder = new ArrayList<>();
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,13 +54,5 @@ public class CustomerDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<OrderDTO> getListOrder() {
-        return listOrder;
-    }
-
-    public void setListOrder(List<OrderDTO> listOrder) {
-        this.listOrder = listOrder;
     }
 }

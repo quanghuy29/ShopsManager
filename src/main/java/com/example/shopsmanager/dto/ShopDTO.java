@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopDTO {
-    private long shopId;
-    private long userID;
+    private Long shopId;
+    private Long userID;
     private String shopName;
     private String website;
     private String address;
@@ -17,29 +17,20 @@ public class ShopDTO {
     private Timestamp createdDay;
     private Timestamp lastRegisterDay;
     private Timestamp expirationDay;
-    private List<OrderDTO> listOrder = new ArrayList<>();
 
-    public long getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
-    public void setUserID(long userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 
-    public List<OrderDTO> getListOrder() {
-        return listOrder;
-    }
-
-    public void setListOrder(List<OrderDTO> listOrder) {
-        this.listOrder = listOrder;
-    }
-
-    public long getShopId() {
+    public Long getShopId() {
         return shopId;
     }
 
-    public void setShopId(long shopId) {
+    public void setShopId(Long shopId) {
         this.shopId = shopId;
     }
 

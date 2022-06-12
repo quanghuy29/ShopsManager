@@ -26,7 +26,7 @@ public class OrderConverter {
         OrderModel model = new OrderModel();
         model.setShopId(dto.getShopId());
         model.setOrderNumber(dto.getOrderNumber());
-        model.setCustomerId(dto.getCustomer());
+        model.setCustomerId(dto.getCustomerId());
         model.setShipId(dto.getShip().getId());
         model.setCreatedDay(dto.getCreatedDay());
         model.setPaymentDay(dto.getPaymentDay());
@@ -42,7 +42,7 @@ public class OrderConverter {
     public OrderDTO toDTO(OrderModel model){
         OrderDTO dto = new OrderDTO();
         dto.setOrderId(model.getOrderId());
-        dto.setCustomer(model.getCustomerId());
+        dto.setCustomerId(model.getCustomerId());
         dto.setOrderNumber(model.getOrderNumber());
         dto.setCreatedDay(model.getCreatedDay());
         dto.setShip(shipConverter.toDTO(shipRepository.findById(model.getShipId()).get()));
@@ -60,7 +60,7 @@ public class OrderConverter {
     public OrderModel toModel(OrderDTO dto, OrderModel model){
         model.setShopId(dto.getShopId());
         model.setOrderNumber(dto.getOrderNumber());
-        model.setCustomerId(dto.getCustomer());
+        model.setCustomerId(dto.getCustomerId());
         model.setShipId(dto.getShip().getId());
         model.setCreatedDay(dto.getCreatedDay());
         model.setPaymentDay(dto.getPaymentDay());
