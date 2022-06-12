@@ -16,6 +16,7 @@ import Quanlydichvu from './screen/Admin/Quanlydichvu.js';
 import Quanlyshop from './screen/Admin/Quanlyshop.js';
 import Login from './screen/Login.js';
 import Register from './screen/Register.js';
+import DangKyShop from './screen/Customer/DangKyShop.js';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -35,6 +36,7 @@ function App() {
         <Route path="/" element={<Home />}> </Route>
         <Route path="/tinh-nang" element={<Tinhnang />}> </Route>     
         <Route path="/register" element={<Register />}> </Route>
+        <Route path="/dang-ky-shop" element={<DangKyShop />}> </Route>
         <Route path="/bang-gia" element={<Banggia />}> </Route>
 
 

@@ -17,7 +17,7 @@ export default function Login(props) {
 
   	if(data.role == "admin") { return <Navigate to="/admin" state={{ from: location }} />}
     else if(data.role === "shop")
-   { return <Navigate to={linkToShop} state={{ from: location }}  />} else  { return <Navigate to="/login" state={{ from: location }}  />}
+   { return <Navigate to={linkToShop} state={{ from: location }}  />}
 
 	return (
 		<div>

@@ -6,10 +6,37 @@ import { Carousel, img, Button, Container, Row, Col, Card } from 'react-bootstra
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 export default function Dashboardadmin(props) {
-  console.log(props.dataApp)
+  
   let location = useLocation();
-  if(props.dataApp.role !== "admin" && !props.dataApp.idShop) {return <Navigate to="/login" state={{ from: location }} replace />}
+  //if(props.dataApp.role !== "admin") {return <Navigate to="/login" state={{ from: location }} replace />}
+  const [shop, setShop] = useState("");
+  const [order, setOrder] = useState("");
 
+    useEffect(() => {
+    fetch("http://localhost:8080/shops")
+      .then(res => res.json())
+      .then(data => setShop(data))
+
+    fetch("http://localhost:8080/register-order")
+      .then(res => res.json())
+      .then(data => setOrder(data))
+
+  },[])
+    var choXacNhan = 0;
+    var hoanThanh = 0;
+    var huy = 0;
+
+    for (var i=0; i< order.length; i++) {
+      if(order[i].state == 0) ++choXacNhan;
+    }
+
+    for (var i=0; i< order.length; i++) {
+      if(order[i].state == 1) ++hoanThanh;
+    }
+    for (var i=0; i< order.length; i++) {
+      if(order[i].state == 2) ++huy;
+    }
+    console.log(props.dataApp)
     return (
         <div >
           <NavBarLogin />
@@ -25,7 +52,7 @@ export default function Dashboardadmin(props) {
                                 <Card style={{ width: '13rem', marginRight: "2rem" }}>
                                   <Card.Body>
                                     <Card.Title>Đơn hàng chờ xác nhận: </Card.Title>
-                                    <Card.Subtitle className="mb-2 text-muted">5</Card.Subtitle>
+                                    <Card.Subtitle className="mb-2 text-muted">{choXacNhan}</Card.Subtitle>
                                     <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}} href="/quan-ly-dich-vu">Xem chi tiết</Button>
                                   </Card.Body>
                                 </Card>
@@ -33,7 +60,7 @@ export default function Dashboardadmin(props) {
                                 <Card style={{ width: '13rem', marginRight: "2rem" }}>
                                   <Card.Body>
                                     <Card.Title>Đơn hàng đã hoàn thành: </Card.Title>
-                                    <Card.Subtitle className="mb-2 text-muted">15</Card.Subtitle>
+                                    <Card.Subtitle className="mb-2 text-muted">{hoanThanh}</Card.Subtitle>
                                     <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}}  href="/quan-ly-dich-vu">Xem chi tiết</Button>
                                   </Card.Body>
                                 </Card>
@@ -41,7 +68,7 @@ export default function Dashboardadmin(props) {
                                 <Card style={{ width: '13rem', marginRight: "2rem" }}>
                                   <Card.Body>
                                     <Card.Title>Đơn hàng đã hủy: </Card.Title>
-                                    <Card.Subtitle className="mb-2 text-muted">1</Card.Subtitle>
+                                    <Card.Subtitle className="mb-2 text-muted">{huy}</Card.Subtitle>
                                     <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}}  href="/quan-ly-dich-vu">Xem chi tiết</Button>
                                   </Card.Body>
                                 </Card>
@@ -49,7 +76,7 @@ export default function Dashboardadmin(props) {
                                 <Card style={{ width: '13rem', marginRight: "2rem" }}>
                                   <Card.Body>
                                     <Card.Title>Shop đang hoạt động: </Card.Title>
-                                    <Card.Subtitle className="mb-2 text-muted">5</Card.Subtitle>
+                                    <Card.Subtitle className="mb-2 text-muted">{shop.length}</Card.Subtitle>
                                     <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}} href="/quan-ly-shop">Xem chi tiết</Button>
                                   </Card.Body>
                                 </Card>

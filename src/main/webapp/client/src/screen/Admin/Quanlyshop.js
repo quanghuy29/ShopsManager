@@ -16,8 +16,62 @@ export default function Quanlyshop(props) {
     const handleClose2 = () => setShow2(false);
     const handleShow2 = () => setShow2(true);
     
-      let location = useLocation();
-    if(props.dataApp.role !== "admin" && !props.dataApp.idShop) {return <Navigate to="/login" state={{ from: location }} replace />}
+    let location = useLocation();
+    const [shops, setShops] = useState("");
+    const [putShop, setPutShop] = useState("");
+    const [deleteShop, setDeleteShop] = useState("");
+
+    useEffect(() => {
+    fetch("http://localhost:8080/shops")
+    .then(res => res.json())
+    .then(data => setShops(data))
+  },[])
+
+
+    const [upShopName, setUpShopName] = useState(""); 
+    const [upWebsite, setUpwebsite] = useState("");
+    const [upEmail, setUpEmail] = useState("");
+    const [upPhone, setUpPhone] = useState("");
+    const [upPassword, setUpPassword] = useState("");
+    const [upState, setUpState] = useState("");
+    const updateShopFunction = () => {
+        const updateIt = {
+                shopId: putShop.shopId,
+                userId: putShop.userId,
+                shopName: putShop.shopName,
+                website: putShop.website,
+                address: putShop.address,
+                detail: putShop.detail,
+                phone: putShop.phone,
+                email: putShop.email,
+                password: putShop.password,
+                state: putShop.state,
+                createdDay: putShop.createdDay,
+                lastRegisterDay: putShop.lastRegisterDay,
+                expirationDate: putShop.expirationDate
+                }
+
+        if (upShopName) {updateIt.shopName = upShopName}
+        if (upWebsite) {updateIt.website = upWebsite}
+        if (upEmail) {updateIt.email = upEmail}
+        if (upPhone) {updateIt.phone = upPhone}
+        if (upPassword) {updateIt.password = upPassword}
+        if (upState) {updateIt.state = upState}
+
+        console.log(updateIt);
+        axios.put('http://localhost:8080/shops', updateIt)
+            .then(res => console.log(res))
+        window.location.reload();
+    }
+
+    const deleteShopFunction = () => {
+        const deleteIt = {shopId: deleteShop.shopId}
+        axios.delete('http://localhost:8080/shops', deleteIt)
+            .then(res => console.log(res))
+        window.location.reload();
+    }
+
+    console.log(shops)
 
     return (
         <div >
@@ -33,7 +87,6 @@ export default function Quanlyshop(props) {
                       <Tab eventKey="tatCa" title="Tất cả">
                             <div style={{display: "flex"}}>
                                 <h3 style ={{marginRight: "33rem"}}>5 người dùng</h3>
-                                <Button variant="info" style ={{marginBottom: "1rem"}} onClick={handleShow}>Thêm người dùng</Button>
                             </div>
                             <Container>
                                 <Row style={{backgroundColor: "#f5f5f5", padding: "0.5rem", paddingBottom: "1rem", paddingTop: "1rem", marginBottom: "1rem"}}>
@@ -45,17 +98,18 @@ export default function Quanlyshop(props) {
                                     <Col xs={2} style={{textAlign: "left"}}>Thao tác</Col>
                                 </Row>
                                 <div>
+                                    { shops && shops.map((shop) => {return (
                                     <Row  style={{borderStyle: "ridge"}}>
-                                        <Col xs={2} style={{textAlign: "left"}}>Alibaba</Col>
-                                        <Col xs={2} style={{textAlign: "left"}}>sdaoas@gmail.com</Col>
-                                        <Col xs={2} style={{textAlign: "left"}}>098327434</Col>
-                                        <Col xs={2} style={{textAlign: "left"}}>Đang hoạt động</Col>
-                                        <Col xs={2} style={{textAlign: "left"}}>21/2/2022</Col>
-                                        <Col xs={2} style={{textAlign: "left"}}>
-                                            <h7  onClick={handleShow2}> Sửa</h7>
-                                            <h7> Xóa</h7>
+                                        <Col xs={2} style={{textAlign: "left", whiteSpace: "nowrap", width: "10rem", overflow: "hidden", textOverflow: "ellipsis"}}>{shop.shopName}</Col>
+                                        <Col xs={2} style={{textAlign: "left", whiteSpace: "nowrap", width: "10rem", overflow: "hidden", textOverflow: "ellipsis"}}>{shop.email}</Col>
+                                        <Col xs={2} style={{textAlign: "left"}}>{shop.phone}</Col>
+                                        <Col xs={2} style={{textAlign: "left"}}>{shop.state}</Col>
+                                        <Col xs={2} style={{textAlign: "left"}}>{shop.expirationDate}</Col>
+                                        <Col xs={2} style={{textAlign: "left", alignItem: "right"}}>
+                                            <h7  onClick={() => {handleShow2(); setPutShop(shop)}}> Sửa</h7>
+                                            <h7 onClick={() => {setDeleteShop(shop); deleteShopFunction()}}> Xóa</h7>
                                         </Col>
-                                    </Row>
+                                    </Row>)})}
 
                                 </div>
 
@@ -73,7 +127,7 @@ export default function Quanlyshop(props) {
                         </Modal.Header>
                         <Modal.Body>
                             <h5>Thêm người dùng</h5>
-                            <label>Tên shop</label><br />
+                            <label>Tên người dùng</label><br />
                             <input type="text" /><br />
 
                             <label>Website</label><br />
@@ -107,31 +161,34 @@ export default function Quanlyshop(props) {
                     <Modal.Title>Chỉnh sửa người dùng</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <h5>Chỉnh sửa người dùng</h5>
+                            <h5>Chỉnh sửa người dùng</h5>     
                             <label>Tên shop</label><br />
-                            <input type="text" /><br />
+                            <input type="text" placeholder={putShop.shopName} onChange={(event) => {setUpShopName(event.target.value)}}/><br />
 
                             <label>Website</label><br />
-                            <input type="text" /><br />
+                            <input type="text" placeholder={putShop.website} onChange={(event) => {setUpwebsite(event.target.value)}}/><br />
 
                             <label>Email</label><br />
-                            <input type="text" /><br />
+                            <input type="text" placeholder={putShop.email} onChange={(event) => {setUpEmail(event.target.value)}}/><br />
 
                             <label>Số điện thoại</label><br />
-                            <input type="number" /><br />
+                            <input type="number" placeholder={putShop.phone} onChange={(event) => {setUpPhone(event.target.value)}}/><br />
+
+                            <label>Detail</label><br />
+                            <input type="text" placeholder={putShop.detail} onChange={(event) => {setUpShopName(event.target.value)}}/><br />
+
+                            <label>Password</label><br />
+                            <input type="password" placeholder={putShop.password} onChange={(event) => {setUpPassword(event.target.value)}}/><br />
                             
-                            <label>Mật khẩu</label><br />
-                            <input type="password" /><br />
-                            
-                            <label>Thông tin thêm</label><br />
-                            <input type="text" /><br />
+                            <label>Trạng thái</label><br />
+                            <input type="text" placeholder={putShop.state} onChange={(event) => {setUpState(event.target.value)}}/><br />
 
                         </Modal.Body>
                         <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose2}>
                             Thoát
                         </Button>
-                        <Button variant="primary" onClick={handleClose2}>
+                        <Button variant="primary" onClick={() => {handleClose2(); updateShopFunction()}}>
                             Chỉnh sửa người dùng
                         </Button>
                 </Modal.Footer>

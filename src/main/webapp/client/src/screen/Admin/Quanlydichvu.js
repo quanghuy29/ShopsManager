@@ -10,9 +10,25 @@ export default function Quanlydichvu(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     let location = useLocation();
-    if(props.dataApp.role !== "admin" && !props.dataApp.idShop) {return <Navigate to="/login" state={{ from: location }} replace />}
+    const [orders, setOrders] = useState("");
+    const [state, setState] = useState("");
+    const [stateOrder, setStateOrder] = useState("");
 
-    
+    useEffect(() => {
+    fetch("http://localhost:8080/register-order")
+    .then(res => res.json())
+    .then(data => setOrders(data))
+  },[])
+
+    const getState = (a) => {if(a == 0) {return "Đang chờ xác nhận"} else {return "Đã hoàn thành"}}
+
+    const putOrder = () => {
+        const putIt = {id: stateOrder.id,shopId: stateOrder.shopId, pay_money: stateOrder.pay_money, pay_date: stateOrder.pay_date, state: state}
+        axios.put('http://localhost:8080/register-order/'+ stateOrder.id, putIt)
+            .then(res => console.log(res))
+        window.location.reload();
+    }
+    console.log(stateOrder);
     return (
         <div >
           <NavBarLogin />
@@ -24,36 +40,30 @@ export default function Quanlydichvu(props) {
                     </Col>
                     <Col xs={9}>
                         <Tabs defaultActiveKey="tatCa" id="uncontrolled-tab-example" className="mb-3">
-                          <Tab eventKey="tatCa" title="Chờ xác nhận">
+                          <Tab eventKey="tatCa" title="Tất cả">
                             <div style={{display: "flex"}}>
-                                <h3 style ={{marginRight: "33rem"}}>5 đơn hàng</h3>
+                                <h3 style ={{marginRight: "33rem"}}>{orders.length} đơn hàng</h3>
                             </div>
                             <div>
                               <Row>
-                                <Card style={{ width: '13rem' }}>
+                              { orders && orders.map((order) => {return(
+                                <Card style={{ width: '13rem', marginRight: "1rem" }}>
                                   <Card.Body>
-                                    <Card.Title>Loại hình: Gia hạn</Card.Title>
-                                    <Card.Subtitle className="mb-2 text-muted">Shop: alibaba</Card.Subtitle>
+                                    <Card.Title>Trạng thái: {getState(order.state)}</Card.Title>
+                                    <Card.Subtitle className="mb-2 text-muted">Shop: {order.shopId}</Card.Subtitle>
                                     <Card.Text>
-                                      <h6>Thời gian gia hạn: 4 tháng</h6>
-                                      <h6>Tổng thanh toán: 4.000.000đ</h6>
+                                      <h6>Ngày gia hạn: {order.pay_date}</h6>
+                                      <h6>Tổng thanh toán: {order.pay_money}</h6>
                                     </Card.Text>
-                                    <Button variant="outline-info" size="sm" style={{margin: "0.1rem"}} onClick={handleShow}>Xem chi tiết</Button>
-                                    <Button variant="outline-success" size="sm" style={{marginRight: "0.1rem"}}>Xác nhận</Button>
-                                    <Button variant="outline-danger" size="sm">Hủy</Button>
+                                    <Button variant="outline-success" size="sm" style={{marginRight: "0.1rem"}} onClick={() => {setState(1); setStateOrder(order); putOrder()}}>Xác nhận</Button>
+                                    <Button variant="outline-danger" size="sm" onClick={() => {setState(0); setStateOrder(order); putOrder()}}>Hủy</Button>
                                   </Card.Body>
-                                </Card>
+                                </Card>)})}
 
                                 
 
                               </Row>
                             </div>
-                          </Tab>
-                          <Tab eventKey="hoanThanh" title="Đã hoàn thành">
-
-                          </Tab>
-                          <Tab eventKey="huy" title="Hủy">
-
                           </Tab>
                         </Tabs>
                     </Col>

@@ -7,7 +7,21 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 
 export default function Quanlydata(props) {
       let location = useLocation();
-    if(props.dataApp.role !== "admin" && !props.dataApp.idShop) {return <Navigate to="/login" state={{ from: location }} replace />}
+      const [customers, setCustomers] = useState("");
+      const [deleteCustomer, setDeleteCustomer] = useState("");
+      useEffect(() => {
+        fetch("http://localhost:8080/customers")
+        .then(res => res.json())
+        .then(data => setCustomers(data))
+      },[])
+
+      const deleteShopFunction = () => {
+        const deleteIt = {}
+        axios.delete('http://localhost:8080/shops', deleteIt)
+            .then(res => console.log(res))
+        window.location.reload();
+    }
+
 
     return (
         <div >
@@ -36,33 +50,28 @@ export default function Quanlydata(props) {
                               <h5>Địa chỉ</h5>
                             </Col>
                             <Col xs={2}>
-                              <h5>Ghi chú</h5>
+                              <h5>Email</h5>
                             </Col>
-                            <Col xs={2}>
-                              <h5>Thao tác</h5>
-                            </Col>
-                          </Row>
 
+                          </Row>
+                          { customers && customers.map((customer) => { return(
                           <Row>
                             <Col xs={2}>
-                              <p>ffdfd</p>
+                              <p>{customer.customerId}</p>
                             </Col>
                             <Col xs={2}>
-                              <p>Tào thị lò</p>
+                              <p>{customer.firstName + " " + customer.lastName}</p>
                             </Col>
                             <Col xs={2}>
-                              <p>039238233</p>
+                              <p>{customer.phone}</p>
                             </Col>
                             <Col xs={2}>
-                              <p>daosa, Hà Nội</p>
+                              <p>{customer.address}</p>
                             </Col>
                             <Col xs={2}>
-                              <p>Boom hàng</p>
+                              <p>{customer.email}</p>
                             </Col>
-                            <Col xs={2}>
-                              <p>Xóa</p>
-                            </Col>
-                          </Row>
+                          </Row>)})}
                         </Container>
                       </Tab>
                     </Tabs>

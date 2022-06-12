@@ -1,9 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, img, Card, Button, Tabs,Tab, Navbar, NavDropdown, Nav, Form, FormControl } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 
 export default function Register() { 
+	const [newFName, setNewFName] = useState("");
+	const [newLName, setNewLName] = useState("");
+	const [newPhoneNumber, setNewPhoneNumber] = useState("");
+	const [newEmail, setNewEmail] = useState("");
+	const [newPassword, setNewPassword] = useState("");
+
+	const [userId, setUserId] = useState("");
+
+	const navigate = useNavigate();
+
+	const postUser = () => {
+        const postIt = {
+			firstName: newFName,
+			lastName: newLName,
+			phoneNumber: newPhoneNumber,
+			email: newEmail,
+			password: newPassword,
+			role: "shop"}
+
+
+        axios.post('http://localhost:8080/sign-up', postIt)
+            .then(res => res.json())
+    		.then(data => setUserId(data))
+
+        navigate("/dang-ky-shop/" + userId, { replace: true });
+       	
+    }
 	return (
 		<div>
 		<Container style={{maxWidth: '100%', margin: '1rem', marginTop:0}}>
@@ -35,16 +63,16 @@ export default function Register() {
 			</Col>
 			<Col xs={8} >
 				<h2 style = {{marginTop: '3rem', marginBottom: "2rem"}}>OmniChannel Account Register</h2>
-			    <input type="text" id="fullname" placeholder="Họ và tên" style={{padding:"0.5rem", marginBottom: "1.5rem"}} size={70}/><br />
-			    <input type="email" id="email" placeholder="Email" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30}/>
-			    <input type="text" id="username" placeholder="Tên cửa hàng" style={{padding:"0.5rem" , marginBottom: "1.5rem" }} size={30}/><br />
-			    <input type="number" id="phonenumber" placeholder="Số điện thoại" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30}/>
-			    <input type="password" id="password" placeholder="Mật khẩu" style={{padding:"0.5rem" , marginBottom: "1.5rem"}} size={30}/><br />
-			    <input type="checkbox" id="agree" style={{marginBottom: "2rem", marginTop: "1rem", marginRight: "0.2rem"}} />
+			    <input type="text" id="fullname" placeholder="Họ và tên đệm" style={{padding:"0.5rem", marginBottom: "1.5rem"}} size={35} onChange={(event) => {setNewFName(event)}} required/>
+			    <input type="text" id="fullname1" placeholder="Tên" style={{padding:"0.5rem", marginBottom: "1.5rem", marginLeft: "1.5rem"}} size={35} onChange={(event) => {setNewLName(event)}} required/><br />
+			    <input type="email" id="email" placeholder="Email" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30} onChange={(event) => {setNewEmail(event)}} required/>
+			    <input type="number" id="phonenumber" placeholder="Số điện thoại" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30} onChange={(event) => {setNewPhoneNumber(event)}} required/>
+			    <input type="password" id="password" placeholder="Mật khẩu" style={{padding:"0.5rem" , marginBottom: "1.5rem"}} size={30} onChange={(event) => {setNewPassword(event)}} required/><br />
+			    <input type="checkbox" id="agree" style={{marginBottom: "2rem", marginTop: "1rem", marginRight: "0.2rem"}} required/>
 			    <label for="agree">Tôi đồng ý với điều khoản sử dụng của OmniChannel</label><br />
 
 			    
-			    <Button formaction="/" style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}}>Đăng ký</Button> <br />
+			    <Button style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}} onClick={postUser()}>Đăng ký</Button> <br />
 			</Col>
 			<Col xs={2}>
 			</Col>
