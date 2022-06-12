@@ -1,14 +1,15 @@
 package com.example.shopsmanager.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class ResponseLoginSuccessDTO {
     private Long userId;
-    private Long shopId;
+    private List<Long> shopId;
     private String role;
     private Timestamp expirationDay;
     private int stateUser;
-    private int stateShop;
+    private List<Integer> stateShop;
 
     public Long getUserId() {
         return userId;
@@ -18,11 +19,11 @@ public class ResponseLoginSuccessDTO {
         this.userId = userId;
     }
 
-    public Long getShopId() {
+    public List<Long> getShopId() {
         return shopId;
     }
 
-    public void setShopId(Long shopId) {
+    public void setShopId(List<Long> shopId) {
         this.shopId = shopId;
     }
 
@@ -50,11 +51,11 @@ public class ResponseLoginSuccessDTO {
         this.stateUser = stateUser;
     }
 
-    public int getStateShop() {
+    public List<Integer> getStateShop() {
         return stateShop;
     }
 
-    public void setStateShop(int stateShop) {
+    public void setStateShop(List<Integer> stateShop) {
         this.stateShop = stateShop;
     }
 }

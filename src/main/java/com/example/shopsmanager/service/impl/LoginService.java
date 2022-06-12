@@ -13,6 +13,9 @@ import com.example.shopsmanager.service.iLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class LoginService implements iLoginService {
     @Autowired
@@ -55,11 +58,20 @@ public class LoginService implements iLoginService {
         if (dto.getPassword().equals(user.getPassword())){
             ResponseLoginSuccessDTO responseLoginSuccessDTO = new ResponseLoginSuccessDTO();
             RoleModel role = roleRepository.getById(user.getRoleId());
-            ShopModel shop = shopRepository.findByUserId(user.getUserId());
+            List<ShopModel> shops = shopRepository.findByUserId(user.getUserId());
+            List<Long> listShopId = new ArrayList<>();
+            List<Integer> listShopState = new ArrayList<>();
             responseLoginSuccessDTO.setRole(role.getRoleName());
-            responseLoginSuccessDTO.setShopId(shop.getShopId());
+            for(ShopModel shop: shops){
+                Long id = shop.getShopId();
+                int state = shop.getState();
+                listShopId.add(id);
+                listShopState.add(state);
+            }
+
+            responseLoginSuccessDTO.setShopId(listShopId);
             responseLoginSuccessDTO.setUserId(user.getUserId());
-            responseLoginSuccessDTO.setStateShop(shop.getState());
+            responseLoginSuccessDTO.setStateShop(listShopState);
             responseLoginSuccessDTO.setStateUser(user.getState());
             return responseLoginSuccessDTO;
         } else {
