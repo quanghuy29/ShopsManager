@@ -59,6 +59,8 @@ public class LoginService implements iLoginService {
             responseLoginSuccessDTO.setRole(role.getRoleName());
             responseLoginSuccessDTO.setShopId(shop.getShopId());
             responseLoginSuccessDTO.setUserId(user.getUserId());
+            responseLoginSuccessDTO.setStateShop(shop.getState());
+            responseLoginSuccessDTO.setStateUser(user.getState());
             return responseLoginSuccessDTO;
         } else {
             ResponseDTO response = new ResponseDTO();
