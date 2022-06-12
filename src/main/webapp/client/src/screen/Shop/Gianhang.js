@@ -27,7 +27,23 @@ export default function Gianhang(props) {
     const [shops, setShops] = useState("");
     const [viewShop, setViewShop] = useState("");
     const [fixShop, setFixShop] = useState("");
- 
+    const [deleteShop, setDeleteShop] = useState("");
+
+    const [fixName, setFixName] = useState("");
+    const [fixAddress, setFixAddress] = useState("");
+    const [fixDetail, setFixDetail] = useState("");
+    const [fixPhone, setFixPhone] = useState("");
+    const [fixEmail, setFixEmail] = useState(""); 
+    const [fixWebsite, setFixWebsite] = useState("");
+    const [fixPassword, setFixPassword] = useState("");
+
+    const [newName, setNewName] = useState("");
+    const [newAddress, setNewAddress] = useState("");
+    const [newDetail, setNewDetail] = useState("");
+    const [newPhone, setNewPhone] = useState("");
+    const [newEmail, setNewEmail] = useState("");
+    const [newWebsite, setNewWebsite] = useState("");
+
   useEffect(() => {
     fetch("http://localhost:8080/shops")
     .then(res => res.json())
@@ -35,6 +51,59 @@ export default function Gianhang(props) {
 
   },[])
 
+  const postShop = () => {
+    const postIt = {
+        shopName: newName,
+        website: newWebsite,
+        address: newAddress,
+        detail: newDetail,
+        phone: newPhone,
+        email: newEmail,
+        userId: idShop
+        }
+    axios.post('http://localhost:8080/register-shop', postIt)
+        .then(res => console.log(res))
+    window.location.reload();
+  }
+
+
+  const putShop = () => {
+    var putIt ={
+    userId: fixShop.userId,
+    shopName: fixShop.shopName,
+    website: fixShop.website,
+    address: fixShop.address,
+    detail: fixShop.detail,
+    phone: fixShop.phone,
+    password: fixShop.password,
+    email: fixShop.email,
+    state:fixShop.state,
+    createdDay: fixShop.createdDay,
+    lastRegisterDay: fixShop.lastRegisterDay,
+    expirationDate: fixShop.expirationDate 
+  }
+    if (fixName) {putIt.shopName = fixName}
+    if (fixAddress) {putIt.address = fixAddress}
+    if (fixDetail) {putIt.detail = fixDetail}
+    if (fixPhone) {putIt.phone = fixPhone}
+    if (fixEmail) {putIt.email = fixEmail}
+    if (fixWebsite) {putIt.website = fixWebsite}
+    if (fixPassword) {putIt.password = fixPassword}
+
+    axios.put('http://localhost:8080/shop/'+ fixShop.shopId, putIt)
+        .then(res => console.log(res))
+    window.location.reload();
+  }
+
+  const deleteShopFunction = () => {
+    var deleteIt ={
+        shopId: deleteShop.shopId
+  }
+
+    axios.delete('http://localhost:8080/shops', deleteIt)
+        .then(res => console.log(res))
+    window.location.reload();
+  }
   console.log(shops);
     
     return (
@@ -58,7 +127,7 @@ export default function Gianhang(props) {
                 </div> </Col>
                   <Col xs={9}>
                     <div style={{display: "flex"}}>
-                            <h3 style ={{marginRight: "33rem"}}>2 gian hàng</h3>
+                            <h3 style ={{marginRight: "33rem"}}>{shops.length} gian hàng</h3>
                             <Button variant="info" style={{marginBottom: "1rem"}} onClick={handleShow}>Thêm gian hàng</Button>
                     </div>
                     <div>
@@ -100,8 +169,8 @@ export default function Gianhang(props) {
                                   </Col>
                                   <Col xs={2}>
                                     <p  style={{marginBottom: "0.1rem"}} onClick={() => {handleShow3();setViewShop(shop)}}>Xem thêm</p>
-                                    <p style={{marginBottom: "0.1rem"}} onClick={() => {handleShow2();setFixShop(shop)}}>Sửa</p>
-                                    <p  style={{marginBottom: "0.1rem"}}>Xóa</p>
+                                    <p style={{marginBottom: "0.1rem"}} onClick={() => {handleShow2();setFixShop(shop);}}>Sửa</p>
+                                    <p  style={{marginBottom: "0.1rem"}} onClick={() => {setDeleteShop(shop); deleteShopFunction()}}>Xóa</p> 
                                   </Col>
                                 </Row>
                             </div>)})}
@@ -114,6 +183,7 @@ export default function Gianhang(props) {
                 </Col>
             </Row>
         </Container>
+
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                     <Modal.Title>Thêm gian hàng</Modal.Title>
@@ -121,22 +191,22 @@ export default function Gianhang(props) {
                         <Modal.Body>
                             <h5>Thêm gian hàng</h5>
                             <label>Tên shop</label><br />
-                            <input type="text" /><br />
+                            <input type="text" onChange={(event) =>setNewName(event.target.value)}/><br />
 
                             <label>Website</label><br />
-                            <input type="text" /><br />
+                            <input type="text" onChange={(event) =>setNewWebsite(event.target.value)}/><br />
 
                             <label>Email</label><br />
-                            <input type="text" /><br />
+                            <input type="text" onChange={(event) =>setNewEmail(event.target.value)}/><br />
 
                             <label>Số điện thoại</label><br />
-                            <input type="number" /><br />
-                            
-                            <label>Mật khẩu</label><br />
-                            <input type="password" /><br />
+                            <input type="number" onChange={(event) =>setNewPhone(event.target.value)}/><br />
+
+                            <label>Địa chỉ</label><br />
+                            <input type="text" onChange={(event) =>setNewAddress(event.target.value)}/><br />
                             
                             <label>Thông tin thêm</label><br />
-                            <input type="text" /><br />
+                            <input type="text" onChange={(event) =>setNewDetail(event.target.value)}/><br />
 
                         </Modal.Body>
                         <Modal.Footer>
@@ -148,6 +218,8 @@ export default function Gianhang(props) {
                         </Button>
                 </Modal.Footer>
         </Modal>
+
+
         <Modal show={show2} onHide={handleClose2}>
             <Modal.Header closeButton>
                     <Modal.Title>Chỉnh sửa gian hàng</Modal.Title>
@@ -155,29 +227,29 @@ export default function Gianhang(props) {
                         <Modal.Body>
                             <h5>Chỉnh sửa gian hàng</h5>
                             <label>Tên shop</label><br />
-                            <input type="text" /><br />
+                            <input type="text" placeholder={fixShop.shopName} onChange={(event) =>setFixName(event.target.value)}/><br />
 
                             <label>Website</label><br />
-                            <input type="text" /><br />
+                            <input type="text" placeholder={fixShop.website} onChange={(event) =>setFixWebsite(event.target.value)}/><br />
 
                             <label>Email</label><br />
-                            <input type="text" /><br />
+                            <input type="text" placeholder={fixShop.email} onChange={(event) =>setFixEmail(event.target.value)}/><br />
 
                             <label>Số điện thoại</label><br />
-                            <input type="number" /><br />
-                            
-                            <label>Mật khẩu</label><br />
-                            <input type="password" /><br />
-                            
+                            <input type="number" placeholder={fixShop.phone} onChange={(event) =>setFixPhone(event.target.value)}/><br />
+
+                            <label>Địa chỉ</label><br />
+                            <input type="text" placeholder={fixShop.address} onChange={(event) =>setFixDetail(event.target.value)}/><br />
+                                                        
                             <label>Thông tin thêm</label><br />
-                            <input type="text" /><br />
+                            <input type="text" placeholder={fixShop.detail} onChange={(event) =>setFixDetail(event.target.value)}/><br />
 
                         </Modal.Body>
                         <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose2}>
                             Thoát
                         </Button>
-                        <Button variant="primary" onClick={handleClose2}>
+                        <Button variant="primary" onClick={() => {handleClose2(); putShop()}}>
                             Chỉnh sửa gian hàng
                         </Button>
                 </Modal.Footer>
