@@ -99,6 +99,21 @@
       "state": "text"
     }
   ],
+  "user": [{
+      "shopId": "111",
+      "userId": "801",
+      "password": "123",
+      "shopName": "Shop quần áo nam nữ mùa hè",
+      "website": "https://shopee.vn/riooshop",
+      "address": "102 Hoàng Mai, Hà Nội",
+      "detail": "Shop quần áo nam nữ mùa hè. Đóng gói cẩn thận. Sản phẩm phù hợp giá tiền. Mặc lên form dáng đẹp.",
+      "phone": "01258963225",
+      "email": "quanaonamnu@gmail.com",
+      "state": "1",
+      "createdDay": "1/2/2019",
+      "lastRegisterDay": "5/6/2022",
+      "expirationDate": "30/8/2022"
+    }],
   "shops": [
     {
       "shopId": "111",

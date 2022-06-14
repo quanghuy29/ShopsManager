@@ -10,11 +10,52 @@ export default function Taikhoan(props) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const data={role: 'shop', idShop: '1312'}
+
     let location = useLocation();
   let idShop = location.pathname.replace("/tai-khoan/",'');
+  const [user, setUser] = useState("");
 
-    
+  const [fixName, setFixName] = useState("");
+  const [fixPhone, setFixPhone] = useState("");
+  const [fixDetail, setFixDetail] = useState("");
+  const [fixAddress, setFixAddress] = useState("");
+  const [fixPassword, setFixPassword] = useState("");
+  const [fixEmail, setFixEmail] = useState("");
+
+
+
+  useEffect(() => {
+        fetch("http://localhost:8080/user")
+        .then(res => res.json())
+        .then(data => setUser(data[0]))
+      },[])
+  const putUser = () => {
+    var putIt = {
+    shopId: user.shopId,
+    userId: user.userId,
+    shopName: user.shopName,
+    website: user.website,
+    address: user.address,
+    detail: user.detail,
+    phone: user.phone,
+    email: user.email,
+    password: user.password,
+    state: user.state,
+    createdDay: user.createdDay,
+    lastRegisterDay: user.lastRegisterDay,
+    expirationDate: user.expirationDate
+    }
+    if (fixName) {putIt.shopName = fixName}
+    if (fixPhone) {putIt.phone = fixPhone}
+    if (fixDetail) {putIt.detail = fixDetail}
+    if (fixAddress) {putIt.address = fixAddress}
+    if (fixPassword) {putIt.password = fixPassword}
+    if (fixEmail) {putIt.email = fixEmail}
+
+    axios.put('http://localhost:8080/user/'+ user.userId, putIt)
+        .then(res => console.log(res))
+  }
+    console.log(user)
     return (
         <div>
           <NavBarLogin />
@@ -38,24 +79,28 @@ export default function Taikhoan(props) {
                     <h2>Tài khoản</h2>
                     <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem"}}>
                       <h5 style={{marginRight: "1rem"}}>Shop:</h5>
-                      <h5>Camsamita</h5>
+                      <h5>{user.shopName}</h5>
                     </div>
                     <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem"}}>
                       <h5 style={{marginRight: "1rem"}}>Email:</h5>
-                      <h5>fdisisd@gmail.com</h5>
+                      <h5>{user.email}</h5>
                     </div>
                     <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem"}}>
                       <h5 style={{marginRight: "1rem"}}>Số điện thoại:</h5>
-                      <h5>09821832332</h5>
+                      <h5>{user.phone}</h5>
                     </div>
                       <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem"}}>
-                      <h5 style={{marginRight: "1rem"}}>Mật khẩu:</h5>
-                      <h5>********</h5>
+                      <h5 style={{marginRight: "1rem"}}>Địa chỉ:</h5>
+                      <h5>{user.address}</h5>
+                    </div>
+                    <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem"}}>
+                      <h5 style={{marginRight: "1rem"}}>Thông tin thêm:</h5>
+                      <h5 style={{float: "left", textAlign: "left"}}>{user.detail}</h5>
                     </div>
                     <Button variant="outline-info" size="lg" onClick={handleShow}>Sửa thông tin</Button>
                     <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem", marginTop: "2rem"}}>
                       <h5 style={{marginRight: "1rem"}}>Hạn sử dụng:</h5>
-                      <h5 style={{marginRight: "3rem"}}>09/12/2022</h5>
+                      <h5 style={{marginRight: "3rem"}}>{user.expirationDate}</h5>
                       <Button variant="outline-info" size="sm"  href="/phuong-thuc-thanh-toan">Gia hạn</Button>
                     </div>
                     <Button variant="danger" size="lg">Đăng xuất</Button>
@@ -64,28 +109,33 @@ export default function Taikhoan(props) {
         </Container>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                    <Modal.Title>Thêm sản phẩm</Modal.Title>
+                    <Modal.Title>Thay đổi thông tin</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <h5>Thêm sản phẩm</h5>
                             <label>Tên shop</label><br />
-                            <input type="text" /><br />
+                            <input type="text" placeholder={user.shopName} onChange={(event) =>setFixName(event.target.value)} /><br />
 
                             <label>Số điện thoại</label><br />
-                            <input type="text" /><br /><br />
+                            <input type="text" placeholder={user.phone} onChange={(event) =>setFixPhone(event.target.value)} /><br /><br />
 
                             <label>Email</label><br />
-                            <input type="email" /><br />
+                            <input type="email" placeholder={user.email} onChange={(event) =>setFixEmail(event.target.value)} /><br />
+
+                            <label>Địa chỉ</label><br />
+                            <input type="text" placeholder={user.address} onChange={(event) =>setFixAddress(event.target.value)} /><br />
+
+                            <label>Thông tin</label><br />
+                            <input type="text" placeholder={user.detail} onChange={(event) =>setFixDetail(event.target.value)} /><br />
 
                             <label>Mật khẩu</label><br />
-                            <input type="text" /><br />
+                            <input type="password" onChange={(event) =>setFixPassword(event.target.value)} /><br />
 
                         </Modal.Body>
                         <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Thoát
                         </Button>
-                        <Button variant="primary" onClick={handleClose}>
+                        <Button variant="primary" onClick={() => {handleClose(); putUser()}}>
                             Hoàn tất
                         </Button>
                 </Modal.Footer>
