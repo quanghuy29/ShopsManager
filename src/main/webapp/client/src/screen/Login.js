@@ -17,6 +17,7 @@ export default function Login(props) {
 	const setJsonData=JSON.stringify(user);
 	localStorage.setItem('user', setJsonData);
 }
+	
 
 	let location = useLocation();
 	const history = createBrowserHistory();
