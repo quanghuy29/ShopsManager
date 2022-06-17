@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 
 export default function Nava(params) {
+
     return (
     	<div style={{backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0}}>
     		<h5 style={{paddingTop: '2rem'}}>

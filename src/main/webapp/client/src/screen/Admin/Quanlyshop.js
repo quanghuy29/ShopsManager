@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import NavBarLogin from '../../component/NavBarLogin.js';
+import NavBarLoginAdmin from '../../component/NavBarLoginAdmin.js';
 import Navadmin from '../../component/Navadmin.js';
 import { Carousel, img, Button, Container, Row, Col, Card, Tabs, Tab, Modal } from 'react-bootstrap';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -21,19 +21,23 @@ export default function Quanlyshop(props) {
     const [putShop, setPutShop] = useState("");
     const [deleteShop, setDeleteShop] = useState("");
 
-    useEffect(() => {
-    fetch("http://localhost:8080/shops")
-    .then(res => res.json())
-    .then(data => setShops(data))
-  },[])
-
-
     const [upShopName, setUpShopName] = useState(""); 
     const [upWebsite, setUpwebsite] = useState("");
     const [upEmail, setUpEmail] = useState("");
     const [upPhone, setUpPhone] = useState("");
     const [upPassword, setUpPassword] = useState("");
     const [upState, setUpState] = useState("");
+
+    useEffect(() => {
+    fetch("http://localhost:8080/shops")
+    .then(res => res.json())
+    .then(data => setShops(data))
+  },[])
+
+    const data = localStorage.getItem('user');
+    const userLocal  = JSON.parse(data);
+    if (!userLocal || userLocal.role !== "admin") {return <Navigate to={"/login"}  />};
+
     const updateShopFunction = () => {
         const updateIt = {
                 shopId: putShop.shopId,
@@ -75,7 +79,7 @@ export default function Quanlyshop(props) {
 
     return (
         <div >
-          <NavBarLogin />
+          <NavBarLoginAdmin />
           <div style={{width: "100%", height: "100%"}}>
             <Container style = {{maxWidth: '100%', marginTop: '1.5rem', margin: '0.5rem'}}>
                 <Row>
@@ -86,7 +90,7 @@ export default function Quanlyshop(props) {
                         <Tabs defaultActiveKey="tatCa" id="uncontrolled-tab-example" className="mb-3">
                       <Tab eventKey="tatCa" title="Tất cả">
                             <div style={{display: "flex"}}>
-                                <h3 style ={{marginRight: "33rem"}}>5 người dùng</h3>
+                                <h3 style ={{marginRight: "33rem"}}>{shops.length} người dùng</h3>
                             </div>
                             <Container>
                                 <Row style={{backgroundColor: "#f5f5f5", padding: "0.5rem", paddingBottom: "1rem", paddingTop: "1rem", marginBottom: "1rem"}}>

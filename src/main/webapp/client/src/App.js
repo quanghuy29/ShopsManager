@@ -3,6 +3,7 @@ import Home from './screen/Customer/Home.js';
 import Tinhnang from './screen/Customer/Tinhnang.js';
 import Banggia from './screen/Customer/Banggia.js';
 import Dangkydichvu from './screen/Customer/Dangkydichvu.js';
+import Trangthaidonhang from './screen/Customer/Trangthaidonhang.js';
 import Phuongthucthanhtoan from './screen/Customer/Phuongthucthanhtoan.js';
 import Dashboard from './screen/Shop/Dashboard.js';
 import Donhang from './screen/Shop/Donhang.js';
@@ -40,32 +41,20 @@ function App() {
         <Route path="/bang-gia" element={<Banggia />}> </Route>
 
 
-        <Route path="/admin" element={<Dashboardadmin dataApp={checkLogin}/>}> </Route>
-        <Route path="/quan-ly-dich-vu" element={<Quanlydichvu dataApp={checkLogin}/>}> </Route>
-        <Route path="/quan-ly-data" element={<Quanlydata dataApp={checkLogin}/>}> </Route>
-        <Route path="/quan-ly-shop" element={<Quanlyshop dataApp={checkLogin}/>}> </Route>
-        <Route path="/dang-ky-dich-vu" element={<Dangkydichvu dataApp={checkLogin}/>}> </Route>
-        <Route path="/phuong-thuc-thanh-toan" element={<Phuongthucthanhtoan dataApp={checkLogin}/>}> </Route>
+        <Route path="/admin" element={<Dashboardadmin/>}> </Route>
+        <Route path="/quan-ly-dich-vu" element={<Quanlydichvu/>}> </Route>
+        <Route path="/quan-ly-data" element={<Quanlydata/>}> </Route>
+        <Route path="/quan-ly-shop" element={<Quanlyshop/>}> </Route>
+        <Route path="/don-hang-dich-vu" element={<Dangkydichvu/>}> </Route>
+        <Route path="/trang-thai-don-hang" element={<Trangthaidonhang/>}> </Route>
+        <Route path="/phuong-thuc-thanh-toan" element={<Phuongthucthanhtoan/>}> </Route>
 
-        <Route path="/dashboard">
-          <Route path=":id" element={<Dashboard />} />
-         </Route>
-        <Route path="/don-hang" >
-          <Route path=":id" element={<Donhang />} />
-
-         </Route>
-        <Route path="/san-pham" > 
-          <Route path=":id" element={<Sanpham />} />
-        </Route>
-        <Route path="/gian-hang">
-          <Route path=":id" element={<Gianhang />} />
-         </Route>
-        <Route path="/khach-hang">
-          <Route path=":id" element={<Khachhang />} />
-         </Route>
-        <Route path="/tai-khoan" >
-          <Route path=":id" element={<Taikhoan />} />
-         </Route>
+        <Route path="/dashboard" element={<Dashboard />} ></Route>
+        <Route path="/don-hang" element={<Donhang />} ></Route>
+        <Route path="/san-pham"  element={<Sanpham />} > </Route>
+        <Route path="/gian-hang"  element={<Gianhang />} ></Route>
+        <Route path="/khach-hang"  element={<Khachhang />} ></Route>
+        <Route path="/tai-khoan"  element={<Taikhoan />} ></Route>
       </Routes>
     </BrowserRouter>
     </div>

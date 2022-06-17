@@ -7,9 +7,6 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 
 export default function Khachhang(props) {
 
-    let location = useLocation();
-  let idShop = location.pathname.replace("/khach-hang/",'');
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -34,13 +31,19 @@ export default function Khachhang(props) {
   const [newAddress, setNewAddress] = useState('');
   const [newEmail, setNewEmail] = useState('');
 
+  const [deleteCustomer, setDeleteCustomer] = useState('');
+
   useEffect(() => {
     fetch("http://localhost:8080/customers")
     .then(res => res.json())
     .then(data => setCustomers(data))
   },[])
 
-  const [deleteCustomer, setDeleteCustomer] = useState('');
+  const data = localStorage.getItem('user');
+    const userLocal  = JSON.parse(data);
+    if (userLocal && userLocal.role == "shop") {let idShop = userLocal.userId} else {return <Navigate to={"/login"}  />};
+
+  
 
 const postCustomertFunction = () => {
     const postIt = {
@@ -68,18 +71,18 @@ const deleteCustomertFunction = () => {
               <Row>
                   <Col xs={3}> <div style={{backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0}}>
                     <h5 style={{paddingTop: '2rem'}}>
-                        <a href={"/dashboard/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
+                        <a href={"/dashboard"} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
-                        <a href={"/don-hang/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Đơn hàng</a></h5>
+                        <a href={"/don-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Đơn hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
-                        <a href={"/san-pham/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
+                        <a href={"/san-pham"} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/gian-hang/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
+                        <a href={"/gian-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/khach-hang/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
+                        <a href={"/khach-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '4.5rem'}}>
-                        <a href={"/tai-khoan/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Tài khoản</a></h5>
-                </div></Col>
+                        <a href={"/tai-khoan"} style = {{textDecoration: 'none', color: '#221e1e'}}>Tài khoản</a></h5>
+                </div> </Col>
                   <Col xs={9}>
                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
                       <Tab eventKey="profile" title="Khách hàng">

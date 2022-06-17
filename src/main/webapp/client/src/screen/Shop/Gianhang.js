@@ -20,8 +20,6 @@ export default function Gianhang(props) {
 
     const handleClose3 = () => setShow3(false);
     const handleShow3 = () => setShow3(true);
-    let location = useLocation();
-  let idShop = location.pathname.replace("/gian-hang/",'');
 
 
     const [shops, setShops] = useState("");
@@ -50,6 +48,11 @@ export default function Gianhang(props) {
     .then(data => setShops(data))
 
   },[])
+
+    let idShop;
+    const dataLocal = localStorage.getItem('user');
+    const userLocal  = JSON.parse(dataLocal);
+    if (userLocal && userLocal.role == "shop") { idShop= userLocal.userId} else {return <Navigate to={"/login"}  />};
 
   const postShop = () => {
     const postIt = {
@@ -113,17 +116,17 @@ export default function Gianhang(props) {
               <Row>
                   <Col xs={3}> <div style={{backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0}}>
                     <h5 style={{paddingTop: '2rem'}}>
-                        <a href={"/dashboard/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
+                        <a href={"/dashboard"} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
-                        <a href={"/don-hang/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Đơn hàng</a></h5>
+                        <a href={"/don-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Đơn hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
-                        <a href={"/san-pham/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
+                        <a href={"/san-pham"} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/gian-hang/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
+                        <a href={"/gian-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/khach-hang/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
+                        <a href={"/khach-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '4.5rem'}}>
-                        <a href={"/tai-khoan/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Tài khoản</a></h5>
+                        <a href={"/tai-khoan"} style = {{textDecoration: 'none', color: '#221e1e'}}>Tài khoản</a></h5>
                 </div> </Col>
                   <Col xs={9}>
                     <div style={{display: "flex"}}>

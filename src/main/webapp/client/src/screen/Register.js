@@ -11,8 +11,6 @@ export default function Register() {
 	const [newEmail, setNewEmail] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 
-	const [userId, setUserId] = useState("");
-
 	const navigate = useNavigate();
 
 	const postUser = () => {
@@ -27,9 +25,11 @@ export default function Register() {
 
         axios.post('http://localhost:8080/sign-up', postIt)
             .then(res => res.json())
-    		.then(data => setUserId(data))
+    		.then(data => localStorage.setItem('userRegister', data))
 
-        navigate("/dang-ky-shop/" + userId, { replace: true });
+
+
+        navigate("/dang-ky-shop", { replace: true });
        	
     }
 	return (
@@ -70,9 +70,8 @@ export default function Register() {
 			    <input type="password" id="password" placeholder="Mật khẩu" style={{padding:"0.5rem" , marginBottom: "1.5rem"}} size={30} onChange={(event) => {setNewPassword(event)}} required/><br />
 			    <input type="checkbox" id="agree" style={{marginBottom: "2rem", marginTop: "1rem", marginRight: "0.2rem"}} required/>
 			    <label for="agree">Tôi đồng ý với điều khoản sử dụng của OmniChannel</label><br />
-
 			    
-			    <Button style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}} onClick={postUser()}>Đăng ký</Button> <br />
+			    <Button style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}} onClick={postUser}>Đăng ký</Button> <br />
 			</Col>
 			<Col xs={2}>
 			</Col>

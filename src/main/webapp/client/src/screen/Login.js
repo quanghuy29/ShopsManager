@@ -7,16 +7,34 @@ import { createBrowserHistory } from 'history';
 
 
 export default function Login(props) { 
-	const data={role: 'shop', idShop: '1312'}
+	const [email, setEmail] = useState("");
+	const [phone, setPhone] = useState("");
+	const [password, setPassword] = useState("");
+
+	const [user, setUser] = useState("");
+
+	const setLocalStorage = () => {
+	const setJsonData=JSON.stringify(user);
+	localStorage.setItem('user', setJsonData);
+}
+
 	let location = useLocation();
 	const history = createBrowserHistory();
-	var linkToShop = "/dashboard/" + data.idShop;
+	var linkToShop = "/dashboard";
 
-	const sendData = () => { props.appCallback(data)}
-	sendData();
+	const loginFunction = () => {
+		const postIt = {phoneNumber: phone,
+			email: email,
+			password: password}
 
-  	if(data.role == "admin") { return <Navigate to="/admin" state={{ from: location }} />}
-    else if(data.role === "shop")
+		axios.post('http://localhost:8080/login', postIt)
+            .then(res => setUser(res))
+
+        setLocalStorage();
+	}
+
+  	if(user.role == "admin") { return <Navigate to="/admin" state={{ from: location }} />}
+    else if(user.role == "shop")
    { return <Navigate to={linkToShop} state={{ from: location }}  />}
 
 	return (
@@ -53,21 +71,21 @@ export default function Login(props) {
 			<Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-5">
 			  <Tab eventKey="home" title="Email" style={{paddingLeft: '6rem'}}>
 			    <label for="email" style={{fontSize: '1.5rem', marginRight: '15rem', marginBottom: '0.7rem'}}>Email</label><br />
-			    <input type="email" id="email" style={{paddingTop: '0.5rem', paddingBottom: '0.5rem', paddingRight: '6rem', paddingLeft: '0.5rem'}}/><br />
+			    <input type="email" id="email" style={{paddingTop: '0.5rem', paddingBottom: '0.5rem', paddingRight: '6rem', paddingLeft: '0.5rem'}} onChange={(event) => {setEmail(event.target.value)}} required/><br />
 			    <label for="password" style={{fontSize: '1.5rem',marginRight: '12rem', marginTop: '1rem', textAlign: 'left', marginBottom: '0.7rem'}}>Password</label><br />
-			    <input type="password" id="password" style={{marginBottom: '2rem', paddingTop: '0.5rem', paddingBottom: '0.5rem', paddingRight: '6rem', paddingLeft: '0.5rem'}}/><br />
-			    <Button style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}}  >Login</Button> <br />
+			    <input type="password" id="password" style={{marginBottom: '2rem', paddingTop: '0.5rem', paddingBottom: '0.5rem', paddingRight: '6rem', paddingLeft: '0.5rem'}} onChange={(event) => {setPassword(event.target.value)}} required/><br />
+			    <Button style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}} onClick={loginFunction} >Login</Button> <br />
 			    <a href="#" style={{marginBottom: '0.5rem'}}>Forgot Password?</a> <br />
-			    <a href="#" >Register</a> <br />
+			    <a href="/register" >Register</a> <br />
 			  </Tab>
 			  <Tab eventKey="profile" title="Phone Number">
 			  	<label for="number" style={{fontSize: '1.5rem', marginRight: '9rem', marginBottom: '0.7rem'}}>Phone Number</label><br />
-			    <input type="email" id="email" style={{paddingTop: '0.5rem', paddingBottom: '0.5rem', paddingRight: '6rem', paddingLeft: '0.5rem'}}/><br />
+			    <input type="email" id="email" style={{paddingTop: '0.5rem', paddingBottom: '0.5rem', paddingRight: '6rem', paddingLeft: '0.5rem'}} onChange={(event) => {setPhone(event.target.value)}} required/><br />
 			    <label for="password" style={{fontSize: '1.5rem',marginRight: '12rem', marginTop: '1rem', textAlign: 'left', marginBottom: '0.7rem'}}>Password</label><br />
-			    <input type="password" id="password" style={{marginBottom: '2rem', paddingTop: '0.5rem', paddingBottom: '0.5rem', paddingRight: '6rem', paddingLeft: '0.5rem'}}/><br />
-			    <Button style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}}>Login</Button> <br />
+			    <input type="password" id="password" style={{marginBottom: '2rem', paddingTop: '0.5rem', paddingBottom: '0.5rem', paddingRight: '6rem', paddingLeft: '0.5rem'}} onChange={(event) => {setPassword(event.target.value)}} required/><br />
+			    <Button style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}} onClick={loginFunction}>Login</Button> <br />
 			    <a href="#" style={{marginBottom: '0.5rem'}}>Forgot Password?</a> <br />
-			    <a href="#" >Register</a> <br />
+			    <a href="/register" >Register</a> <br />
 			  </Tab>
 			</Tabs>
 			</Col>

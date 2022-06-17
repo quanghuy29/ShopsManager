@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import NavBarLogin from '../../component/NavBarLogin.js';
+import NavBarLoginAdmin from '../../component/NavBarLoginAdmin.js';
 import Navadmin from '../../component/Navadmin.js';
 import { Carousel, img, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -8,7 +8,6 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 export default function Dashboardadmin(props) {
   
   let location = useLocation();
-  //if(props.dataApp.role !== "admin") {return <Navigate to="/login" state={{ from: location }} replace />}
   const [shop, setShop] = useState("");
   const [order, setOrder] = useState("");
 
@@ -22,6 +21,11 @@ export default function Dashboardadmin(props) {
       .then(data => setOrder(data))
 
   },[])
+
+    const data = localStorage.getItem('user');
+    const userLocal  = JSON.parse(data);
+    if (!userLocal || userLocal.role !== "admin") {return <Navigate to={"/login"}  />};
+    
     var choXacNhan = 0;
     var hoanThanh = 0;
     var huy = 0;
@@ -39,7 +43,7 @@ export default function Dashboardadmin(props) {
     console.log(props.dataApp)
     return (
         <div >
-          <NavBarLogin />
+          <NavBarLoginAdmin />
           <div style={{width: "100%", height: "100%"}}>
             <Container style = {{maxWidth: '100%', marginTop: '1.5rem', margin: '0.5rem'}}>
                 <Row>

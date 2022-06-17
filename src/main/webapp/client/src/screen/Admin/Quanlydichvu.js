@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import NavBarLogin from '../../component/NavBarLogin.js';
+import NavBarLoginAdmin from '../../component/NavBarLoginAdmin.js';
 import Navadmin from '../../component/Navadmin.js';
 import { Carousel, img, Button, Container, Row, Col, Card, Tabs, Tab, Modal } from 'react-bootstrap';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -20,6 +20,10 @@ export default function Quanlydichvu(props) {
     .then(data => setOrders(data))
   },[])
 
+    const data = localStorage.getItem('user');
+    const userLocal  = JSON.parse(data);
+    if (!userLocal || userLocal.role !== "admin") {return <Navigate to={"/login"}  />};
+
     const getState = (a) => {if(a == 0) {return "Đang chờ xác nhận"} else {return "Đã hoàn thành"}}
 
     const putOrder = () => {
@@ -31,7 +35,7 @@ export default function Quanlydichvu(props) {
     console.log(stateOrder);
     return (
         <div >
-          <NavBarLogin />
+          <NavBarLoginAdmin />
           <div style={{width: "100%", height: "100%"}}>
             <Container style = {{maxWidth: '100%', marginTop: '1.5rem', margin: '0.5rem'}}>
                 <Row>

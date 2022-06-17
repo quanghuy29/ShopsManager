@@ -6,29 +6,30 @@ import { Carousel, img, Button, Container, Row, Col, Tabs, Tab, Modal } from 're
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 export default function Taikhoan(props) {
-  const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    let location = useLocation();
-  let idShop = location.pathname.replace("/tai-khoan/",'');
-  const [user, setUser] = useState("");
+    const [user, setUser] = useState("");
 
-  const [fixName, setFixName] = useState("");
-  const [fixPhone, setFixPhone] = useState("");
-  const [fixDetail, setFixDetail] = useState("");
-  const [fixAddress, setFixAddress] = useState("");
-  const [fixPassword, setFixPassword] = useState("");
-  const [fixEmail, setFixEmail] = useState("");
-
-
+    const [fixName, setFixName] = useState("");
+    const [fixPhone, setFixPhone] = useState("");
+    const [fixDetail, setFixDetail] = useState("");
+    const [fixAddress, setFixAddress] = useState("");
+    const [fixPassword, setFixPassword] = useState("");
+    const [fixEmail, setFixEmail] = useState("");
 
   useEffect(() => {
-        fetch("http://localhost:8080/user")
+        fetch("http://localhost:8080/user/" +  userLocal.userId)
         .then(res => res.json())
-        .then(data => setUser(data[0]))
+        .then(data => setUser(data))
       },[])
+
+  const data = localStorage.getItem('user');
+    const userLocal  = JSON.parse(data);
+    if (userLocal && userLocal.role == "shop") {let idShop = userLocal.userId} else {return <Navigate to={"/login"}  />};
+
   const putUser = () => {
     var putIt = {
     shopId: user.shopId,
@@ -55,7 +56,11 @@ export default function Taikhoan(props) {
     axios.put('http://localhost:8080/user/'+ user.userId, putIt)
         .then(res => console.log(res))
   }
-    console.log(user)
+    const logOut = () => {
+        localStorage.clear();
+        window.location.reload();
+    }
+    console.log(data)
     return (
         <div>
           <NavBarLogin />
@@ -63,17 +68,17 @@ export default function Taikhoan(props) {
               <Row>
                   <Col xs={3}> <div style={{backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0}}>
                     <h5 style={{paddingTop: '2rem'}}>
-                        <a href={"/dashboard/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
+                        <a href={"/dashboard"} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
-                        <a href={"/don-hang/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Đơn hàng</a></h5>
+                        <a href={"/don-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Đơn hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
-                        <a href={"/san-pham/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
+                        <a href={"/san-pham"} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/gian-hang/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
+                        <a href={"/gian-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/khach-hang/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
+                        <a href={"/khach-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '4.5rem'}}>
-                        <a href={"/tai-khoan/"+ idShop} style = {{textDecoration: 'none', color: '#221e1e'}}>Tài khoản</a></h5>
+                        <a href={"/tai-khoan"} style = {{textDecoration: 'none', color: '#221e1e'}}>Tài khoản</a></h5>
                 </div> </Col>
                   <Col xs={9}>
                     <h2>Tài khoản</h2>
@@ -103,7 +108,7 @@ export default function Taikhoan(props) {
                       <h5 style={{marginRight: "3rem"}}>{user.expirationDate}</h5>
                       <Button variant="outline-info" size="sm"  href="/phuong-thuc-thanh-toan">Gia hạn</Button>
                     </div>
-                    <Button variant="danger" size="lg">Đăng xuất</Button>
+                    <Button variant="danger" size="lg" onClick={logOut}>Đăng xuất</Button>
                 </Col>
             </Row>
         </Container>

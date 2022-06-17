@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, img, Card, Button, Tabs,Tab, Navbar, NavDropdown, Nav, Form, FormControl } from 'react-bootstrap';
 import axios from 'axios';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, useNavigate, Navigate, useLocation } from "react-router-dom";
 
      
 export default function DangKyShop() { 
@@ -13,7 +13,9 @@ export default function DangKyShop() {
 	const [newPhoneNumber, setNewPhoneNumber] = useState("");
 
 	let location = useLocation();
-    let idShop = location.pathname.replace("/dang-ky-shop/",'');
+
+	const data = localStorage.getItem('userRegister');
+    const userRegisterLocal  = JSON.parse(data);
 
 	const postUser = () => {
         const postIt = {
@@ -23,12 +25,12 @@ export default function DangKyShop() {
 			detail: newDetail,
 			phone: newPhoneNumber,
 			email: newEmail,
-			userId: idShop
+			userId: userRegisterLocal.userId
 			}
 
 
-        axios.post('http://localhost:8080/sign-up', postIt)
-            .then(res => console.log(res))
+        axios.post('http://localhost:8080/register-shop', postIt)
+            .then(res => localStorage.setItem('shopRegister', res))
        	
     }
 	return (
@@ -49,9 +51,6 @@ export default function DangKyShop() {
 		                    
 		                  </Nav>
 		                  
-		                    <Nav.Link href="/login">Login</Nav.Link>
-		                    <Nav.Link href="/register"><Button variant="info">Register</Button></Nav.Link>
-
 		                </Navbar.Collapse>
 		              </Container>
 		          </Navbar>
@@ -70,7 +69,7 @@ export default function DangKyShop() {
 			    <input type="email" id="password1" placeholder="Email" style={{padding:"0.5rem" , marginBottom: "1.5rem"}} size={30} onChange={(event) => {setNewEmail(event)}} required/><br />
 
 			    
-			    <Button href="/dang-ky-shop" style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}} onClick={postUser()}>Đăng ký</Button> <br />
+			    <Button href="/dang-ky-dich-vu" style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}} onClick={postUser()}>Đăng ký</Button> <br />
 			</Col>
 			<Col xs={2}>
 			</Col>
