@@ -1,6 +1,7 @@
 package com.example.shopsmanager.service.impl;
 
 import com.example.shopsmanager.converter.ShopConverter;
+import com.example.shopsmanager.dto.ListID;
 import com.example.shopsmanager.dto.ShopDTO;
 import com.example.shopsmanager.model.OrderModel;
 import com.example.shopsmanager.model.OrderProductModel;
@@ -52,7 +53,8 @@ public class ShopService implements iShopService {
     }
 
     @Override
-    public void delete(long[] ids) {
+    public void delete(ListID listID) {
+        List<Long> ids = listID.getIds();
         for(long item: ids){
             ShopModel shop = shopRepository.getById(item);
             List<OrderModel> listOrder = orderRepository.findAllByShopId(shop.getShopId());

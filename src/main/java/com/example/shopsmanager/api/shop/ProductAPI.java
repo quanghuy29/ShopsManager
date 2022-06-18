@@ -1,6 +1,7 @@
 package com.example.shopsmanager.api.shop;
 
 import com.example.shopsmanager.dto.ListDTO;
+import com.example.shopsmanager.dto.ListID;
 import com.example.shopsmanager.dto.ProductDTO;
 import com.example.shopsmanager.service.iProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ProductAPI {
     }
 
     @DeleteMapping(value = "/product")
-    public void deleteProduct(@RequestBody long[] ids){
+    public void deleteProduct(@RequestBody ListID ids){
         productService.delete(ids);
     }
 }

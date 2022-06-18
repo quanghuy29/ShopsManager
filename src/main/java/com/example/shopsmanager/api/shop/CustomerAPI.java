@@ -1,6 +1,7 @@
 package com.example.shopsmanager.api.shop;
 
 import com.example.shopsmanager.dto.CustomerDTO;
+import com.example.shopsmanager.dto.ListID;
 import com.example.shopsmanager.service.iCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class CustomerAPI {
         return customerService.save(customer);
     }
     @DeleteMapping(value = "/customer")
-    public void deleteCustomer(@RequestBody long[] ids){
+    public void deleteCustomer(@RequestBody ListID ids){
         customerService.delete(ids);
     }
 }
