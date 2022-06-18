@@ -4,7 +4,7 @@ import com.example.shopsmanager.dto.RegisterOrderDTO;
 import com.example.shopsmanager.service.impl.RegisterOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin
 @RestController
 public class RegisterOrderAPI {
     @Autowired

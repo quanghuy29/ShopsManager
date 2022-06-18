@@ -3,11 +3,9 @@ package com.example.shopsmanager.api.admin;
 import com.example.shopsmanager.dto.ShopDTO;
 import com.example.shopsmanager.service.iShopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 public class ShopAdminAPI {
     @Autowired

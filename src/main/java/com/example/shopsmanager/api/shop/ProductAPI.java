@@ -5,7 +5,7 @@ import com.example.shopsmanager.dto.ProductDTO;
 import com.example.shopsmanager.service.iProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin
 @RestController
 public class ProductAPI {
     @Autowired

@@ -13,6 +13,7 @@ import com.example.shopsmanager.service.iLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +74,11 @@ public class LoginService implements iLoginService {
             responseLoginSuccessDTO.setUserId(user.getUserId());
             responseLoginSuccessDTO.setStateShop(listShopState);
             responseLoginSuccessDTO.setStateUser(user.getState());
+
+            long datetime = System.currentTimeMillis();
+            Timestamp timestamp = new Timestamp(datetime);
+            user.setLastLogin(timestamp);
+            userRepository.save(user);
             return responseLoginSuccessDTO;
         } else {
             ResponseDTO response = new ResponseDTO();
