@@ -24,11 +24,12 @@ public class UserService implements iUserService {
     public SignUpDTO save(SignUpDTO userDTO) {
         UserModel userModel = new UserModel();
         userModel = userConverter.toModel(userDTO);
-        userModel = userRepository.save(userModel);
 
         long datetime = System.currentTimeMillis();
         Timestamp timestamp = new Timestamp(datetime);
         userModel.setCreatedDate(timestamp);
+
+        userModel = userRepository.save(userModel);
         return userConverter.toDTO(userModel);
     }
 

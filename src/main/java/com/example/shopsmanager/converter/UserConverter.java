@@ -18,14 +18,12 @@ public class UserConverter {
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private ShopRepository shopRepository;
 
     public UserModel toModel(SignUpDTO userDTO){
         UserModel userModel = new UserModel();
         userModel.setFirstName(userDTO.getFirstName());
-        userModel.setLastName(userDTO.getLastname());
+        userModel.setLastName(userDTO.getLastName());
         userModel.setEmail(userDTO.getEmail());
         userModel.setPhone(userDTO.getPhone());
         userModel.setPassword(userDTO.getPassword());
@@ -35,8 +33,9 @@ public class UserConverter {
 
     public SignUpDTO toDTO(UserModel model){
         SignUpDTO dto = new SignUpDTO();
+        dto.setUserId(model.getUserId());
         dto.setFirstName(model.getFirstName());
-        dto.setLastname(model.getLastName());
+        dto.setLastName(model.getLastName());
         dto.setEmail(model.getEmail());
         dto.setPhone(model.getPhone());
         dto.setPassword(model.getPassword());

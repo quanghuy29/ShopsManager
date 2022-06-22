@@ -1,12 +1,21 @@
 package com.example.shopsmanager.dto;
 
 public class SignUpDTO {
+    private Long userId;
     private String firstName;
-    private String lastname;
+    private String lastName;
     private String phone;
     private String email;
     private String password;
     private String roleCode;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -16,12 +25,12 @@ public class SignUpDTO {
         this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
     }
 
     public String getPhone() {
