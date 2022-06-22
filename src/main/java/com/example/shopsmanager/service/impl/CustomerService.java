@@ -70,6 +70,18 @@ public class CustomerService implements iCustomerService {
     }
 
     @Override
+    public List<CustomerDTO> findAll() {
+        List<CustomerDTO> listCustomer = new ArrayList<>();
+        List<CustomerModel> listModel = customerRepository.findAll();
+
+        for(CustomerModel model: listModel){
+            CustomerDTO dto = customerConverter.toDTO(model);
+            listCustomer.add(dto);
+        }
+        return listCustomer;
+    }
+
+    @Override
     public ResponseDTO delete(ListID listID) {
         List<Long> ids = listID.getIds();
         for(long item: ids){

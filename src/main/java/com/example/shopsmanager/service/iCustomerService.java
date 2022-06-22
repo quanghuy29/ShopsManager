@@ -10,5 +10,6 @@ public interface iCustomerService {
     CustomerDTO save(CustomerDTO dto);
     CustomerDTO findOneById(Long id);
     List<CustomerDTO> findAllByShop(Long shopId);
+    List<CustomerDTO> findAll();
     ResponseDTO delete(ListID ids);
 }

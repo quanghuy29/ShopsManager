@@ -26,6 +26,10 @@ public class CustomerAPI {
     public List<CustomerDTO> showAllByShop(@PathVariable("idShop") long id){
         return customerService.findAllByShop(id);
     }
+    @GetMapping(value = "/customer")
+    public List<CustomerDTO> showAll(){
+        return customerService.findAll();
+    }
     @PutMapping(value = "/customer/{idCustomer}")
     public CustomerDTO updateCustomer(@RequestBody CustomerDTO customer, @PathVariable("idCustomer") long id){
         customer.setId(id);
