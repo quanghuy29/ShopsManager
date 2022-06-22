@@ -5,6 +5,7 @@ import com.example.shopsmanager.converter.OrderDetailConverter;
 import com.example.shopsmanager.dto.ListID;
 import com.example.shopsmanager.dto.OrderDTO;
 import com.example.shopsmanager.dto.OrderDetailDTO;
+import com.example.shopsmanager.dto.ResponseDTO;
 import com.example.shopsmanager.model.OrderModel;
 import com.example.shopsmanager.model.OrderProductModel;
 import com.example.shopsmanager.repository.OrderProductRepository;
@@ -65,7 +66,7 @@ public class OrderService implements iOrderService {
     }
 
     @Override
-    public void delete(ListID listID) {
+    public ResponseDTO delete(ListID listID) {
         List<Long> ids = listID.getIds();
         for(long item: ids){
             if(orderRepository.findById(item).isPresent())
@@ -75,6 +76,10 @@ public class OrderService implements iOrderService {
             }
             orderRepository.deleteById(item);
         }
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setStatus("Success");
+        responseDTO.setMsg("Delete success");
+        return responseDTO;
     }
 
     @Override

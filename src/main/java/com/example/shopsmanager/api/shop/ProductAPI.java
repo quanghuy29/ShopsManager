@@ -3,9 +3,14 @@ package com.example.shopsmanager.api.shop;
 import com.example.shopsmanager.dto.ListDTO;
 import com.example.shopsmanager.dto.ListID;
 import com.example.shopsmanager.dto.ProductDTO;
+import com.example.shopsmanager.dto.ResponseDTO;
 import com.example.shopsmanager.service.iProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @CrossOrigin
 @RestController
 public class ProductAPI {
@@ -34,8 +39,12 @@ public class ProductAPI {
         return productService.save(product);
     }
 
-    @DeleteMapping(value = "/product")
-    public void deleteProduct(@RequestBody ListID ids){
-        productService.delete(ids);
+    @DeleteMapping(value = "/product/{idProduct}")
+    public ResponseDTO deleteProduct(@PathVariable("idProduct") long id){
+        ListID ids = new ListID();
+        List<Long> list = new ArrayList<>();
+        list.add(id);
+        ids.setIds(list);
+        return productService.delete(ids);
     }
 }

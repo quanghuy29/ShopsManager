@@ -2,10 +2,12 @@ package com.example.shopsmanager.api.shop;
 
 import com.example.shopsmanager.dto.CustomerDTO;
 import com.example.shopsmanager.dto.ListID;
+import com.example.shopsmanager.dto.ResponseDTO;
 import com.example.shopsmanager.service.iCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @CrossOrigin
 @RestController
@@ -29,8 +31,12 @@ public class CustomerAPI {
         customer.setId(id);
         return customerService.save(customer);
     }
-    @DeleteMapping(value = "/customer")
-    public void deleteCustomer(@RequestBody ListID ids){
-        customerService.delete(ids);
+    @DeleteMapping(value = "/customer/{idCustomer}")
+    public ResponseDTO deleteCustomer(@PathVariable("idCustomer") long id){
+        ListID ids = new ListID();
+        List<Long> list = new ArrayList<>();
+        list.add(id);
+        ids.setIds(list);
+        return customerService.delete(ids);
     }
 }

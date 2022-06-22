@@ -2,9 +2,9 @@ package com.example.shopsmanager.service.impl;
 
 import com.example.shopsmanager.converter.ShopConverter;
 import com.example.shopsmanager.dto.ListID;
+import com.example.shopsmanager.dto.ResponseDTO;
 import com.example.shopsmanager.dto.ShopDTO;
 import com.example.shopsmanager.model.OrderModel;
-import com.example.shopsmanager.model.OrderProductModel;
 import com.example.shopsmanager.model.ProductModel;
 import com.example.shopsmanager.model.ShopModel;
 import com.example.shopsmanager.repository.*;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+
 @Transactional
 @Service
 public class ShopService implements iShopService {
@@ -53,7 +54,7 @@ public class ShopService implements iShopService {
     }
 
     @Override
-    public void delete(ListID listID) {
+    public ResponseDTO delete(ListID listID) {
         List<Long> ids = listID.getIds();
         for(long item: ids){
             ShopModel shop = shopRepository.getById(item);
@@ -70,6 +71,10 @@ public class ShopService implements iShopService {
             productRepository.deleteAllByShopId(shop.getShopId());
             shopRepository.deleteById(item);
         }
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setStatus("Success");
+        responseDTO.setMsg("Delete success");
+        return responseDTO;
     }
 
     @Override

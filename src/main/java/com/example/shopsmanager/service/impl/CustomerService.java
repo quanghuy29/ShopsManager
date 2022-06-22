@@ -3,6 +3,7 @@ package com.example.shopsmanager.service.impl;
 import com.example.shopsmanager.converter.CustomerConverter;
 import com.example.shopsmanager.dto.CustomerDTO;
 import com.example.shopsmanager.dto.ListID;
+import com.example.shopsmanager.dto.ResponseDTO;
 import com.example.shopsmanager.model.CustomerModel;
 import com.example.shopsmanager.model.OrderModel;
 import com.example.shopsmanager.repository.CustomerRepository;
@@ -69,7 +70,7 @@ public class CustomerService implements iCustomerService {
     }
 
     @Override
-    public void delete(ListID listID) {
+    public ResponseDTO delete(ListID listID) {
         List<Long> ids = listID.getIds();
         for(long item: ids){
             if(customerRepository.findById(item).isPresent()){
@@ -78,5 +79,9 @@ public class CustomerService implements iCustomerService {
             }
             customerRepository.deleteById(item);
         }
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setStatus("Success");
+        responseDTO.setMsg("Delete success");
+        return responseDTO;
     }
 }
