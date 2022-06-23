@@ -17,6 +17,7 @@ public class OrderDTO {
     private float shippingFee;
     private float transitionFee;
     private float totalPayment;
+    private String detail;
     private List<OrderDetailDTO> orderDetail;
 
     public List<OrderDetailDTO> getOrderDetail() {
@@ -129,5 +130,13 @@ public class OrderDTO {
 
     public void setTotalPayment(float totalPayment) {
         this.totalPayment = totalPayment;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }

@@ -36,6 +36,7 @@ public class OrderConverter {
         model.setShippingFee(dto.getShippingFee());
         model.setTransitionFee(dto.getTransitionFee());
         model.setTotalPayment(dto.getTotalPayment());
+        model.setDetail(dto.getDetail());
         return model;
     }
 
@@ -54,6 +55,7 @@ public class OrderConverter {
         dto.setShippingFee(model.getShippingFee());
         dto.setTransitionFee(model.getTransitionFee());
         dto.setTotalPayment(model.getTotalPayment());
+        dto.setDetail(model.getDetail());
         dto.setOrderDetail(getOrderDetail(dto.getOrderId()));
         return dto;
     }
@@ -70,6 +72,7 @@ public class OrderConverter {
         model.setShippingFee(dto.getShippingFee());
         model.setTransitionFee(dto.getTransitionFee());
         model.setTotalPayment(dto.getTotalPayment());
+        model.setDetail(dto.getDetail());
         return model;
     }
 

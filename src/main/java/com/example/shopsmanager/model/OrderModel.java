@@ -32,6 +32,8 @@ public class OrderModel {
     private float transitionFee;
     @Column(name = "totalpayment")
     private float totalPayment;
+    @Column(name = "Detail")
+    private String detail;
     public long getOrderId() {
         return orderid;
     }
@@ -134,5 +136,13 @@ public class OrderModel {
 
     public void setTotalPayment(float totalPayment) {
         this.totalPayment = totalPayment;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }
