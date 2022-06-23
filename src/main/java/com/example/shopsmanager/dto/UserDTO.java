@@ -11,6 +11,7 @@ public class UserDTO {
     private String lastName;
     private String phone;
     private String email;
+    private String password;
     private Timestamp lastLogin;
     private Timestamp createdDate;
     private int stateUser;
@@ -54,6 +55,14 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Timestamp getLastLogin() {

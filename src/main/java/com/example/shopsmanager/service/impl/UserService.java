@@ -34,6 +34,17 @@ public class UserService implements iUserService {
     }
 
     @Override
+    public UserDTO save(UserDTO userDTO) {
+        UserModel userModel = new UserModel();
+        if (userDTO.getUserId() != null){
+            UserModel oldModel = userRepository.getById(userDTO.getUserId());
+            userModel = userConverter.toUserModel(userDTO, oldModel);
+        } else userModel = userConverter.toUserModel(userDTO);
+        userModel = userRepository.save(userModel);
+        return userConverter.toUserDTO(userModel);
+    }
+
+    @Override
     public UserDTO findOneById(Long id) {
         if (userRepository.findById(id).isPresent()){
             UserModel model = userRepository.findById(id).get();

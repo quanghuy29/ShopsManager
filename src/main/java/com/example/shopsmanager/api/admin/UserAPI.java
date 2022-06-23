@@ -4,10 +4,7 @@ import com.example.shopsmanager.dto.ListDTO;
 import com.example.shopsmanager.dto.UserDTO;
 import com.example.shopsmanager.service.iUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -24,5 +21,14 @@ public class UserAPI {
         listResult.setListResult(userService.findAll());
         listResult.setTotalItem();
         return listResult;
+    }
+    @PutMapping(value = "/user/{idUser}")
+    public UserDTO updateUser(@PathVariable("idUser") long id, @RequestBody UserDTO dto){
+        dto.setUserId(id);
+        return userService.save(dto);
+    }
+    @PostMapping(value = "/user")
+    public UserDTO saveUser(@RequestBody UserDTO dto){
+        return userService.save(dto);
     }
 }

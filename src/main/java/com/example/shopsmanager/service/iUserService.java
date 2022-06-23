@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface iUserService {
     SignUpDTO save(SignUpDTO userDTO);
+    UserDTO save(UserDTO userDTO);
     UserDTO findOneById(Long id);
     List<UserDTO> findAll();
 }

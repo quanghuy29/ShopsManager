@@ -6,7 +6,6 @@ import com.example.shopsmanager.model.ShopModel;
 import com.example.shopsmanager.model.UserModel;
 import com.example.shopsmanager.repository.RoleRepository;
 import com.example.shopsmanager.repository.ShopRepository;
-import com.example.shopsmanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -52,6 +51,7 @@ public class UserConverter {
         dto.setEmail(model.getEmail());
         dto.setLastLogin(model.getLastLogin());
         dto.setCreatedDate(model.getCreatedDate());
+        dto.setPassword(model.getPassword());
         dto.setStateUser(model.getState());
         dto.setRole(roleRepository.getById(model.getRoleId()).getRoleName());
 
@@ -70,5 +70,26 @@ public class UserConverter {
         dto.setStateShop(listShopState);
 
         return dto;
+    }
+
+    public UserModel toUserModel(UserDTO dto, UserModel oldModel){
+        oldModel.setFirstName(dto.getFirstName());
+        oldModel.setLastName(dto.getLastName());
+        oldModel.setPhone(dto.getPhone());
+        oldModel.setEmail(dto.getEmail());
+        oldModel.setState(dto.getStateUser());
+        oldModel.setPassword(dto.getPassword());
+        return oldModel;
+    }
+
+    public UserModel toUserModel(UserDTO dto){
+        UserModel model = new UserModel();
+        model.setFirstName(dto.getFirstName());
+        model.setLastName(dto.getLastName());
+        model.setPhone(dto.getPhone());
+        model.setEmail(dto.getEmail());
+        model.setState(dto.getStateUser());
+        model.setPassword(dto.getPassword());
+        return model;
     }
 }
