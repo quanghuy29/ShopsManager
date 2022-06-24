@@ -24,12 +24,12 @@ export default function Quanlyshop(props) {
     const [upShopName, setUpShopName] = useState(""); 
     const [upWebsite, setUpwebsite] = useState("");
     const [upEmail, setUpEmail] = useState("");
+    const [upDetail, setUpDetail] = useState(""); 
     const [upPhone, setUpPhone] = useState("");
-    const [upPassword, setUpPassword] = useState("");
     const [upState, setUpState] = useState("");
 
     useEffect(() => {
-    fetch("http://localhost:8080/shops")
+    fetch("http://localhost:8080/ShopsManager_war_exploded/shop")
     .then(res => res.json())
     .then(data => setShops(data))
   },[])
@@ -38,44 +38,69 @@ export default function Quanlyshop(props) {
     const userLocal  = JSON.parse(data);
     if (!userLocal || userLocal.role !== "admin") {return <Navigate to={"/login"}  />};
 
+    var date  = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var dt = date.getDate();
+   
+    if (dt < 10) {
+      dt = '0' + dt;
+    }
+    if (month < 10) {
+      month = '0' + month;
+    }
+   
+    const today = (year+'-' + month + '-'+dt);
+
     const updateShopFunction = () => {
         const updateIt = {
-                shopId: putShop.shopId,
-                userId: putShop.userId,
+                userID: putShop.userID,
                 shopName: putShop.shopName,
                 website: putShop.website,
                 address: putShop.address,
                 detail: putShop.detail,
                 phone: putShop.phone,
                 email: putShop.email,
-                password: putShop.password,
                 state: putShop.state,
-                createdDay: putShop.createdDay,
+                createdDay: today,
                 lastRegisterDay: putShop.lastRegisterDay,
                 expirationDate: putShop.expirationDate
                 }
+//   {
+//     "userID": 1,
+//     "shopName": "Quần áo mùa đông",
+//     "website": "quanaomuadong.com.vn",
+//     "address": "Đông Anh, Hà Nội",
+//     "detail": "Shop chính hãng",
+//     "phone": "0398494562",
+//     "email": "quanaomuadong@gmail.com",
+//     "state": 1,
+//     "createdDay": 1670778000000,
+//     "lastRegisterDay": 1670778000000,
+//     "expirationDay": null
+// }
 
         if (upShopName) {updateIt.shopName = upShopName}
         if (upWebsite) {updateIt.website = upWebsite}
         if (upEmail) {updateIt.email = upEmail}
+        if (upDetail) {updateIt.detail = upDetail}
         if (upPhone) {updateIt.phone = upPhone}
-        if (upPassword) {updateIt.password = upPassword}
         if (upState) {updateIt.state = upState}
 
         console.log(updateIt);
-        axios.put('http://localhost:8080/shops', updateIt)
+        axios.put('http://localhost:8080/ShopsManager_war_exploded/shop/' + putShop.shopId, updateIt)
             .then(res => console.log(res))
         window.location.reload();
     }
 
-    const deleteShopFunction = () => {
-        const deleteIt = {shopId: deleteShop.shopId}
-        axios.delete('http://localhost:8080/shops', deleteIt)
+    const deleteShopFunction = (ID) => {
+        const deleteIt = {idShop: ID}
+        axios.delete('http://localhost:8080/ShopsManager_war_exploded/shop/' + ID, deleteIt)
             .then(res => console.log(res))
-        window.location.reload();
+       window.location.reload();
     }
 
-    console.log(shops)
+    
 
     return (
         <div >
@@ -86,7 +111,7 @@ export default function Quanlyshop(props) {
                     <Col xs={3}>
                         <Navadmin />
                     </Col>
-                    <Col xs={9}>
+                    <Col xs={9} style={{marginTop: "6rem"}}>
                         <Tabs defaultActiveKey="tatCa" id="uncontrolled-tab-example" className="mb-3">
                       <Tab eventKey="tatCa" title="Tất cả">
                             <div style={{display: "flex"}}>
@@ -94,24 +119,22 @@ export default function Quanlyshop(props) {
                             </div>
                             <Container>
                                 <Row style={{backgroundColor: "#f5f5f5", padding: "0.5rem", paddingBottom: "1rem", paddingTop: "1rem", marginBottom: "1rem"}}>
-                                    <Col xs={2} style={{textAlign: "left"}}>Tên shop</Col>
-                                    <Col xs={2} style={{textAlign: "left"}}>Email</Col>
-                                    <Col xs={2} style={{textAlign: "left"}}>Số điện thoại</Col>
-                                    <Col xs={2} style={{textAlign: "left"}}>Trạng thái</Col>
-                                    <Col xs={2} style={{textAlign: "left"}}>Hạn sử dụng</Col>
-                                    <Col xs={2} style={{textAlign: "left"}}>Thao tác</Col>
+                                    <Col xs={3} style={{textAlign: "center"}}>Tên shop</Col>
+                                    <Col xs={3} style={{textAlign: "center"}}>Email</Col>
+                                    <Col xs={2} style={{textAlign: "center"}}>Số điện thoại</Col>
+                                    <Col xs={2} style={{textAlign: "center"}}>Trạng thái</Col>
+                                    <Col xs={2} style={{textAlign: "center"}}>Thao tác</Col>
                                 </Row>
                                 <div>
                                     { shops && shops.map((shop) => {return (
                                     <Row  style={{borderStyle: "ridge"}}>
-                                        <Col xs={2} style={{textAlign: "left", whiteSpace: "nowrap", width: "10rem", overflow: "hidden", textOverflow: "ellipsis"}}>{shop.shopName}</Col>
-                                        <Col xs={2} style={{textAlign: "left", whiteSpace: "nowrap", width: "10rem", overflow: "hidden", textOverflow: "ellipsis"}}>{shop.email}</Col>
-                                        <Col xs={2} style={{textAlign: "left"}}>{shop.phone}</Col>
-                                        <Col xs={2} style={{textAlign: "left"}}>{shop.state}</Col>
-                                        <Col xs={2} style={{textAlign: "left"}}>{shop.expirationDate}</Col>
-                                        <Col xs={2} style={{textAlign: "left", alignItem: "right"}}>
+                                        <Col xs={3} style={{textAlign: "center", whiteSpace: "nowrap", width: "16.5rem", overflow: "hidden", textOverflow: "ellipsis"}}>{shop.shopName}</Col>
+                                        <Col xs={3} style={{textAlign: "center", whiteSpace: "nowrap", width: "16.5rem", overflow: "hidden", textOverflow: "ellipsis"}}>{shop.email}</Col>
+                                        <Col xs={2} style={{textAlign: "center"}}>{shop.phone}</Col>
+                                        <Col xs={2} style={{textAlign: "center"}}>{shop.state}</Col>
+                                        <Col xs={2} style={{textAlign: "center", alignItem: "right"}}>
                                             <h7  onClick={() => {handleShow2(); setPutShop(shop)}}> Sửa</h7>
-                                            <h7 onClick={() => {setDeleteShop(shop); deleteShopFunction()}}> Xóa</h7>
+                                            <h7 onClick={() => {deleteShopFunction(shop.shopId)}}> Xóa</h7>
                                         </Col>
                                     </Row>)})}
 
@@ -142,9 +165,6 @@ export default function Quanlyshop(props) {
 
                             <label>Số điện thoại</label><br />
                             <input type="number" /><br />
-                            
-                            <label>Mật khẩu</label><br />
-                            <input type="password" /><br />
                             
                             <label>Thông tin thêm</label><br />
                             <input type="text" /><br />
@@ -179,10 +199,8 @@ export default function Quanlyshop(props) {
                             <input type="number" placeholder={putShop.phone} onChange={(event) => {setUpPhone(event.target.value)}}/><br />
 
                             <label>Detail</label><br />
-                            <input type="text" placeholder={putShop.detail} onChange={(event) => {setUpShopName(event.target.value)}}/><br />
+                            <input type="text" placeholder={putShop.detail} onChange={(event) => {setUpDetail(event.target.value)}}/><br />
 
-                            <label>Password</label><br />
-                            <input type="password" placeholder={putShop.password} onChange={(event) => {setUpPassword(event.target.value)}}/><br />
                             
                             <label>Trạng thái</label><br />
                             <input type="text" placeholder={putShop.state} onChange={(event) => {setUpState(event.target.value)}}/><br />

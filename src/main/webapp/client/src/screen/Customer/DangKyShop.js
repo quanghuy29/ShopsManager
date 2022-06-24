@@ -12,11 +12,14 @@ export default function DangKyShop() {
 	const [newDetail, setNewDetail] = useState("");
 	const [newPhoneNumber, setNewPhoneNumber] = useState("");
 
-	let location = useLocation();
+	const [response, setResponse] = useState("");
+	const navigate = useNavigate();
 
 	const data = localStorage.getItem('userRegister');
     const userRegisterLocal  = JSON.parse(data);
 
+
+	var helloUse = [];
 	const postUser = () => {
         const postIt = {
 			shopName: newShopName,
@@ -25,14 +28,30 @@ export default function DangKyShop() {
 			detail: newDetail,
 			phone: newPhoneNumber,
 			email: newEmail,
-			userId: userRegisterLocal.userId
+			userID: userRegisterLocal.userId
 			}
 
 
-        axios.post('http://localhost:8080/register-shop', postIt)
-            .then(res => localStorage.setItem('shopRegister', res))
+        axios.post('http://localhost:8080/ShopsManager_war_exploded/register', postIt)
+            .then(res => helloUse.push(res))
+			.then(res => console.log(res))
+
+
+		setTimeout(setIt, 1000);
+
+		
        	
     }
+
+	const setIt = () => {
+		const setJson=JSON.stringify(helloUse[0]);
+		localStorage.setItem('shopRegister', setJson)
+
+		const data1 = localStorage.getItem('shopRegister');
+		const shopRegisterLocal  = JSON.parse(data1);
+
+		if(shopRegisterLocal) navigate("/dang-ky-dich-vu", { replace: true }); 
+	}
 	return (
 		<div>
 		<Container style={{maxWidth: '100%', margin: '1rem', marginTop:0}}>
@@ -61,15 +80,15 @@ export default function DangKyShop() {
 			</Col>
 			<Col xs={8} >
 				<h2 style = {{marginTop: '3rem', marginBottom: "2rem"}}>Đăng ký shop</h2>
-			    <input type="text" id="fullname" placeholder="Tên Shop" style={{padding:"0.5rem", marginBottom: "1.5rem"}} size={35} onChange={(event) => {setNewShopName(event)}} required/>
-			    <input type="text" id="fullname1" placeholder="Website" style={{padding:"0.5rem", marginBottom: "1.5rem", marginLeft: "1.5rem"}} size={35} onChange={(event) => {setNewWebsite(event)}} required/><br />
-			    <input type="text" id="email" placeholder="Địa chỉ" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30} onChange={(event) => {setNewAddress(event)}} required/>
-			    <input type="text" id="text" placeholder="Thông tin shop" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30} onChange={(event) => {setNewDetail(event)}} required/>
-			    <input type="number" id="password" placeholder="Số điện thoại" style={{padding:"0.5rem" , marginBottom: "1.5rem"}} size={30} onChange={(event) => {setNewPhoneNumber(event)}} required/><br />
-			    <input type="email" id="password1" placeholder="Email" style={{padding:"0.5rem" , marginBottom: "1.5rem"}} size={30} onChange={(event) => {setNewEmail(event)}} required/><br />
+			    <input type="text" id="fullname" placeholder="Tên Shop" style={{padding:"0.5rem", marginBottom: "1.5rem"}} size={35} onChange={(event) => {setNewShopName(event.target.value)}} required/>
+			    <input type="text" id="fullname1" placeholder="Website" style={{padding:"0.5rem", marginBottom: "1.5rem", marginLeft: "1.5rem"}} size={35} onChange={(event) => {setNewWebsite(event.target.value)}} required/><br />
+			    <input type="text" id="email" placeholder="Địa chỉ" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30} onChange={(event) => {setNewAddress(event.target.value)}} required/>
+			    <input type="text" id="text" placeholder="Thông tin shop" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30} onChange={(event) => {setNewDetail(event.target.value)}} required/>
+			    <input type="number" id="password" placeholder="Số điện thoại" style={{padding:"0.5rem" , marginBottom: "1.5rem"}} size={30} onChange={(event) => {setNewPhoneNumber(event.target.value)}} required/><br />
+			    <input type="email" id="password1" placeholder="Email" style={{padding:"0.5rem" , marginBottom: "1.5rem"}} size={30} onChange={(event) => {setNewEmail(event.target.value)}} required/><br />
 
 			    
-			    <Button href="/dang-ky-dich-vu" style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}} onClick={postUser()}>Đăng ký</Button> <br />
+			    <Button style={{marginBottom: '1rem', paddingRight: '8rem', paddingLeft: '8rem', paddingBottom: '0.5rem', paddingTop: '0.5rem'}} onClick={postUser}>Đăng ký</Button> <br />
 			</Col>
 			<Col xs={2}>
 			</Col>

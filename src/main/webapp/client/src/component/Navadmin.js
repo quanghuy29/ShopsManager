@@ -13,7 +13,7 @@ export default function Navadmin(params) {
         window.location.reload();
     }
     return (
-    	<div style={{backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0}}>
+    	<div style={{paddingBottom: "11rem", backgroundColor: "#f5f5f5", marginTop: '6rem', position: "fixed", paddingLeft: "6rem", paddingRight: "6rem",position: "fixed", zIndex: 999}}>
     		<h5 style={{paddingTop: '2rem'}}>
     			<a href="/admin" style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
     		<h5 style={{paddingTop: '2.5rem'}}>

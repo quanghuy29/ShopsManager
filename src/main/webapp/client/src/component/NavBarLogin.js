@@ -6,20 +6,21 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 export default function NavBarLogin(params) {
     const [user, setUser] = useState("");
     useEffect(() => {
-        fetch("http://localhost:8080/user")
+        fetch("http://localhost:8080/ShopsManager_war_exploded/user")
         .then(res => res.json())
         .then(data => setUser(data[0]))
       },[])
     const data = localStorage.getItem('user');
     const userLocal  = JSON.parse(data);
+    console.log(userLocal);
     if (userLocal) {let idShop = userLocal.idShop} else {return <Navigate to={"/login"}  />};
     return (
-        <div>
+        <div style={{ width: "100%", backgroundColor: "#e4e4e45c",position: "fixed", zIndex: 999}}>
             <Navbar bg="light" expand="lg">
-              <Container fluid>
+              <Container fluid style={{marginBottom: "-2rem"}}>
                 <Navbar.Brand href="/dashboard" style = {{marginLeft: "40px", fontSize: '2.3rem', fontWeight: 700}}>OmniChannel</Navbar.Brand>
                 <Navbar.Collapse id="navbarScroll" style={{marginLeft: '34rem'}} >
-                    <Nav.Link href="/tai-khoan" style={{marginLeft: "20rem"}}>{user.shopName}</Nav.Link>
+                    <Nav.Link href="/tai-khoan" style={{marginLeft: "20rem"}}>Shop: <i>{userLocal.userId}</i></Nav.Link>
                 </Navbar.Collapse>
               </Container>
           </Navbar>

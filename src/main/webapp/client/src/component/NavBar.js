@@ -4,7 +4,7 @@ import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from '
 
 export default function NavBar(params) {
     return (
-        <div>
+        <div style={{position: "fixed", zIndex: 999}}>
             <Navbar bg="light" expand="lg">
               <Container fluid>
                 <Navbar.Brand href="/" style = {{marginLeft: "40px", fontSize: '2.3rem', fontWeight: 700}}>OmniChannel</Navbar.Brand>

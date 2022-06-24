@@ -26,7 +26,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 function App() {
   const [checkLogin, setCheckLogin] = useState('');
   const callbackLogin = (data) => {setCheckLogin(data);}
-  console.log(checkLogin)
+
 
  
   return (
@@ -38,6 +38,7 @@ function App() {
         <Route path="/tinh-nang" element={<Tinhnang />}> </Route>     
         <Route path="/register" element={<Register />}> </Route>
         <Route path="/dang-ky-shop" element={<DangKyShop />}> </Route>
+        <Route path="/dang-ky-dich-vu" element={<Dangkydichvu />}> </Route>
         <Route path="/bang-gia" element={<Banggia />}> </Route>
 
 

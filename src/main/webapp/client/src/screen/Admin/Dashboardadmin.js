@@ -12,13 +12,13 @@ export default function Dashboardadmin(props) {
   const [order, setOrder] = useState("");
 
     useEffect(() => {
-    fetch("http://localhost:8080/shops")
+    fetch("http://localhost:8080/ShopsManager_war_exploded/shop")
       .then(res => res.json())
       .then(data => setShop(data))
 
-    fetch("http://localhost:8080/register-order")
+    fetch("http://localhost:8080/ShopsManager_war_exploded/register-order")
       .then(res => res.json())
-      .then(data => setOrder(data))
+      .then(data => setOrder(data.listResult))
 
   },[])
 
@@ -50,7 +50,7 @@ export default function Dashboardadmin(props) {
                     <Col xs={3}>
                         <Navadmin />
                     </Col>
-                    <Col xs={9}>
+                    <Col xs={9} style={{marginTop: "6rem"}}>
                         <Container>
                             <Row>
                                 <Card style={{ width: '13rem', marginRight: "2rem" }}>

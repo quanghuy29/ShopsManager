@@ -15,22 +15,27 @@ export default function Quanlydichvu(props) {
     const [stateOrder, setStateOrder] = useState("");
 
     useEffect(() => {
-    fetch("http://localhost:8080/register-order")
+    fetch("http://localhost:8080/ShopsManager_war_exploded/register-order")
     .then(res => res.json())
-    .then(data => setOrders(data))
+    .then(data => setOrders(data.listResult))
   },[])
 
     const data = localStorage.getItem('user');
     const userLocal  = JSON.parse(data);
     if (!userLocal || userLocal.role !== "admin") {return <Navigate to={"/login"}  />};
 
-    const getState = (a) => {if(a == 0) {return "Đang chờ xác nhận"} else {return "Đã hoàn thành"}}
+    const getState = (a) => {if(a == 0) {return "Đang chờ xác nhận"} else if(a == 1) {return "Đã xác nhận"} else {return "Đã hủy"}}
 
-    const putOrder = () => {
-        const putIt = {id: stateOrder.id,shopId: stateOrder.shopId, pay_money: stateOrder.pay_money, pay_date: stateOrder.pay_date, state: state}
-        axios.put('http://localhost:8080/register-order/'+ stateOrder.id, putIt)
+    const putOrder = (order) => {
+        const putIt = {
+          shopId: order.shopId, 
+          pay_money: order.pay_money, 
+          pay_date: order.pay_date,
+          state: state
+        }
+        axios.put('http://localhost:8080/ShopsManager_war_exploded/register-order/'+ order.id, putIt)
             .then(res => console.log(res))
-        window.location.reload();
+        // window.location.reload();
     }
     console.log(stateOrder);
     return (
@@ -42,7 +47,7 @@ export default function Quanlydichvu(props) {
                     <Col xs={3}>
                         <Navadmin />
                     </Col>
-                    <Col xs={9}>
+                    <Col xs={9} style={{marginTop: "6rem"}}>
                         <Tabs defaultActiveKey="tatCa" id="uncontrolled-tab-example" className="mb-3">
                           <Tab eventKey="tatCa" title="Tất cả">
                             <div style={{display: "flex"}}>
@@ -56,11 +61,10 @@ export default function Quanlydichvu(props) {
                                     <Card.Title>Trạng thái: {getState(order.state)}</Card.Title>
                                     <Card.Subtitle className="mb-2 text-muted">Shop: {order.shopId}</Card.Subtitle>
                                     <Card.Text>
-                                      <h6>Ngày gia hạn: {order.pay_date}</h6>
                                       <h6>Tổng thanh toán: {order.pay_money}</h6>
                                     </Card.Text>
-                                    <Button variant="outline-success" size="sm" style={{marginRight: "0.1rem"}} onClick={() => {setState(1); setStateOrder(order); putOrder()}}>Xác nhận</Button>
-                                    <Button variant="outline-danger" size="sm" onClick={() => {setState(0); setStateOrder(order); putOrder()}}>Hủy</Button>
+                                    <Button variant="outline-success" size="sm" style={{marginRight: "0.1rem"}} onClick={() => {setState(1); setStateOrder(order); putOrder(order)}}>Xác nhận</Button>
+                                    <Button variant="outline-danger" size="sm" onClick={() => {setState(2); setStateOrder(order); putOrder(order)}}>Hủy</Button>
                                   </Card.Body>
                                 </Card>)})}
 

@@ -34,15 +34,15 @@ export default function Khachhang(props) {
   const [deleteCustomer, setDeleteCustomer] = useState('');
 
   useEffect(() => {
-    fetch("http://localhost:8080/customers")
+    fetch("http://localhost:8080/ShopsManager_war_exploded/shop/customer/" + idShop)
     .then(res => res.json())
     .then(data => setCustomers(data))
   },[])
 
-  const data = localStorage.getItem('user');
-    const userLocal  = JSON.parse(data);
-    if (userLocal && userLocal.role == "shop") {let idShop = userLocal.userId} else {return <Navigate to={"/login"}  />};
-
+  let idShop;
+  const dataLocal = localStorage.getItem('user');
+  const userLocal  = JSON.parse(dataLocal);
+  if (userLocal  && userLocal.role == "shop") { idShop= userLocal.shopId[0]} else {return <Navigate to={"/login"}  />};
   
 
 const postCustomertFunction = () => {
@@ -54,13 +54,17 @@ const postCustomertFunction = () => {
         email: newEmail
         }
 
-    axios.post('http://localhost:8080/customers', postIt)
+    axios.post('http://localhost:8080/ShopsManager_war_exploded/customer', postIt)
         .then(res => console.log(res))
   }
 
-const deleteCustomertFunction = () => {
-    axios.delete('http://localhost:8080/customers/'+ deleteCustomer, {customerId: deleteCustomer})
+const deleteCustomertFunction = (ID) => {
+    const deleteCus = {
+        idCustomer: ID
+    }
+    axios.delete('http://localhost:8080/ShopsManager_war_exploded/customer/' + ID, deleteCus)
         .then(res => console.log(res))
+    console.log(deleteCus);
   }
 
 
@@ -69,21 +73,20 @@ const deleteCustomertFunction = () => {
           <NavBarLogin />
           <Container style = {{maxWidth: '100%', marginTop: '1.5rem', margin: '0.5rem'}}>
               <Row>
-                  <Col xs={3}> <div style={{backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0}}>
+                  <Col xs={3}> <div style={{paddingBottom: "11rem", backgroundColor: "#f5f5f5", marginTop: '6rem', position: "fixed", paddingLeft: "7rem", paddingRight: "7rem",position: "fixed", zIndex: 999}}>
                     <h5 style={{paddingTop: '2rem'}}>
                         <a href={"/dashboard"} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
                         <a href={"/don-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Đơn hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
                         <a href={"/san-pham"} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
-                    <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/gian-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
+
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
                         <a href={"/khach-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '4.5rem'}}>
                         <a href={"/tai-khoan"} style = {{textDecoration: 'none', color: '#221e1e'}}>Tài khoản</a></h5>
                 </div> </Col>
-                  <Col xs={9}>
+                  <Col xs={9} style={{marginTop: "6rem"}}>
                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
                       <Tab eventKey="profile" title="Khách hàng">
                         <div style={{display: "flex"}}>
@@ -92,35 +95,31 @@ const deleteCustomertFunction = () => {
                             </div>
                         <Container>
                           <Row style={{borderStyle: "ridge", backgroundColor: "#f5f5f5"}}>
-                            <Col xs={1} style={{textAlign: "left"}}>Tài khoản</Col>
+                            <Col xs={2} style={{textAlign: "left"}}>Tài khoản</Col>
                             <Col xs={2} style={{textAlign: "left"}}>Họ và tên</Col>
-                            <Col xs={2} style={{textAlign: "left"}}>Số điện thoại</Col>
-                            <Col xs={4} style={{textAlign: "left"}}>Địa chỉ</Col>
+                            <Col xs={3} style={{textAlign: "left"}}>Số điện thoại</Col>
+                            <Col xs={3} style={{textAlign: "left"}}>Địa chỉ</Col>
                             <Col xs={2} style={{textAlign: "left"}}>Email</Col>
-                            <Col xs={1} style={{textAlign: "left"}}>Thao tác</Col>
                           </Row>
 
                           <div>
                                 {customers && customers.map((cus, i) =>{
                                 return(
                                         <Row style={{borderStyle: "ridge", backgroundColor: "#f5f5f5", marginTop: "0rem"}}>                   
-                                            <Col xs={1} style={{textAlign: "center"}}>
-                                                <p style={{marginTop: "1rem"}}>{cus.customerId}</p>
+                                            <Col xs={2} style={{textAlign: "center"}}>
+                                                <p style={{marginTop: "1rem"}}>{cus.id}</p>
                                             </Col>
                                             <Col xs={2} style={{textAlign: "left"}}>
                                                 <p style={{marginTop: "1rem"}}>{cus.firstName + " " + cus.lastName}</p>
                                             </Col>
-                                            <Col xs={2} style={{textAlign: "left"}}>
+                                            <Col xs={3} style={{textAlign: "left"}}>
                                                 <p style={{marginTop: "1rem"}}>{cus.phone}</p>
                                             </Col>
-                                            <Col xs={4} style={{textAlign: "left"}}>
+                                            <Col xs={3} style={{textAlign: "left"}}>
                                                 <p style={{marginTop: "1rem"}}>{cus.address}</p>
                                             </Col>
                                             <Col xs={2} style={{textAlign: "left"}}>
                                                 <p style={{marginTop: "1rem"}}>{cus.email}</p>
-                                            </Col>
-                                            <Col xs={1} style={{textAlign: "left"}}>
-                                            <Button variant="info" size="sm" style={{marginTop: "1rem"}} onClick={() => {setDeleteCustomer(cus.customerId); deleteCustomertFunction()}}>Xóa</Button>
                                             </Col>
                                     </Row>
                                 )})}

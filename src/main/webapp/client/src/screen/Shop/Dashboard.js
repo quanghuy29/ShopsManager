@@ -9,18 +9,19 @@ export default function Dashboard(props) {
   const [orders, setOrders] = useState('');
   const [products, setProducts] = useState('');
   useEffect(() => {
-    fetch("http://localhost:8080/orders")
+    fetch("http://localhost:8080/ShopsManager_war_exploded/order/shop/" + idShop)
     .then(res => res.json())
     .then(data => setOrders(data))
 
-    fetch("http://localhost:8080/products")
+    fetch("http://localhost:8080/ShopsManager_war_exploded/product/shop/" + idShop)
     .then(res => res.json())
     .then(data => setProducts(data))
   },[])
 
-  const data = localStorage.getItem('user');
-    const userLocal  = JSON.parse(data);
-    if (userLocal && userLocal.role == "shop") {let idShop = userLocal.userId} else {return <Navigate to={"/login"}  />};
+      let idShop;
+      const dataLocal = localStorage.getItem('user');
+      const userLocal  = JSON.parse(dataLocal);
+      if (userLocal  && userLocal.role == "shop") { idShop= userLocal.shopId[0]} else {return <Navigate to={"/login"}  />};
 
   var choXacNhan = 0;
   var dangGiao = 0;
@@ -48,7 +49,7 @@ export default function Dashboard(props) {
           <div style={{width: "100%", height: "100%"}}>
           <Container style = {{maxWidth: '100%', marginTop: '1.5rem', margin: '0.5rem'}}>
             <Row>
-                <Col xs={3}> <div style={{backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0}}>
+                <Col xs={3}> <div style={{paddingBottom: "11rem", backgroundColor: "#f5f5f5", marginTop: '6rem', position: "fixed", paddingLeft: "7rem", paddingRight: "7rem",position: "fixed", zIndex: 999}}>
                     <h5 style={{paddingTop: '2rem'}}>
                         <a href={"/dashboard"} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
@@ -56,14 +57,12 @@ export default function Dashboard(props) {
                     <h5 style={{paddingTop: '2.5rem'}}>
                         <a href={"/san-pham"} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/gian-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
-                    <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
                         <a href={"/khach-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '4.5rem'}}>
                         <a href={"/tai-khoan"} style = {{textDecoration: 'none', color: '#221e1e'}}>Tài khoản</a></h5>
                 </div> </Col>
                 <Col>
-                    <Row style= {{backgroundColor: "#ffffff"}}>
+                    <Row style= {{backgroundColor: "#ffffff", marginTop: "7rem"}}>
                         <Col xs={3}>
                             <h4>{choXacNhan}</h4>
                             <h5>Chờ xác nhận</h5>

@@ -12,61 +12,65 @@ export default function Taikhoan(props) {
     const handleShow = () => setShow(true);
 
     const [user, setUser] = useState("");
+    const [shops, setShops] = useState("");
 
     const [fixName, setFixName] = useState("");
     const [fixPhone, setFixPhone] = useState("");
+    const [fixFName, setFixFName] = useState("");
+    const [fixLName, setFixLName] = useState("");
     const [fixDetail, setFixDetail] = useState("");
     const [fixAddress, setFixAddress] = useState("");
     const [fixPassword, setFixPassword] = useState("");
     const [fixEmail, setFixEmail] = useState("");
 
   useEffect(() => {
-        fetch("http://localhost:8080/user/" +  userLocal.userId)
+    var idPost;
+      if(userLocal) { idPost = userLocal.userId}
+        fetch("http://localhost:8080/ShopsManager_war_exploded/user/" + idPost )
         .then(res => res.json())
         .then(data => setUser(data))
+
+        fetch("http://localhost:8080/ShopsManager_war_exploded/shop/" + idShop)
+        .then(res => res.json())
+        .then(data => setShops(data))
       },[])
 
-  const data = localStorage.getItem('user');
-    const userLocal  = JSON.parse(data);
-    if (userLocal && userLocal.role == "shop") {let idShop = userLocal.userId} else {return <Navigate to={"/login"}  />};
+      let idShop;
+      const dataLocal = localStorage.getItem('user');
+      const userLocal  = JSON.parse(dataLocal);
+      if (userLocal  && userLocal.role == "shop") { idShop= userLocal.shopId[0]} else {return <Navigate to={"/login"}  />};
 
   const putUser = () => {
     var putIt = {
-    shopId: user.shopId,
-    userId: user.userId,
-    shopName: user.shopName,
-    website: user.website,
-    address: user.address,
-    detail: user.detail,
-    phone: user.phone,
-    email: user.email,
-    password: user.password,
-    state: user.state,
-    createdDay: user.createdDay,
-    lastRegisterDay: user.lastRegisterDay,
-    expirationDate: user.expirationDate
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phone: user.phone,
+      email: user.email,
+      password: user.password
     }
-    if (fixName) {putIt.shopName = fixName}
+
     if (fixPhone) {putIt.phone = fixPhone}
-    if (fixDetail) {putIt.detail = fixDetail}
-    if (fixAddress) {putIt.address = fixAddress}
+    if (fixFName) {putIt.firstName = fixFName}
+    if (fixLName) {putIt.lastName = fixLName}
     if (fixPassword) {putIt.password = fixPassword}
     if (fixEmail) {putIt.email = fixEmail}
 
-    axios.put('http://localhost:8080/user/'+ user.userId, putIt)
+    axios.put('http://localhost:8080/ShopsManager_war_exploded/user/'+ user.userId, putIt)
         .then(res => console.log(res))
+    window.location.reload();
   }
+
+
     const logOut = () => {
         localStorage.clear();
         window.location.reload();
     }
-    console.log(data)
     return (
         <div>
           <NavBarLogin />
           <Container style = {{maxWidth: '100%', marginTop: '1.5rem', margin: '0.5rem'}}>
               <Row>
-                  <Col xs={3}> <div style={{backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0}}>
+                  <Col xs={3}> <div style={{paddingBottom: "11rem", backgroundColor: "#f5f5f5", marginTop: '6rem', position: "fixed", paddingLeft: "7rem", paddingRight: "7rem",position: "fixed", zIndex: 999}}>
                     <h5 style={{paddingTop: '2rem'}}>
                         <a href={"/dashboard"} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
@@ -74,17 +78,19 @@ export default function Taikhoan(props) {
                     <h5 style={{paddingTop: '2.5rem'}}>
                         <a href={"/san-pham"} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/gian-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
-                    <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
                         <a href={"/khach-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '4.5rem'}}>
                         <a href={"/tai-khoan"} style = {{textDecoration: 'none', color: '#221e1e'}}>Tài khoản</a></h5>
                 </div> </Col>
-                  <Col xs={9}>
+                  <Col xs={9} style={{marginTop: "6rem"}}>
                     <h2>Tài khoản</h2>
                     <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem"}}>
-                      <h5 style={{marginRight: "1rem"}}>Shop:</h5>
-                      <h5>{user.shopName}</h5>
+                      <h5 style={{marginRight: "1rem"}}>User:</h5>
+                      <h5>{user.firstName + " " + user.lastName}</h5>
+                    </div>
+                    <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem"}}>
+                      <h5 style={{marginRight: "1rem"}}>Shop name:</h5>
+                      <h5>{shops.shopName}</h5>
                     </div>
                     <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem"}}>
                       <h5 style={{marginRight: "1rem"}}>Email:</h5>
@@ -94,20 +100,8 @@ export default function Taikhoan(props) {
                       <h5 style={{marginRight: "1rem"}}>Số điện thoại:</h5>
                       <h5>{user.phone}</h5>
                     </div>
-                      <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem"}}>
-                      <h5 style={{marginRight: "1rem"}}>Địa chỉ:</h5>
-                      <h5>{user.address}</h5>
-                    </div>
-                    <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem"}}>
-                      <h5 style={{marginRight: "1rem"}}>Thông tin thêm:</h5>
-                      <h5 style={{float: "left", textAlign: "left"}}>{user.detail}</h5>
-                    </div>
+
                     <Button variant="outline-info" size="lg" onClick={handleShow}>Sửa thông tin</Button>
-                    <div style={{display: "flex", marginBottom: "2rem", marginLeft: "2rem", marginTop: "2rem"}}>
-                      <h5 style={{marginRight: "1rem"}}>Hạn sử dụng:</h5>
-                      <h5 style={{marginRight: "3rem"}}>{user.expirationDate}</h5>
-                      <Button variant="outline-info" size="sm"  href="/phuong-thuc-thanh-toan">Gia hạn</Button>
-                    </div>
                     <Button variant="danger" size="lg" onClick={logOut}>Đăng xuất</Button>
                 </Col>
             </Row>
@@ -117,20 +111,18 @@ export default function Taikhoan(props) {
                     <Modal.Title>Thay đổi thông tin</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <label>Tên shop</label><br />
-                            <input type="text" placeholder={user.shopName} onChange={(event) =>setFixName(event.target.value)} /><br />
+                            <label>First Name</label><br />
+                            <input type="text" placeholder={user.firstName} onChange={(event) =>setFixFName(event.target.value)} /><br />
+
+                            <label>Last Name</label><br />
+                            <input type="text" placeholder={user.lastName} onChange={(event) =>setFixLName(event.target.value)} /><br />
 
                             <label>Số điện thoại</label><br />
                             <input type="text" placeholder={user.phone} onChange={(event) =>setFixPhone(event.target.value)} /><br /><br />
 
                             <label>Email</label><br />
                             <input type="email" placeholder={user.email} onChange={(event) =>setFixEmail(event.target.value)} /><br />
-
-                            <label>Địa chỉ</label><br />
-                            <input type="text" placeholder={user.address} onChange={(event) =>setFixAddress(event.target.value)} /><br />
-
-                            <label>Thông tin</label><br />
-                            <input type="text" placeholder={user.detail} onChange={(event) =>setFixDetail(event.target.value)} /><br />
+                            {console.log(user.email)}
 
                             <label>Mật khẩu</label><br />
                             <input type="password" onChange={(event) =>setFixPassword(event.target.value)} /><br />

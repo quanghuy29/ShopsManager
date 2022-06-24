@@ -11,27 +11,47 @@ export default function Register() {
 	const [newEmail, setNewEmail] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 
+	const [responseData, setResponseData] = useState("");
 	const navigate = useNavigate();
+	var helloUse = []
+	const postUser = (event) => {
+		
+			const postIt = {
+				firstName: newFName,
+				lastName: newLName,
+				phone: newPhoneNumber,
+				email: newEmail,
+				password: newPassword,
+				roleCode: "shop"}
 
-	const postUser = () => {
-        const postIt = {
-			firstName: newFName,
-			lastName: newLName,
-			phoneNumber: newPhoneNumber,
-			email: newEmail,
-			password: newPassword,
-			role: "shop"}
+		axios.post('http://localhost:8080/ShopsManager_war_exploded/sign-up', postIt)
+		  	.then( res => {/*const response = res; setResponseData(response);*/helloUse.push(res.data)})
+		
+		setTimeout(checkIt, 1000);
+		
+		}
+
+	const checkIt = () => {
+		const setJsonData=JSON.stringify(helloUse[0]);
+		localStorage.setItem('userRegister', setJsonData);
+
+		const data = localStorage.getItem('userRegister');
+		const userRegisterLocal  = JSON.parse(data);
+
+		if(userRegisterLocal) navigate("/dang-ky-shop", { replace: true }); 
+	}
 
 
-        axios.post('http://localhost:8080/sign-up', postIt)
-            .then(res => res.json())
-    		.then(data => localStorage.setItem('userRegister', data))
-
-
-
-        navigate("/dang-ky-shop", { replace: true });
+		// {
+		// 	"firstName": "1",
+		// 	"lastname": "1",
+		// 	"phone": "1",
+		// 	"email": "1",
+		// 	"password": "1",
+		// 	"roleCode": "shop"
+		// }
        	
-    }
+
 	return (
 		<div>
 		<Container style={{maxWidth: '100%', margin: '1rem', marginTop:0}}>
@@ -63,11 +83,11 @@ export default function Register() {
 			</Col>
 			<Col xs={8} >
 				<h2 style = {{marginTop: '3rem', marginBottom: "2rem"}}>OmniChannel Account Register</h2>
-			    <input type="text" id="fullname" placeholder="Họ và tên đệm" style={{padding:"0.5rem", marginBottom: "1.5rem"}} size={35} onChange={(event) => {setNewFName(event)}} required/>
-			    <input type="text" id="fullname1" placeholder="Tên" style={{padding:"0.5rem", marginBottom: "1.5rem", marginLeft: "1.5rem"}} size={35} onChange={(event) => {setNewLName(event)}} required/><br />
-			    <input type="email" id="email" placeholder="Email" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30} onChange={(event) => {setNewEmail(event)}} required/>
-			    <input type="number" id="phonenumber" placeholder="Số điện thoại" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30} onChange={(event) => {setNewPhoneNumber(event)}} required/>
-			    <input type="password" id="password" placeholder="Mật khẩu" style={{padding:"0.5rem" , marginBottom: "1.5rem"}} size={30} onChange={(event) => {setNewPassword(event)}} required/><br />
+			    <input type="text" id="fullname" placeholder="Họ và tên đệm" style={{padding:"0.5rem", marginBottom: "1.5rem"}} size={35} onChange={(event) => {setNewFName(event.target.value)}} required/>
+			    <input type="text" id="fullname1" placeholder="Tên" style={{padding:"0.5rem", marginBottom: "1.5rem", marginLeft: "1.5rem"}} size={35} onChange={(event) => {setNewLName(event.target.value)}} required/><br />
+			    <input type="email" id="email" placeholder="Email" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30} onChange={(event) => {setNewEmail(event.target.value)}} required/>
+			    <input type="number" id="phonenumber" placeholder="Số điện thoại" style={{padding:"0.5rem" , marginBottom: "1.5rem" , marginRight: "1rem"}} size={30} onChange={(event) => {setNewPhoneNumber(event.target.value)}} required/>
+			    <input type="password" id="password" placeholder="Mật khẩu" style={{padding:"0.5rem" , marginBottom: "1.5rem"}} size={30} onChange={(event) => {setNewPassword(event.target.value)}} required/><br />
 			    <input type="checkbox" id="agree" style={{marginBottom: "2rem", marginTop: "1rem", marginRight: "0.2rem"}} required/>
 			    <label for="agree">Tôi đồng ý với điều khoản sử dụng của OmniChannel</label><br />
 			    

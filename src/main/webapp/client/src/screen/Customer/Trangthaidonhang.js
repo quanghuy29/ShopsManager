@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBarLogin from '../../component/NavBarLogin.js';
-import { Carousel, img, Button, Container, Row, Col, Card } from 'react-bootstrap';
+import { Carousel, img, Button, Container, Row, Col, Card, Navbar } from 'react-bootstrap';
 
 export default function Trangthaidonhang() {
     const data = localStorage.getItem('orderState');
@@ -9,19 +9,28 @@ export default function Trangthaidonhang() {
 
     const cancelOrder = () => {
         const putIt = {
-            shopID: orderState.shopId,
+            shopId: orderState.shopId,
             pay_money: orderState.pay_money,
             pay_date: orderState.pay_date,
             state: "2"}
 
 
-        axios.put('http://localhost:8080/register-shop/' + orderState.id, putIt)
+        axios.put('http://localhost:8080/ShopsManager_war_exploded/register-order' + orderState.id, putIt)
             .then(res => console.log(res))
+  
     }
 
     return (
         <div>
-        <NavBarLogin />
+        <div>
+            <Navbar bg="light" expand="lg">
+              <Container fluid>
+                <Navbar.Brand href="/dashboard" style = {{marginLeft: "40px", fontSize: '2.3rem', fontWeight: 700}}>OmniChannel</Navbar.Brand>
+                <Navbar.Collapse id="navbarScroll" style={{marginLeft: '34rem'}} >
+                </Navbar.Collapse>
+              </Container>
+          </Navbar>
+        </div>
         <Container style = {{maxWidth: '100%', marginTop: '1.5rem', margin: '0.5rem'}}>
             <Row>
                 <h2>Trạng thái đơn hàng</h2>

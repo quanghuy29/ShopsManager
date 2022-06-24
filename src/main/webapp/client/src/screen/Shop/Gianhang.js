@@ -43,7 +43,7 @@ export default function Gianhang(props) {
     const [newWebsite, setNewWebsite] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8080/shops")
+    fetch("http://localhost:8080/ShopsManager_war_exploded/shop")
     .then(res => res.json())
     .then(data => setShops(data))
 
@@ -52,39 +52,80 @@ export default function Gianhang(props) {
     let idShop;
     const dataLocal = localStorage.getItem('user');
     const userLocal  = JSON.parse(dataLocal);
-    if (userLocal && userLocal.role == "shop") { idShop= userLocal.userId} else {return <Navigate to={"/login"}  />};
+    if (userLocal && userLocal.role == "shop") { idShop= userLocal.shopId[0]} else {return <Navigate to={"/login"}  />};
 
   const postShop = () => {
     const postIt = {
+        userID: userLocal.userId,
         shopName: newName,
         website: newWebsite,
         address: newAddress,
         detail: newDetail,
         phone: newPhone,
-        email: newEmail,
-        userId: idShop
+        email: newEmail
         }
-    axios.post('http://localhost:8080/register-shop', postIt)
+    axios.post('http://localhost:8080/ShopsManager_war_exploded/register', postIt)
         .then(res => console.log(res))
     window.location.reload();
   }
 
+//   {
+//     "userID": 1,
+//     "shopName": "quanghuy1",
+//     "website": "alo",
+//     "address": "ha noi",
+//     "detail": "âsá",
+//     "phone": "123",
+//     "email": "abc",
+//     "state": 0,
+//     "createdDay": "2022-06-21",
+//     "lastRegisterDay": null
+// }
+
+  var date  = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth()+1;
+  var dt = date.getDate();
+ 
+  if (dt < 10) {
+    dt = '0' + dt;
+  }
+  if (month < 10) {
+    month = '0' + month;
+  }
+ 
+  const today = (year+'-' + month + '-'+dt);
+
 
   const putShop = () => {
     var putIt ={
-    userId: fixShop.userId,
+    userID: userLocal.userId,
     shopName: fixShop.shopName,
     website: fixShop.website,
     address: fixShop.address,
     detail: fixShop.detail,
     phone: fixShop.phone,
-    password: fixShop.password,
     email: fixShop.email,
     state:fixShop.state,
-    createdDay: fixShop.createdDay,
+    createdDay: today,
     lastRegisterDay: fixShop.lastRegisterDay,
     expirationDate: fixShop.expirationDate 
   }
+
+//   {
+//     "userID": 1,
+//     "shopName": "Quần áo mùa đông",
+//     "website": "quanaomuadong.com.vn",
+//     "address": "Đông Anh, Hà Nội",
+//     "detail": "Shop chính hãng",
+//     "phone": "0398494562",
+//     "email": "quanaomuadong@gmail.com",
+//     "state": 1,
+//     "createdDay": 1670778000000,
+//     "lastRegisterDay": 1670778000000,
+//     "expirationDay": null
+// }
+
     if (fixName) {putIt.shopName = fixName}
     if (fixAddress) {putIt.address = fixAddress}
     if (fixDetail) {putIt.detail = fixDetail}
@@ -93,8 +134,9 @@ export default function Gianhang(props) {
     if (fixWebsite) {putIt.website = fixWebsite}
     if (fixPassword) {putIt.password = fixPassword}
 
-    axios.put('http://localhost:8080/shop/'+ fixShop.shopId, putIt)
+    axios.put('http://localhost:8080/ShopsManager_war_exploded/shop/'+ fixShop.shopId, putIt)
         .then(res => console.log(res))
+    console.log(putIt);
     window.location.reload();
   }
 
@@ -114,15 +156,13 @@ export default function Gianhang(props) {
           <NavBarLogin />
           <Container style = {{maxWidth: '100%', marginTop: '1.5rem', margin: '0.5rem'}}>
               <Row>
-                  <Col xs={3}> <div style={{backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0}}>
+                  <Col xs={3}> <div style={{paddingBottom: "11rem", backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0,position: "fixed", zIndex: 999}}>
                     <h5 style={{paddingTop: '2rem'}}>
                         <a href={"/dashboard"} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
                         <a href={"/don-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Đơn hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
                         <a href={"/san-pham"} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
-                    <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/gian-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
                         <a href={"/khach-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '4.5rem'}}>
@@ -216,7 +256,7 @@ export default function Gianhang(props) {
                         <Button variant="secondary" onClick={handleClose}>
                             Thoát
                         </Button>
-                        <Button variant="primary" onClick={handleClose}>
+                        <Button variant="primary" onClick={() => {handleClose(); postShop()}}>
                             Thêm gian hàng
                         </Button>
                 </Modal.Footer>
@@ -242,7 +282,7 @@ export default function Gianhang(props) {
                             <input type="number" placeholder={fixShop.phone} onChange={(event) =>setFixPhone(event.target.value)}/><br />
 
                             <label>Địa chỉ</label><br />
-                            <input type="text" placeholder={fixShop.address} onChange={(event) =>setFixDetail(event.target.value)}/><br />
+                            <input type="text" placeholder={fixShop.address} onChange={(event) =>setFixAddress(event.target.value)}/><br />
                                                         
                             <label>Thông tin thêm</label><br />
                             <input type="text" placeholder={fixShop.detail} onChange={(event) =>setFixDetail(event.target.value)}/><br />

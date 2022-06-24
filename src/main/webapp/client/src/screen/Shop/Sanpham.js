@@ -4,6 +4,9 @@ import NavBarLogin from '../../component/NavBarLogin.js';
 import Nav from '../../component/Nav.js';
 import { Carousel, img, Button, Container, Row, Col, Tabs, Tab, Card,Modal, Image } from 'react-bootstrap';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import ImageUpload from 'image-upload-react'
+import 'image-upload-react/dist/index.css'
+import SweetPagination from "sweetpagination";
 
 export default function Sanpham(props) {
     const [show, setShow] = useState(false);
@@ -30,7 +33,12 @@ export default function Sanpham(props) {
   const [newPrice, setNewPrice] = useState('');
   const [newAvailable, setNewAvailable] = useState('');
   const [newDetail, setNewDetail] = useState('');
-  const [image, setNewImage] = useState('');
+  const [newImage, setNewImage] = useState();
+  const [newImage2, setNewImage2] = useState();
+
+  const [urlImage, setUrlImage] = useState();
+
+  
 
   // update product
   const [fixPrice, setFixPrice] = useState('');
@@ -44,88 +52,149 @@ export default function Sanpham(props) {
 
   // get product
     useEffect(() => {
-        fetch("http://localhost:8080/products")
+        fetch("http://localhost:8080/ShopsManager_war_exploded/product/shop/" + idShop)
         .then(res => res.json())
-        .then(data => setProducts(data))
+        .then(data => setProducts(data.listResult))
       },[])
 
-    let idShop;
-    const dataLocal = localStorage.getItem('user');
-    const userLocal  = JSON.parse(dataLocal);
-    if (userLocal  && userLocal.role == "shop") { idShop= userLocal.userId} else {return <Navigate to={"/login"}  />};
+      const handleImageSelect = (e) => {
+        setNewImage(URL.createObjectURL(e.target.files[0]));
+        setNewImage2(URL.createObjectURL(e.target.files[0]))
+      }
+
+      let idShop;
+      const dataLocal = localStorage.getItem('user');
+      const userLocal  = JSON.parse(dataLocal);
+      if (userLocal  && userLocal.role == "shop") { idShop= userLocal.shopId[0]} else {return <Navigate to={"/login"}  />};
+      
+    var date  = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth()+1;
+  var dt = date.getDate();
+ 
+  if (dt < 10) {
+    dt = '0' + dt;
+  }
+  if (month < 10) {
+    month = '0' + month;
+  }
+ 
+  const today = (year+'-' + month + '-'+dt);
 
   const postProduct = () => {
-    let date = Date();
     const postIt = {
-        shopid: idShop, 
+        shopId: idShop,
         category: newCategory, 
-        productName: newProductName, 
-        detail: newDetail, 
+        name: newProductName, 
+        description: newDetail, 
         price: newPrice, 
-        image: image, 
+        image: dataUrl[0], 
         available: newAvailable, 
-        createdDay: date}
+        createdDay: today}
 
-    axios.post('http://localhost:8080/product', postIt)
+    axios.post('http://localhost:8080/ShopsManager_war_exploded/product', postIt)
         .then(res => console.log(res))
+        console.log(postIt);
+    window.location.reload();
   }
 
   const updateProduct = () => {
     const putIt = {
-        productID: fixProduct.productID, 
-        shopid: fixProduct.shopid, 
+        shopId: idShop,
         category: fixProduct.category, 
-        productName: fixProduct.productName, 
-        detail: fixProduct.detail, 
+        name: fixProduct.name, 
+        description: fixProduct.description, 
         price: fixProduct.price, 
-        image: fixProduct.image, 
+        image: dataUrl2[0],
         available: fixProduct.available, 
-        createdDay: fixProduct.createdDay}
+        createdDay: today}
 
     if (fixPrice) {putIt.price = fixPrice}
-    if (fixDetail) {putIt.detail = fixDetail}
-    if (fixProductName) {putIt.productName = fixProductName}
-    if (fixImage) {putIt.image = fixImage}
+    if (fixDetail) {putIt.description = fixDetail}
+    if (fixProductName) {putIt.name = fixProductName}
     if (fixAvailable) {putIt.available = fixAvailable}
     if (fixCategory) {putIt.category = fixCategory}
 
 
-    axios.put('http://localhost:8080/product/'+ fixProduct.productID, putIt)
+    axios.put('http://localhost:8080/ShopsManager_war_exploded/product/'+ fixProduct.id, putIt)
         .then(res => console.log(res))
+    window.location.reload();
   }
 // delete product
-    
-    const deleteProductFunction = () => {
-    axios.delete('http://localhost:8080/product/'+ deleteProduct, {productID: deleteProduct})
-        .then(res => console.log(res))
+const dataUrl = [];
+const uploadImage = (e) => {
+  const formData = new FormData();
+  formData.append("file", newImage);
+  formData.append("upload_preset", "project2");
+  // Tải ảnh lên cloudinary
+  // API: https://api.cloudinary.com/v1_1/{Cloudinary-Name}/image/upload
+  axios
+    .post("https://api.cloudinary.com/v1_1/huong-pham-van/image/upload", formData)
+    .then((response) => {/*setTimeout(setUrlImage(response.data.url), 2200);*/ console.log(urlImage); dataUrl.push(response.data.url)})
+    .catch((err) => console.error(err));
+
+  setTimeout(postProduct, 2000);
+};
+
+const dataUrl2 = [];
+const uploadImage2 = (e) => {
+  const formData = new FormData();
+  formData.append("file", newImage2);
+  formData.append("upload_preset", "project2");
+  // Tải ảnh lên cloudinary
+  // API: https://api.cloudinary.com/v1_1/{Cloudinary-Name}/image/upload
+  axios
+    .post("https://api.cloudinary.com/v1_1/huong-pham-van/image/upload", formData)
+    .then((response) => {/*setTimeout(setUrlImage(response.data.url), 2200);*/ dataUrl2.push(response.data.url)})
+    .catch((err) => console.error(err));
+
+  setTimeout(updateProduct, 2000);
+};
+
+
+
+    const deleteProductFunction = (ID) => {
+
+      const payload = {
+        idProduct: ID
+      };
+
+      axios.delete('http://localhost:8080/ShopsManager_war_exploded/product/' + ID, payload)
+        .then(function (response) {
+          console.log(response);
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+     window.location.reload();
   }
   
   console.log(products)
     return (
         <div>
           <NavBarLogin />
-          <Container style = {{maxWidth: '100%', marginTop: '1.5rem', margin: '0.5rem'}}>
+          <Container style = {{maxWidth: '100%', height:" 100%", marginTop: 0}}>
               <Row>
-                  <Col xs={3}> <div style={{backgroundColor: "#f5f5f5", marginTop: '0rem', paddingRight: 0, paddingLeft: 0}}>
+
+                  <Col xs={3}> <div style={{paddingBottom: "11rem", backgroundColor: "#f5f5f5", marginTop: '6rem', position: "fixed", paddingLeft: "7rem", paddingRight: "7rem",position: "fixed", zIndex: 999}}>
                     <h5 style={{paddingTop: '2rem'}}>
                         <a href={"/dashboard"} style = {{textDecoration: 'none', color: '#221e1e'}}>Dashboard</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
                         <a href={"/don-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Đơn hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem'}}>
                         <a href={"/san-pham"} style = {{textDecoration: 'none', color: '#221e1e'}}>Sản phẩm</a></h5>
-                    <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
-                        <a href={"/gian-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Gian hàng</a></h5>
+
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '1rem'}}>
                         <a href={"/khach-hang"} style = {{textDecoration: 'none', color: '#221e1e'}}>Khách hàng</a></h5>
                     <h5 style={{paddingTop: '2.5rem', paddingBottom: '4.5rem'}}>
                         <a href={"/tai-khoan"} style = {{textDecoration: 'none', color: '#221e1e'}}>Tài khoản</a></h5>
                 </div> </Col>
-                  <Col xs={9}>
+                  <Col xs={9} style={{marginTop: "6rem"}}>
                     <Tabs defaultActiveKey="tatCa" id="uncontrolled-tab-example" className="mb-3">
                       <Tab eventKey="tatCa" title="Tất cả">
                         <div style={{display: "flex"}}>
                             <h3 style ={{marginRight: "33rem"}}>{products.length} sản phẩm</h3>
-                            <Button variant="info" style={{marginBottom: "1rem"}} onClick={handleShow}>Thêm sản phẩm mới</Button>
+                            <Button variant="info" style={{marginBottom: "2rem"}} onClick={handleShow}>Thêm sản phẩm mới</Button>
                         </div>
                         <div>
                           <Row>
@@ -133,17 +202,18 @@ export default function Sanpham(props) {
                             <Card style={{ width: '11.5rem', height: "18rem", marginRight: "0.8rem", marginBottom: "1rem"}} >
                               <Card.Img variant="top" src={pro.image} style={{ width: '9rem', height: "9rem"}}/>
                               <Card.Body style= {{paddingLeft: 0}}>
-                                <h6 style= {{ whiteSpace: "nowrap", width: "10.5rem", overflow: "hidden", textOverflow: "ellipsis"}}>{pro.productName}</h6>
+                                <h6 style= {{ whiteSpace: "nowrap", width: "10.5rem", overflow: "hidden", textOverflow: "ellipsis"}}>{pro.name}</h6>
                                 <div style={{display: "flex"}}>
-                                  <h9 style={{textAlign: "left", marginRight: "0.8rem"}}>{pro.price}đ</h9>
+                                  <h9 style={{textAlign: "left", marginRight: "0.6rem"}}>Price: {pro.price}đ</h9>
                                   <h9 style={{textAlign: "right"}}>Stock: {pro.available}</h9>
                                 </div>
                                 <Button variant="info" size="sm" style={{marginRight: "0.3rem"}} onClick={() => {handleShow3(); setViewProduct(pro)}}>Xem</Button>
                                 <Button variant="outline-info" size="sm" onClick={() => {handleShow2(); setFixProduct(pro)}}>Sửa</Button>
-                                <Button variant="info" size="sm" style={{marginLeft: "0.3rem"}} onClick={() => {deleteProductFunction(); setDeleteProduct(pro.productID)}}>Xóa</Button>
+                                <Button variant="info" size="sm" style={{marginLeft: "0.3rem"}} onClick={() => {deleteProductFunction(pro.id);}}>Xóa</Button>
                               </Card.Body>
                             </Card>)})}
                           </Row>
+
                         </div>
                       </Tab>
                    
@@ -174,13 +244,17 @@ export default function Sanpham(props) {
                             <input type="number"  onChange={(event) =>setNewAvailable(event.target.value)} required/><br />
                         
                             <h5>Hình ảnh</h5>
-                            <input type="file"  onChange={(event) =>setNewImage(event.target.value)} required/><br />
+                            <input
+                              type="file"
+                              accept="image/png, image/gif, image/jpeg"
+                              onChange={(e) => setNewImage(e.target.files[0])}
+                            />
                         </Modal.Body>
                         <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Thoát
                         </Button>
-                        <Button variant="primary" onClick={() => {handleClose(); postProduct()}}>
+                        <Button variant="primary" onClick={() => {handleClose(); uploadImage();}}>
                             Thêm sản phẩm
                         </Button>
                 </Modal.Footer>
@@ -193,13 +267,13 @@ export default function Sanpham(props) {
                             <h5>Thêm sản phẩm</h5>
                             <label>Ngành hàng</label><br />
                             <input type="text" placeholder={fixProduct.category} onChange={(event) =>setFixCategory(event.target.value)}/><br />
-                            <label>Mã shop</label><br />
-                            <input type="text" value={fixProduct.shopid}></input><br />
+                            {/* <label>Mã shop</label><br />
+                            <input type="text" value={fixProduct.shopid}></input><br /> */}
                             <label>Tên sản phẩm</label><br />
                             <input type="text" placeholder={fixProduct.productName} onChange={(event) =>setFixProductName(event.target.value)}/><br /><br />
 
                             <label>Mô tả sản phẩm</label><br />
-                            <input type="text" placeholder={fixProduct.detail} onChange={(event) =>setFixDetail(event.target.value)}/><br />
+                            <input type="text" placeholder={fixProduct.description} onChange={(event) =>setFixDetail(event.target.value)}/><br />
 
                             <label>Giá</label><br />
                             <input type="text" placeholder={fixProduct.price} onChange={(event) =>setFixPrice(event.target.value)}/><br />
@@ -209,13 +283,17 @@ export default function Sanpham(props) {
                             
 
                             <h5>Hình ảnh</h5>
-                            <input type="file" onChange={(data) =>setFixImage(data)}/><br />
+                            <input
+                              type="file"
+                              accept="image/png, image/gif, image/jpeg"
+                              onChange={(e) => setNewImage2(e.target.files[0])}
+                            />
                         </Modal.Body>
                         <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose2}>
                             Thoát
                         </Button>
-                        <Button variant="primary" onClick={() => {handleClose2(); updateProduct()}}>
+                        <Button variant="primary" onClick={() => {handleClose2(); uploadImage2();}}>
                             Sửa sản phẩm
                         </Button>
                 </Modal.Footer>
@@ -229,13 +307,13 @@ export default function Sanpham(props) {
                             <p>{viewProduct.category}</p><br />
 
                             <label>ID sản phẩm</label><br />
-                            <p>{viewProduct.productID}</p><br />
+                            <p>{viewProduct.id}</p><br />
 
                             <label>Tên sản phẩm</label><br />
-                            <p>{viewProduct.productName}</p><br />
+                            <p>{viewProduct.name}</p><br />
 
                             <label>Mô tả sản phẩm</label><br />
-                            <p>{viewProduct.detail}</p><br />
+                            <p>{viewProduct.description}</p><br />
 
                             <label>Giá</label><br />
                             <p>{viewProduct.price}</p><br />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, img, Card, Button, Tabs,Tab, Navbar, NavDropdown, Nav, Form, FormControl } from 'react-bootstrap';
 import axios from 'axios';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { createBrowserHistory } from 'history';
 
 
@@ -13,30 +13,36 @@ export default function Login(props) {
 
 	const [user, setUser] = useState("");
 
-	const setLocalStorage = () => {
-	const setJsonData=JSON.stringify(user);
-	localStorage.setItem('user', setJsonData);
-}
-	
+	const navigate = useNavigate();
 
 	let location = useLocation();
 	const history = createBrowserHistory();
 	var linkToShop = "/dashboard";
 
 	const loginFunction = () => {
-		const postIt = {phoneNumber: phone,
-			email: email,
-			password: password}
+		var postIt;
+		if (email) { postIt = { email: email,
+			password: password}}
+		if (phone) { postIt = {phoneNumber: phone,
+			password: password}}
 
-		axios.post('http://localhost:8080/login', postIt)
-            .then(res => setUser(res))
+		axios.post('http://localhost:8080/ShopsManager_war_exploded/login', postIt)
+			.then(res => setUser(res.data))
 
-        setLocalStorage();
+		if(user) {
+            const setJsonData=JSON.stringify(user);
+			localStorage.setItem('user', setJsonData); checkLogin();}
 	}
 
-  	if(user.role == "admin") { return <Navigate to="/admin" state={{ from: location }} />}
-    else if(user.role == "shop")
-   { return <Navigate to={linkToShop} state={{ from: location }}  />}
+	const checkLogin = () => {
+	const dataLocal = localStorage.getItem('user');
+    const userLocal  = JSON.parse(dataLocal);
+	
+
+  	if(userLocal.role == "admin") {  navigate("/admin", { replace: true });}
+    else if(userLocal.role == "shop")
+   { navigate("/dashboard", { replace: true });}}
+	
 
 	return (
 		<div>

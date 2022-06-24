@@ -10,7 +10,7 @@ export default function Quanlydata(props) {
       const [customers, setCustomers] = useState("");
       const [deleteCustomer, setDeleteCustomer] = useState("");
       useEffect(() => {
-        fetch("http://localhost:8080/customers")
+        fetch("http://localhost:8080/ShopsManager_war_exploded/customer")
         .then(res => res.json())
         .then(data => setCustomers(data))
       },[])
@@ -21,7 +21,7 @@ export default function Quanlydata(props) {
 
       const deleteShopFunction = () => {
         const deleteIt = {}
-        axios.delete('http://localhost:8080/shops', deleteIt)
+        axios.delete('http://localhost:8080/ShopsManager_war_exploded/shop', deleteIt)
             .then(res => console.log(res))
         window.location.reload();
     }
@@ -36,7 +36,7 @@ export default function Quanlydata(props) {
                     <Col xs={3}>
                         <Navadmin />
                     </Col>
-                    <Col xs={9}>
+                    <Col xs={9} style={{marginTop: "6rem"}}>
                         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
                       <Tab eventKey="profile" title="Khách hàng">
                         <Container>
@@ -50,10 +50,10 @@ export default function Quanlydata(props) {
                             <Col xs={2}>
                               <h5>Số điện thoại</h5>
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={3}>
                               <h5>Địa chỉ</h5>
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={3}>
                               <h5>Email</h5>
                             </Col>
 
@@ -61,7 +61,7 @@ export default function Quanlydata(props) {
                           { customers && customers.map((customer) => { return(
                           <Row>
                             <Col xs={2}>
-                              <p>{customer.customerId}</p>
+                              <p>{customer.id}</p>
                             </Col>
                             <Col xs={2}>
                               <p>{customer.firstName + " " + customer.lastName}</p>
@@ -69,10 +69,10 @@ export default function Quanlydata(props) {
                             <Col xs={2}>
                               <p>{customer.phone}</p>
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={3}>
                               <p>{customer.address}</p>
                             </Col>
-                            <Col xs={2}>
+                            <Col xs={3}>
                               <p>{customer.email}</p>
                             </Col>
                           </Row>)})}
