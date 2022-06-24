@@ -6,6 +6,7 @@ import { Carousel, img, Button, Container, Row, Col, Tabs, Tab, Modal } from 're
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 export default function Donhang(props) {
+    var resp = [];
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -29,13 +30,18 @@ export default function Donhang(props) {
     const [newProduct3, setNewProduct3] = useState('');
     const [newQuantity3, setNewQuantity3] = useState('');
     const [newCustomerId, setNewCustomerId] = useState('');
-    const [newDetail, setNewDetail] = useState('');
     const [newTotalPrice, setNewTotalPrice] = useState('');
     const [newShipingFee, setNewShipingFee] = useState('');
     const [newTotalPayment, setNewTotalPayment] = useState('');
     const [newState, setNewState] = useState('');
     const [newShipName, setNewShipName] = useState('');
     const [newChannel, setNewChannel] = useState('');
+
+    const [newFName, setNewFName] = useState('');
+    const [newLName, setNewLName] = useState('');
+    const [newPhone, setNewPhone] = useState('');
+    const [newAddress, setNewAddress] = useState('');
+    const [newEmail, setNewEmail] = useState('');
 
     const [changeState, setChangeState] = useState('');
 
@@ -98,29 +104,25 @@ export default function Donhang(props) {
  
   const today = (year+'-' + month + '-'+dt);
 
-    const postOrder = () => {
-        const postIt = {
-            shopId: idShop,
-            ship:
-              {name: newShipName},
-            orderDetail:
-                 [
-                    {productId: newProduct, quantity: newQuantity}
-                ],
-            customerId: newCustomerId,
-            detail: newChannel,
-            createdDay: today,
-            totalPrice: newTotalPrice,
-            shippingFee: newShipingFee,
-            trasitionFee: 0,
-            totalPayment: newTotalPayment,
-            state: newState }
-        if (newProduct2) {postIt.orderDetail.push({productId: newProduct2, quantity: newQuantity2})}
-        if (newProduct3) {postIt.orderDetail.push({productId: newProduct3, quantity: newQuantity3})}
-        console.log(postIt);
-        axios.post('http://localhost:8080/ShopsManager_war_exploded/order', postIt)
-            .then(res => console.log(res))
-        window.location.reload();
+
+var NewCusId = [];
+const postOrder = () => {
+        const postCus = {
+            firstName: newFName,
+            lastName: newLName,
+            address: newAddress,
+            phone: newPhone,
+            email: newEmail
+            }
+
+        
+        axios.post('http://localhost:8080/ShopsManager_war_exploded/customer', postCus)
+            .then(res => {
+                NewCusId.push(res.data.id)
+            })
+
+        setTimeout(direct, 1000);
+       
 
         // {
         //     "shopId":"3",
@@ -140,6 +142,34 @@ export default function Donhang(props) {
         //         }
         //     ]
         // }
+    }
+
+    const direct = () => {
+        console.log(NewCusId);
+        const postIt = {
+            shopId: idShop,
+            ship:
+            {name: newShipName},
+            orderDetail:
+                [
+                    {productId: newProduct, quantity: newQuantity}
+                ],
+            customerId: NewCusId[0],
+            detail: newChannel,
+            createdDay: today,
+            totalPrice: newTotalPrice,
+            shippingFee: newShipingFee,
+            trasitionFee: 0,
+            totalPayment: newTotalPayment,
+            state: newState
+        }
+        
+        if (newProduct2) {postIt.orderDetail.push({productId: newProduct2, quantity: newQuantity2})}
+        if (newProduct3) {postIt.orderDetail.push({productId: newProduct3, quantity: newQuantity3})}
+
+        console.log(postIt);
+        axios.post('http://localhost:8080/ShopsManager_war_exploded/order', postIt)
+            .then(res => console.log(res)) 
     }
 
     const checkStateOrder = (item) => {
@@ -280,9 +310,23 @@ export default function Donhang(props) {
                             <label>Kênh bán hàng</label><br />
                             <input type="text" onChange={(event) => {setNewChannel(event.target.value)}} required/><br /><br />
 
+                            {/* Thêm khách hàng */}
                             <h5>Khách hàng</h5>
-                            <label>ID Khách hàng</label><br />
-                            <input type="text" onChange={(event) => {setNewCustomerId(event.target.value)}} required/><br /><br />
+                            <label>Họ và tên đệm khách hàng</label><br />
+                            <input type="text" onChange={(event) => {setNewFName(event.target.value)}} required/><br /><br />
+
+                            <label>Tên khách hàng</label><br />
+                            <input type="text" onChange={(event) => {setNewLName(event.target.value)}} required/><br /><br />
+
+                            <label>SĐT liên hệ</label><br />
+                            <input type="text" onChange={(event) => {setNewPhone(event.target.value)}} required/><br /><br />
+
+                            <label>Email liên hệ</label><br />
+                            <input type="text" onChange={(event) => {setNewEmail(event.target.value)}} required/><br /><br />
+
+                            <label>Địa chỉ giao hàng</label><br />
+                            <input type="text" onChange={(event) => {setNewAddress(event.target.value)}} required/><br /><br />
+                            {/* Thêm khách hàng */}
 
                             <h5>Tổng giá tiền</h5>
                             <input type="number" onChange={(event) => {setNewTotalPrice(event.target.value)}} required/><br /><br />
