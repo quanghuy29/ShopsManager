@@ -15,21 +15,60 @@ export default function Register() {
 	const navigate = useNavigate();
 	var helloUse = []
 	const postUser = (event) => {
-		
-			const postIt = {
-				firstName: newFName,
-				lastName: newLName,
-				phone: newPhoneNumber,
-				email: newEmail,
-				password: newPassword,
-				roleCode: "shop"}
+		let isCheck = true;
+		if (newFName == '') {
+			alert("Firt name không được để trống");
+			isCheck = false;
+		}
+		else if (newLName == '') {
+			alert("Last name không được để trống");
+			isCheck = false;
+		}
+		else if (newEmail == "") {
+			alert("Email không được để trống");
+			isCheck = false;
+		} else if (!isEmail(newEmail)) {
+			alert("Email không đúng định dạng");
+			isCheck = false;
+		}
+		else if (newPassword == '') {
+			alert("Password không được để trống");
+			isCheck = false;
+		}
+		else if (newPhoneNumber == "") {
+			alert("Phone không được để trống");
+			isCheck = false;
+		} else if (!isPhone(newPhoneNumber)) {
+			alert("Phone không đúng định dạng");
+			isCheck = false;
+		}
 
-		axios.post('http://localhost:8080/ShopsManager_war_exploded/sign-up', postIt)
+		const postIt = {
+			firstName: newFName,
+			lastName: newLName,
+			phone: newPhoneNumber,
+			email: newEmail,
+			password: newPassword,
+			roleCode: "shop"
+		}
+
+		if(isCheck == true) {
+			axios.post('http://localhost:8080/ShopsManager_war_exploded/sign-up', postIt)
 		  	.then( res => {/*const response = res; setResponseData(response);*/helloUse.push(res.data)})
 		
-		setTimeout(checkIt, 1000);
-		
+			setTimeout(checkIt, 1000);
 		}
+	}
+
+	function isEmail(email) {
+		return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+			email
+		);
+	}
+
+	function isPhone(number) {
+		return /(84|0[3|5|7|8|9])+([0-9]{8})\b/.test(number);
+	}
 
 	const checkIt = () => {
 		const setJsonData=JSON.stringify(helloUse[0]);
@@ -40,18 +79,7 @@ export default function Register() {
 
 		if(userRegisterLocal) navigate("/dang-ky-shop", { replace: true }); 
 	}
-
-
-		// {
-		// 	"firstName": "1",
-		// 	"lastname": "1",
-		// 	"phone": "1",
-		// 	"email": "1",
-		// 	"password": "1",
-		// 	"roleCode": "shop"
-		// }
-       	
-
+    
 	return (
 		<div>
 		<Container style={{maxWidth: '100%', margin: '1rem', marginTop:0}}>
