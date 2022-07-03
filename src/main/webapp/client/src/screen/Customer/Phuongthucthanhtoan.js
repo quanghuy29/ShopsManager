@@ -8,6 +8,9 @@ export default function Phuongthucthanhtoan() {
     const data = localStorage.getItem('shopRegister');
     const shopRegisterLocal  = JSON.parse(data);
 
+    const data1 = localStorage.getItem('user');
+    const userLocal  = JSON.parse(data1);
+
     const navigate = useNavigate();
 
     const [response, setResponse] = useState("");
@@ -31,12 +34,13 @@ export default function Phuongthucthanhtoan() {
 
         
         const postIt = {
-                shopId: shopRegisterLocal.data.shopId,
+                shopId: "shopRegisterLocal.data.shopId",
                 pay_money: "120000",
                 pay_date: today,
                 state: "0"
             }
-
+        if ( !shopRegisterLocal || userLocal) {postIt.shopId = userLocal.shopId[0]}
+        if ( shopRegisterLocal || !userLocal) {postIt.shopId = shopRegisterLocal.data.shopId}
         axios.post('http://localhost:8080/ShopsManager_war_exploded/register-order', postIt)
             .then(res => resp.push(res.data))
             .then(Res => console.log(Res))
@@ -83,7 +87,7 @@ export default function Phuongthucthanhtoan() {
                       <p>Số tài khoản: 109393230232332</p>
                       <p>Người nhận: Tổm Thị Tỉm</p>
                       <p>Số tiền: 120.000đ</p>
-                      <p>Nội dung: {shopRegisterLocal.shopId} nạp tiền</p>
+                      <p>Nội dung: {shopRegisterLocal? shopRegisterLocal.shopId : userLocal.shopId[0]} nạp tiền</p>
                       <Button variant="info" onClick={registerOrder}>Đăng ký</Button>
                     </Accordion.Body>
                   </Accordion.Item>
@@ -93,7 +97,7 @@ export default function Phuongthucthanhtoan() {
                      <p> Số điện thoại: 0929219222</p>
                       <p>Người nhận: Tổm Thị Tỉm</p>
                       <p>Số tiền: 120.000đ</p>
-                      <p>Nội dung: {shopRegisterLocal.shopId} nạp tiền</p>
+                      <p>Nội dung: {shopRegisterLocal? shopRegisterLocal.shopId : userLocal.shopId[0]} nạp tiền</p>
                       <Button variant="info" onClick={registerOrder}>Đăng ký</Button>
                     </Accordion.Body>
                   </Accordion.Item>

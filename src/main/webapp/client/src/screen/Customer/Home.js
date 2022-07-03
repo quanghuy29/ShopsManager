@@ -8,7 +8,7 @@ export default function Home() {
     return (
         <div>
             <NavBar />
-            <div style={{backgroundColor: '#f0f0ff'}}>
+            <div style={{backgroundColor: '#f0f0ff', marginTop: "0rem", paddingTop: "6rem"}}>
             <Container>
                 <Row>
                     <Col sm={5} style={{backgroundColor:'#f0f0ff', padding: '5rem'}}>

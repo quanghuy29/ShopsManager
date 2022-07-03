@@ -39,6 +39,9 @@ export default function Sanpham(props) {
   const [urlImage, setUrlImage] = useState();
 
   
+  const [category, setCategory] = useState('');
+  const [getNewCategory, setGetNewCategory] = useState('');
+  
 
   // update product
   const [fixPrice, setFixPrice] = useState('');
@@ -55,6 +58,10 @@ export default function Sanpham(props) {
         fetch("http://localhost:8080/ShopsManager_war_exploded/product/shop/" + idShop)
         .then(res => res.json())
         .then(data => setProducts(data.listResult))
+
+        fetch("http://localhost:8080/ShopsManager_war_exploded/category")
+        .then(res => res.json())
+        .then(data => setCategory(data.listResult))
       },[])
 
       const handleImageSelect = (e) => {
@@ -105,7 +112,7 @@ export default function Sanpham(props) {
         name: fixProduct.name, 
         description: fixProduct.description, 
         price: fixProduct.price, 
-        image: dataUrl2[0],
+        image: fixProduct.image,
         available: fixProduct.available, 
         createdDay: today}
 
@@ -114,6 +121,7 @@ export default function Sanpham(props) {
     if (fixProductName) {putIt.name = fixProductName}
     if (fixAvailable) {putIt.available = fixAvailable}
     if (fixCategory) {putIt.category = fixCategory}
+    if(dataUrl2[0]) {putIt.image = dataUrl2[0]}
 
 
     axios.put('http://localhost:8080/ShopsManager_war_exploded/product/'+ fixProduct.id, putIt)
@@ -228,11 +236,16 @@ const uploadImage2 = (e) => {
                         </Modal.Header>
                         <Modal.Body>
                             <h5>Thêm sản phẩm</h5>
-                            <label>Ngành hàng</label><br />
-                            <input type="text" onChange={(event) =>setNewCategory(event.target.value)} required/><br />
+                            <label>Ngành hàng</label><br />                       
+                              <select onChange={(even) => {setNewCategory(even.target.value);}}>
+                                {category && category.map((item) => {return(
+                                      <option value={item.categoryName}>{item.categoryName}</option>
+                                    )})}
+                              </select><br />
+                            
 
                             <label>Tên sản phẩm</label><br />
-                            <input type="text"  onChange={(event) =>setNewProductName(event.target.value)} required/><br /><br />
+                            <input type="text"  onChange={(event) =>setNewProductName(event.target.value)} required/><br />
 
                             <label>Mô tả sản phẩm</label><br />
                             <input type="text"  onChange={(event) =>setNewDetail(event.target.value)} required/><br />
@@ -264,13 +277,18 @@ const uploadImage2 = (e) => {
                     <Modal.Title>Chỉnh sửa sản phẩm</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <h5>Thêm sản phẩm</h5>
+                            <h5>Chỉnh sửa sản phẩm</h5>
                             <label>Ngành hàng</label><br />
-                            <input type="text" placeholder={fixProduct.category} onChange={(event) =>setFixCategory(event.target.value)}/><br />
+                            
+                            <select onChange={(even) => {setFixCategory(even.target.value);}}>
+                                {category && category.map((item) => {return(
+                                      <option value={item.categoryName}>{item.categoryName}</option>
+                                    )})}
+                              </select><br />
                             {/* <label>Mã shop</label><br />
                             <input type="text" value={fixProduct.shopid}></input><br /> */}
                             <label>Tên sản phẩm</label><br />
-                            <input type="text" placeholder={fixProduct.productName} onChange={(event) =>setFixProductName(event.target.value)}/><br /><br />
+                            <input type="text" placeholder={fixProduct.productName} onChange={(event) =>setFixProductName(event.target.value)}/><br />
 
                             <label>Mô tả sản phẩm</label><br />
                             <input type="text" placeholder={fixProduct.description} onChange={(event) =>setFixDetail(event.target.value)}/><br />

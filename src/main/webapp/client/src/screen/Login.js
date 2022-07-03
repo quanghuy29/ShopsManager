@@ -19,15 +19,16 @@ export default function Login(props) {
 	const history = createBrowserHistory();
 	var linkToShop = "/dashboard";
 
+	const userData = []
 	const loginFunction = () => {
 		let isCheck = true;
 		var postIt;
 
 		if (email) {
-			if (email == "") {
+			if ( (email == "") && (email != "admin")) {
 				alert("Email không được để trống");
 				isCheck = false;
-			} else if (!isEmail(email)) {
+			} else if (!isEmail(email) && (email != "admin")) {
 				alert("Email không đúng định dạng");
 				isCheck = false;
 			}
@@ -57,21 +58,25 @@ export default function Login(props) {
 				password: password
 			}
 		}
-
-		console.log(postIt);
-
+		
 		if(isCheck == true) {
 			axios.post('http://localhost:8080/ShopsManager_war_exploded/login', postIt)
 			.then(res => {
-				if(res.data.status == "Error") alert("Thông tin đăng nhập không chính xác");
-				else setUser(res.data);
+				console.log(res);
+				if(userData) {userData.shift();}
+				userData.push(res.data);
 			})
+			setTimeout(isLogin, 1000);
 
-		    if(user) {
-				const setJsonData=JSON.stringify(user);
-				localStorage.setItem('user', setJsonData); checkLogin();
-			}
+		    
 		}
+	}
+	const isLogin = () => {
+		if(userData[0].status == "Error") {alert("Thông tin đăng nhập không chính xác");} else {
+			const setJsonData=JSON.stringify(userData[0]);
+			localStorage.setItem('user', setJsonData); 
+			checkLogin();}
+
 	}
 
 	function isEmail(email) {
@@ -87,11 +92,25 @@ export default function Login(props) {
 	const checkLogin = () => {
 	const dataLocal = localStorage.getItem('user');
     const userLocal  = JSON.parse(dataLocal);
+	console.log(userLocal.shopId.length);
 	
+  	if(userLocal.role == "admin") { navigate("/admin", { replace: true }); }
+    if(userLocal.role == "shop" && userLocal.shopId.length == 0) { navigate("/dang-ky-shop", { replace: true }); }
+	if (userLocal.role == "shop" && userLocal.stateShop[0] == 0) { navigate("/phuong-thuc-thanh-toan", { replace: true }); }
+	if (userLocal.role == "shop" && userLocal.stateShop[0] == 1 && userLocal.shopId) { navigate("/dashboard", { replace: true }); }}
 
-  	if(userLocal.role == "admin") {  navigate("/admin", { replace: true });}
-    else if(userLocal.role == "shop")
-   { navigate("/dashboard", { replace: true });}}
+  /* {
+    "userId": 149,
+    "shopId": [
+        42
+    ],
+    "role": "shop",
+    "expirationDay": null,
+    "stateUser": 0,
+    "stateShop": [
+        1
+    ]
+}*/
 	
 
 	return (

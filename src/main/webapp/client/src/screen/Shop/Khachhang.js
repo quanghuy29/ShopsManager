@@ -53,7 +53,6 @@ const postCustomertFunction = () => {
         phone: newPhone,
         email: newEmail
         }
-
     axios.post('http://localhost:8080/ShopsManager_war_exploded/customer', postIt)
         .then(res => console.log(res))
   }
@@ -91,7 +90,7 @@ const deleteCustomertFunction = (ID) => {
                       <Tab eventKey="profile" title="Khách hàng">
                         <div style={{display: "flex"}}>
                                 <h3 style ={{marginRight: "33rem"}}>{customers.length} Khách hàng</h3>
-                                <Button variant="info" style ={{marginBottom: "1rem"}} onClick={handleShow}>Thêm khách hàng mới</Button>
+                                {/* <Button variant="info" style ={{marginBottom: "1rem"}} onClick={handleShow}>Thêm khách hàng mới</Button> */}
                             </div>
                         <Container>
                           <Row style={{borderStyle: "ridge", backgroundColor: "#f5f5f5"}}>

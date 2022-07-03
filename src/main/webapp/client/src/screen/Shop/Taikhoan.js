@@ -13,6 +13,7 @@ export default function Taikhoan(props) {
 
     const [user, setUser] = useState("");
     const [shops, setShops] = useState("");
+    const [putShop, setPutShop] = useState("");
 
     const [fixName, setFixName] = useState("");
     const [fixPhone, setFixPhone] = useState("");
@@ -22,6 +23,8 @@ export default function Taikhoan(props) {
     const [fixAddress, setFixAddress] = useState("");
     const [fixPassword, setFixPassword] = useState("");
     const [fixEmail, setFixEmail] = useState("");
+
+    const [upShopName, setUpShopName] = useState("");
 
   useEffect(() => {
     var idPost;
@@ -59,6 +62,43 @@ export default function Taikhoan(props) {
         .then(res => console.log(res))
     window.location.reload();
   }
+
+    var date  = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var dt = date.getDate();
+   
+    if (dt < 10) {
+      dt = '0' + dt;
+    }
+    if (month < 10) {
+      month = '0' + month;
+    }
+   
+    const today = (year+'-' + month + '-'+dt);
+
+  const updateShopFunction = () => {
+    const updateIt = {
+            userID: shops.userID,
+            shopName: putShop.shopName,
+            website: shops.website,
+            address: shops.address,
+            detail: shops.detail,
+            phone: shops.phone,
+            email: shops.email,
+            state: shops.state,
+            createdDay: today,
+            lastRegisterDay: shops.lastRegisterDay,
+            expirationDate: shops.expirationDate
+            }
+
+    if (upShopName) {updateIt.shopName = upShopName}
+
+    console.log(updateIt);
+    axios.put('http://localhost:8080/ShopsManager_war_exploded/shop/' + idShop, updateIt)
+        .then(res => console.log(res))
+    window.location.reload();
+}
 
 
     const logOut = () => {
@@ -117,6 +157,9 @@ export default function Taikhoan(props) {
                             <label>Last Name</label><br />
                             <input type="text" placeholder={user.lastName} onChange={(event) =>setFixLName(event.target.value)} /><br />
 
+                            <label>Shop Name</label><br />
+                            <input type="text" placeholder={shops.shopName} onChange={(event) =>setUpShopName(event.target.value)} /><br />
+
                             <label>Số điện thoại</label><br />
                             <input type="text" placeholder={user.phone} onChange={(event) =>setFixPhone(event.target.value)} /><br /><br />
 
@@ -132,7 +175,7 @@ export default function Taikhoan(props) {
                         <Button variant="secondary" onClick={handleClose}>
                             Thoát
                         </Button>
-                        <Button variant="primary" onClick={() => {handleClose(); putUser()}}>
+                        <Button variant="primary" onClick={() => {handleClose(); putUser(); updateShopFunction()}}>
                             Hoàn tất
                         </Button>
                 </Modal.Footer>

@@ -23,6 +23,7 @@ export default function Donhang(props) {
     const [products, setProducts] = useState('');
     const [viewOrder, setViewOrder] = useState('');
 
+
     const [newProduct, setNewProduct] = useState('');
     const [newQuantity, setNewQuantity] = useState('');
     const [newProduct2, setNewProduct2] = useState('');
@@ -58,6 +59,8 @@ export default function Donhang(props) {
     fetch("http://localhost:8080/ShopsManager_war_exploded/product/shop/" + idShop)
     .then(res => res.json())
     .then(data => setProducts(data.listResult))
+
+    
   },[])
   console.log(orders);
     let idShop;
@@ -202,8 +205,12 @@ const postOrder = () => {
         window.location.reload();
     }
 
-   
-
+    function changeColorRed(e) {
+        e.target.style.fontWeight = 'bold';
+    }
+    function changeColorWhite(e) {
+        e.target.style.fontWeight = 'normal';
+    }
     return (
         <div>
           <NavBarLogin />
@@ -269,7 +276,7 @@ const postOrder = () => {
                                                 <p style={{marginTop: "0rem"}}>{item.detail}</p>
                                             </Col>
                                             <Col xs={1} style={{textAlign: "left"}}>
-                                                <p style={{marginTop: "0rem"}}><a onClick={() => {handleShow2(); setViewOrder(item); setOrderState(item.state)}}>Xem thêm</a></p>
+                                                <p style={{marginTop: "0rem", cursor: 'pointer'}} onMouseOver={changeColorRed} onMouseOut={changeColorWhite}><a onClick={() => {handleShow2(); setViewOrder(item); setOrderState(item.state)}}>Xem thêm</a></p>
                                             </Col>
                                     </Row>
 
@@ -313,16 +320,16 @@ const postOrder = () => {
                             {/* Thêm khách hàng */}
                             <h5>Khách hàng</h5>
                             <label>Họ và tên đệm khách hàng</label><br />
-                            <input type="text" onChange={(event) => {setNewFName(event.target.value)}} required/><br /><br />
+                            <input type="text" onChange={(event) => {setNewFName(event.target.value)}} required/><br />
 
                             <label>Tên khách hàng</label><br />
-                            <input type="text" onChange={(event) => {setNewLName(event.target.value)}} required/><br /><br />
+                            <input type="text" onChange={(event) => {setNewLName(event.target.value)}} required/><br />
 
                             <label>SĐT liên hệ</label><br />
-                            <input type="text" onChange={(event) => {setNewPhone(event.target.value)}} required/><br /><br />
+                            <input type="text" onChange={(event) => {setNewPhone(event.target.value)}} required/><br />
 
                             <label>Email liên hệ</label><br />
-                            <input type="text" onChange={(event) => {setNewEmail(event.target.value)}} required/><br /><br />
+                            <input type="text" onChange={(event) => {setNewEmail(event.target.value)}} required/><br />
 
                             <label>Địa chỉ giao hàng</label><br />
                             <input type="text" onChange={(event) => {setNewAddress(event.target.value)}} required/><br /><br />
@@ -341,7 +348,12 @@ const postOrder = () => {
                             <input type="text" onChange={(event) => {setNewShipName(event.target.value)}} required/><br /><br />
 
                             <h5>Trạng thái đơn hàng</h5>
-                            <input type="text" onChange={(event) => {setNewState(event.target.value)}} required/><br />
+                            <select onChange={(even) => {setNewState(even.target.value); }}>
+                                <option value="1">Đang vận chuyển</option>
+                                <option value="2">Hoàn thành</option>
+                                <option value="3">Đã hủy</option>
+                                <option value="4">Trả hàng</option>
+                            </select><br />
                         </Modal.Body>
                         <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>

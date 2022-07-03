@@ -21,7 +21,7 @@ export default function Quanlyshop(props) {
     const [putShop, setPutShop] = useState("");
     const [deleteShop, setDeleteShop] = useState("");
 
-    const [upShopName, setUpShopName] = useState(""); 
+    const [upShopName, setUpShopName] = useState("");
     const [upWebsite, setUpwebsite] = useState("");
     const [upEmail, setUpEmail] = useState("");
     const [upDetail, setUpDetail] = useState(""); 

@@ -15,12 +15,14 @@ export default function Dashboard(props) {
 
     fetch("http://localhost:8080/ShopsManager_war_exploded/product/shop/" + idShop)
     .then(res => res.json())
-    .then(data => setProducts(data))
+    .then(data => setProducts(data.listResult))
   },[])
 
       let idShop;
       const dataLocal = localStorage.getItem('user');
       const userLocal  = JSON.parse(dataLocal);
+      if(!userLocal.shopId) {return <Navigate to={"/dang-ky-shop"}  />};
+      if(userLocal.stateShop[0] == 0) {return <Navigate to={"/phuong-thuc-thanh-toan"}  />};
       if (userLocal  && userLocal.role == "shop") { idShop= userLocal.shopId[0]} else {return <Navigate to={"/login"}  />};
 
   var choXacNhan = 0;
@@ -38,6 +40,7 @@ export default function Dashboard(props) {
   }
 
   var hetHang = 0;
+  console.log(products)
   for (var i=0; i<products.length; i++) {
     if (products[i].available == 0) ++hetHang;
   }
@@ -64,26 +67,26 @@ export default function Dashboard(props) {
                 <Col>
                     <Row style= {{backgroundColor: "#ffffff", marginTop: "7rem"}}>
                         <Col xs={3}>
-                            <h4>{choXacNhan}</h4>
-                            <h5>Chờ xác nhận</h5>
+                            <h4  href="/don-hang">{choXacNhan}</h4>
+                            <h5  href="/don-hang">Chờ xác nhận</h5>
                         </Col>
                         <Col xs={3}>
-                            <h4>{dangGiao}</h4>
-                            <h5>Đang xử lý</h5>
+                            <h4 href="/don-hang">{dangGiao}</h4>
+                            <h5  href="/don-hang">Đang vận chuyển</h5>
                         </Col>
                         <Col xs={3}>
                             <h4>{hoanThanh}</h4>
                             <h5>Hoàn thành</h5>
                         </Col>
                         <Col xs={3}>
-                            <h4>{daHuy}</h4>
-                            <h5>Đơn hủy</h5>
+                            <h4  href="/don-hang">{daHuy}</h4>
+                            <h5  href="/don-hang">Đơn hủy</h5>
                         </Col>
                     </Row>
                     <Row>
                         <Col xs={3}>
-                            <h4>{hetHang}</h4>
-                            <h5>Sản phẩm hết hàng</h5>
+                            <h4  href="/san-pham">{hetHang}</h4>
+                            <h5  href="/san-pham">Sản phẩm hết hàng</h5>
                         </Col>
                         <Col xs={3}>
                         </Col>

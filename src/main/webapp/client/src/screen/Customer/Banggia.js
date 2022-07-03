@@ -7,7 +7,7 @@ export default function Banggia() {
     return (
         <div>
             <NavBar />
-            <div style={{backgroundImage: "url('backgroundtinhnang.jpg')"}}>
+            <div style={{backgroundImage: "url('backgroundtinhnang.jpg')", paddingTop: "6rem"}}>
             <h1 style={{paddingTop: "3rem"}}>Bảng báo giá nền tảng quản lý bán hàng đa kênh</h1>
             <p style={{marginTop: "2rem"}}>OmniChannel giúp kết nối thông suốt các kênh bán hàng từ online đến offline và quản lý tập trung</p>
             <Container>

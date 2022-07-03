@@ -14,6 +14,8 @@ export default function Quanlydichvu(props) {
     const [state, setState] = useState("");
     const [stateOrder, setStateOrder] = useState("");
 
+    const [shops, setShops] = useState("");
+
     useEffect(() => {
     fetch("http://localhost:8080/ShopsManager_war_exploded/register-order")
     .then(res => res.json())
@@ -35,8 +37,40 @@ export default function Quanlydichvu(props) {
         }
         axios.put('http://localhost:8080/ShopsManager_war_exploded/register-order/'+ order.id, putIt)
             .then(res => console.log(res))
+
+        getShop(order.shopId)
         // window.location.reload();
     }
+
+    const getShop = (id) => {
+      axios.get('http://localhost:8080/ShopsManager_war_exploded/shop/' + id)
+        .then(res => setShops(res.data))
+      
+      console.log(shops);
+      updateShopFunction(id)
+    }
+
+    const updateShopFunction = (id) => {
+    const updateIt = {
+            userID: shops.userID,
+            shopName: shops.shopName,
+            website: shops.website,
+            address: shops.address,
+            detail: shops.detail,
+            phone: shops.phone,
+            email: shops.email,
+            state: state,
+            createdDay: shops.createdDay,
+            lastRegisterDay: shops.lastRegisterDay,
+            expirationDate: shops.expirationDate
+            }
+
+    axios.put('http://localhost:8080/ShopsManager_war_exploded/shop/' + id, updateIt)
+        .then(res => console.log(res))
+
+    console.log("1")
+   // window.location.reload();
+}
     console.log(stateOrder);
     return (
         <div >

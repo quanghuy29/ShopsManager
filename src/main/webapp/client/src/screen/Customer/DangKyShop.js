@@ -18,6 +18,9 @@ export default function DangKyShop() {
 	const data = localStorage.getItem('userRegister');
     const userRegisterLocal  = JSON.parse(data);
 
+	const data1 = localStorage.getItem('user');
+    const userLocal  = JSON.parse(data1);
+
 
 	var helloUse = [];
 	const postUser = () => {
@@ -28,8 +31,10 @@ export default function DangKyShop() {
 			detail: newDetail,
 			phone: newPhoneNumber,
 			email: newEmail,
-			userID: userRegisterLocal.userId
+			userID: "userRegisterLocal.userId"
 			}
+		if (userRegisterLocal && !userLocal) {postIt.userID = userRegisterLocal.userId}
+		if (!userRegisterLocal && userLocal) {postIt.userID = userLocal.userId}
 
 
         axios.post('http://localhost:8080/ShopsManager_war_exploded/register', postIt)

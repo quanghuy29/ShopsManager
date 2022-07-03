@@ -7,7 +7,7 @@ export default function Tinhnang() {
     return (
         <div>
             <NavBar />
-            <div style={{backgroundColor: "#f2f2fe"}}>
+            <div style={{backgroundColor: "#f2f2fe", paddingTop: "6rem"}}>
 	            <h2 style={{paddingTop: "4rem", paddingBottom: "2rem"}}>Omnichannel mang đến mọi thứ bạn cần <br />
 				để quản lý & bán hàng đa kênh ngay hôm nay</h2>
 				<h4 style={{paddingBottom: "2rem"}}>Khám phá những tính năng vượt trội của Sapo</h4>
